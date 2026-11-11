@@ -19,7 +19,7 @@ const APPWRITE_CONFIG = {
   projectId: "6af477840009bd198145",
   bucketId: "6af477980014e69c5286"
 };
-const ADMIN_PIN = "CAMBIAR_PIN";
+const ADMIN_PIN = "admin123";
 const SITE = { nombre: "ASADA Bijagua", telefono: "+506 0000-0000", correo: "info@asadabijagua.cr", emergencia: "+506 0000-0000" };
 /* Colecciones: noticias, cortes, documentos, faqs, junta, proyectos, contactos */
 
