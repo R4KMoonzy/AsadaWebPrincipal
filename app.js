@@ -19,7 +19,7 @@ const APPWRITE_CONFIG = {
   projectId: "6af477840009bd198145",
   bucketId: "6af477980014e69c5286"
 };
-const ADMIN_PIN = "admin123";
+const ADMIN_PIN = "CAMBIAR_PIN";
 const SITE = { nombre: "ASADA Bijagua", telefono: "+506 0000-0000", correo: "info@asadabijagua.cr", emergencia: "+506 0000-0000" };
 /* Colecciones: noticias, cortes, documentos, faqs, junta, proyectos, contactos */
 
@@ -118,12 +118,12 @@ const pages = {
   async index() {
     const cb = $("#home-cortes"), nb = $("#home-news");
     try { const c = (await listDocs("cortes", "fecha", "desc", 20)).filter(x => !/final|cancel/i.test(x.estado || "")).slice(0, 3);
-      c.length ? cb.innerHTML = `<div class="rows">${c.map(cutRow).join("")}</div>` : empty(cb, "No hay cortes ni mantenimientos activos o proximos."); } catch (e) { fail(cb); }
-    try { const n = await listDocs("noticias", "creadoEn", "desc", 3); n.length ? nb.innerHTML = n.map(newsCard).join("") : empty(nb, "Aun no hay noticias publicadas."); } catch (e) { fail(nb); }
+      c.length ? cb.innerHTML = `<div class="rows">${c.map(cutRow).join("")}</div>` : empty(cb, "No hay cortes ni mantenimientos activos o proximos."); } catch (e) { console.error(e); fail(cb); }
+    try { const n = await listDocs("noticias", "creadoEn", "desc", 3); n.length ? nb.innerHTML = n.map(newsCard).join("") : empty(nb, "Aun no hay noticias publicadas."); } catch (e) { console.error(e); fail(nb); }
   },
   async noticias() {
     const box = $("#feed");
-    try { const n = await listDocs("noticias"); n.length ? box.innerHTML = n.map(newsCard).join("") : empty(box, "Aun no hay noticias publicadas."); } catch (e) { fail(box); }
+    try { const n = await listDocs("noticias"); n.length ? box.innerHTML = n.map(newsCard).join("") : empty(box, "Aun no hay noticias publicadas."); } catch (e) { console.error(e); fail(box); }
     if (isAdmin()) $("#admin-link").hidden = false;
   },
   async detalle() {
@@ -132,22 +132,22 @@ const pages = {
     try { const n = await getOne("noticias", id); if (!n) return empty(box, "La noticia no existe o fue retirada.");
       document.title = n.titulo + " | ASADA Bijagua";
       box.innerHTML = `<time>${fmt(n.creadoEn)}</time><h1>${esc(n.titulo)}</h1>${n.imagenId ? `<img class="hero-img" src="${fileView(n.imagenId)}" alt="${esc(n.titulo)}">` : ""}${paras(n.descripcion)}`;
-    } catch (e) { fail(box); }
+    } catch (e) { console.error(e); fail(box); }
   },
   async cortes() {
     const box = $("#cortes-list");
-    try { const c = await listDocs("cortes", "fecha", "desc"); c.length ? box.innerHTML = `<div class="rows">${c.map(cutRow).join("")}</div>` : empty(box, "No hay avisos registrados."); } catch (e) { fail(box); }
+    try { const c = await listDocs("cortes", "fecha", "desc"); c.length ? box.innerHTML = `<div class="rows">${c.map(cutRow).join("")}</div>` : empty(box, "No hay avisos registrados."); } catch (e) { console.error(e); fail(box); }
     if (isAdmin()) $("#admin-link").hidden = false;
   },
   async nosotros() {
     const box = $("#junta");
     try { const j = await listDocs("junta", "orden", "asc"); j.length ? box.innerHTML = j.map(m => `<div class="c3 team"><div class="card-img">${m.fotoId ? `<img src="${fileView(m.fotoId)}" alt="${esc(m.nombre)}" loading="lazy">` : ""}</div><h3>${esc(m.nombre)}</h3><p>${esc(m.cargo)}</p></div>`).join("") : empty(box, "La Junta Directiva se mostrara aqui.");
-    } catch (e) { fail(box); }
+    } catch (e) { console.error(e); fail(box); }
   },
   async proyectos() {
     const box = $("#proyectos-list");
     try { const p = await listDocs("proyectos"); p.length ? box.innerHTML = p.map(x => `<article class="card"><div class="card-img">${x.imagenId ? `<img src="${fileView(x.imagenId)}" alt="${esc(x.titulo)}" loading="lazy">` : ""}</div><div class="card-body"><span class="tag" style="align-self:flex-start">${esc(x.estado || "")}</span><h3>${esc(x.titulo)}</h3><p>${esc(x.descripcion || "")}</p></div></article>`).join("") : empty(box, "No hay proyectos registrados.");
-    } catch (e) { fail(box); }
+    } catch (e) { console.error(e); fail(box); }
   },
   async documentos() {
     const box = $("#docs-list"), q = $("#doc-q"), cat = $("#doc-cat");
@@ -155,7 +155,7 @@ const pages = {
     const draw = () => { const t = q.value.toLowerCase(), c = cat.value;
       const r = all.filter(d => (!c || d.categoria === c) && (!t || (d.titulo + " " + (d.descripcion || "")).toLowerCase().includes(t)));
       r.length ? box.innerHTML = `<div class="rows">${r.map(d => `<div class="row"><div><span class="tag">${esc(d.categoria || "Documento")}</span></div><div><h3>${esc(d.titulo)}</h3><p>${esc(d.descripcion || "")}</p><span class="meta">${fmt(d.creadoEn)}</span></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("")}</div>` : empty(box, "No se encontraron documentos."); };
-    try { all = await listDocs("documentos"); draw(); } catch (e) { fail(box); }
+    try { all = await listDocs("documentos"); draw(); } catch (e) { console.error(e); fail(box); }
     q.oninput = draw; cat.onchange = draw;
   },
   async faq() {
@@ -211,7 +211,7 @@ const pages = {
     const refresh = async () => { const c = T[sel.value]; lst.innerHTML = `<p class="empty">Cargando...</p>`;
       try { const r = await listDocs(c.c, c.o[0], c.o[1]); lst.innerHTML = r.length ? r.map(it => `<div class="admin-item"><div><strong>${esc(it.titulo || it.sector || it.pregunta || it.nombre)}</strong><span class="meta" style="display:block">${esc([it.tipo, it.sector && it.titulo ? it.sector : "", it.descripcion && !it.titulo ? it.descripcion : "", fmt(it.fecha || it.creadoEn)].filter(Boolean).join(" - "))}</span></div><button class="btn sm danger" data-id="${it.id}" type="button">Eliminar</button></div>`).join("") : `<p class="empty">Sin registros.</p>`;
         $$("button[data-id]", lst).forEach(b => b.onclick = async () => { if (!confirm("Eliminar este registro de forma permanente?")) return; await removeDoc(c.c, r.find(x => x.id === b.dataset.id)); refresh(); });
-      } catch (e) { fail(lst); } };
+      } catch (e) { console.error(e); fail(lst); } };
     sel.onchange = () => show(sel.value);
     form.onsubmit = async e => { e.preventDefault(); const c = T[sel.value], btn = $("button", form); btn.disabled = true; btn.textContent = "Publicando...";
       try { const data = { ...(c.fix || {}) };
