@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Panel administrativo | ASADA Bijagua</title><meta name="description" content="Panel de administración del sitio ASADA Bijagua.">
+<link rel="icon" href="logo1.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"></head>
+<body data-page="admin" class="admin-body"><div id="site-header"></div>
+<main class="admin-main">
+  <div id="admin-gate" class="admin-gate" hidden>
+    <div class="admin-gate-card">
+      <div class="admin-gate-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 1 1 8 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+      <h2>Acceso administrativo</h2>
+      <p>Ingrese su código para gestionar el contenido del sitio y del programa.</p>
+      <button class="btn dark" id="gate-btn" type="button">Ingresar código</button>
+    </div>
+  </div>
+
+  <div id="admin-panel" class="admin-shell" hidden>
+    <aside class="admin-sidebar">
+      <div class="admin-side-head">
+        <div class="admin-side-title">Panel</div>
+        <div class="admin-side-sub">ASADA Bijagua</div>
+      </div>
+      <nav id="admin-menu" class="admin-menu" aria-label="Secciones del panel"></nav>
+      <div class="admin-side-foot">
+        <a class="admin-side-link" href="index.html">Ver sitio</a>
+        <a class="admin-side-link" href="programa.html" target="_blank">Ver programa</a>
+        <button class="admin-side-link danger" id="logout" type="button">Cerrar sesión</button>
+      </div>
+    </aside>
+    <section class="admin-content">
+      <div class="admin-top">
+        <div>
+          <div class="admin-breadcrumb" id="admin-bc">Panel</div>
+          <h1 id="admin-title">Gestión</h1>
+          <p id="admin-desc" class="meta">Seleccione una opción del menú para comenzar.</p>
+        </div>
+        <button class="admin-menu-toggle" id="admin-menu-toggle" type="button">Menú</button>
+      </div>
+      <div class="admin-work grid">
+        <div class="c5 admin-col">
+          <div class="admin-card">
+            <div class="admin-card-head"><h3 id="admin-form-title">Nuevo registro</h3><span class="admin-badge" id="admin-mode">Crear</span></div>
+            <div id="admin-tip" class="admin-tip" hidden></div>
+            <form class="form admin-form" id="admin-form"></form>
+            <p class="notice" id="admin-msg" hidden style="margin-top:16px"></p>
+          </div>
+        </div>
+        <div class="c7 admin-col">
+          <div class="admin-card">
+            <div class="admin-card-head"><h3>Registros</h3><span class="meta" id="admin-count"></span></div>
+            <div id="admin-list" class="admin-list"></div>
+          </div>
+        </div>
+      </div>
+      <select id="tipo" hidden aria-hidden="true"></select>
+    </section>
+  </div>
+</main>
+<div id="site-footer"></div><script type="module" src="app.js"></script></body></html>
