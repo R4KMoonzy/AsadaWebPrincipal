@@ -220,7 +220,7 @@ textarea{min-height:110px;resize:vertical}
 .admin-list .admin-item{border-radius:12px;margin-bottom:10px}
 .admin-list .admin-item strong{font-size:.98rem}
 .admin-col{min-width:0}
-@media(max-width:1100px){.admin-shell{grid-template-columns:1fr}.admin-sidebar{position:fixed;left:0;top:0;bottom:0;width:300px;transform:translateX(-100%);transition:transform .2s;z-index:80;height:auto}.admin-shell.menu-open .admin-sidebar{transform:translateX(0)}.admin-menu-toggle{display:inline-flex}.admin-content{padding:20px 16px 32px}.admin-work.grid{display:grid}}
+@media(max-width:1100px){.admin-shell{grid-template-columns:1fr}.admin-sidebar{position:fixed;left:0;top:0;bottom:0;width:300px;max-width:88vw;transform:translateX(-100%);transition:transform .2s;z-index:80;height:100dvh;max-height:100dvh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.admin-shell.menu-open .admin-sidebar{transform:translateX(0)}.admin-menu-toggle{display:inline-flex}.admin-content{padding:20px 16px 32px}.admin-work.grid{display:grid}}
 @media(max-width:900px){.admin-work.grid{grid-template-columns:1fr}.admin-work.grid>*{grid-column:span 12!important}}
 .admin-gate[hidden],.admin-shell[hidden]{display:none!important}
 
