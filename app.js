@@ -203,7 +203,7 @@ const initWaterDrops = () => {
 
 const mountLayout = () => {
   $("#site-header").innerHTML = `
-  <div class="topbar"><div class="wrap"><span>Emergencias y fugas: ${SITE.emergencia}</span><div class="tools"><button type="button" id="fs-m" aria-label="Reducir texto">A-</button><button type="button" id="fs-p" aria-label="Aumentar texto">A+</button><button type="button" id="hc" aria-label="Alto contraste">Contraste</button><button type="button" id="open-admin">Acceso Administrativo</button></div></div></div>
+  <div class="topbar"><div class="wrap"><span>Emergencias y fugas: ${SITE.emergencia}</span><button type="button" id="open-admin" class="top-admin">Acceso Administrativo</button></div></div>
   <header class="header"><div class="wrap">
     <a class="brand" href="index.html"><img src="logo1.jpg" alt="Logotipo ASADA Bijagua"><span>ASADA Bijagua<small>Asociacion Administradora del Acueducto, Upala</small></span></a>
     <button class="burger" type="button" id="burger" aria-label="Abrir menu">Menu</button>
@@ -230,6 +230,38 @@ const mountLayout = () => {
     $("#nav").onclick = e => e.target.closest("a") && $("#nav").classList.remove("open");
     $("#site-footer").innerHTML = `<footer class="footer"><div class="wrap"><div class="grid"><div><h4>Creciendo por la vida</h4><p>Programa de Educación Ambiental de la ASADA Bijagua. Cuidamos el agua y el bosque con la comunidad de Bijagua de Upala.</p></div><div><h4>Explorar</h4><a href="#informacion">El programa completo</a><a href="#noticias">Noticias</a><a href="#aliados">Aliados</a></div><div><h4>ASADA Bijagua</h4><a href="index.html">Volver al sitio de la ASADA</a><a href="contacto.html">Contacto</a><a href="admin.html">Panel administrativo</a></div></div><div class="legal"><span>&copy; ${new Date().getFullYear()} ASADA Bijagua</span></div></div></footer>`;
   }
+
+  const mainEl = $("main");
+  if (mainEl && !mainEl.id) mainEl.id = "contenido-principal";
+  document.body.insertAdjacentHTML("afterbegin", `<a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>`);
+  document.body.insertAdjacentHTML("beforeend", `
+    <div id="accesibilidad-flotante" class="acc-float">
+      <button type="button" class="acc-bubble" id="acc-bubble" aria-label="Abrir opciones de accesibilidad" aria-expanded="false" aria-controls="acc-panel" title="Accesibilidad">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="4" r="1.8" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M4.5 8.6c2.4 1.2 4.8 1.8 7.5 1.8s5.1-.6 7.5-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M12 10.4V15m0 0-4.2 6m4.2-6 4.2 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="acc-panel" id="acc-panel" role="group" aria-label="Ajustes de accesibilidad" hidden>
+        <p class="acc-title">Accesibilidad</p>
+        <div class="acc-row">
+          <span>Tamaño de texto</span>
+          <div class="acc-btns">
+            <button type="button" id="acc-fs-menos" aria-label="Reducir tamaño de letra">A-</button>
+            <button type="button" id="acc-fs-reset" aria-label="Restablecer tamaño de letra">A</button>
+            <button type="button" id="acc-fs-mas" aria-label="Aumentar tamaño de letra">A+</button>
+          </div>
+        </div>
+        <div class="acc-row">
+          <span>Alto contraste</span>
+          <button type="button" class="acc-switch" id="acc-contraste" role="switch" aria-checked="false" aria-label="Alternar alto contraste"><span></span></button>
+        </div>
+        <p class="acc-hint">Toque la burbuja para abrir o cerrar.</p>
+      </div>
+    </div>
+  `);
+
   $("#burger").onclick = () => $("#nav").classList.toggle("open");
   if (document.body.dataset.theme !== "programa") { loadSiteConfig(); initWaterDrops(); }
   const modal = $("#pin-modal");
@@ -245,9 +277,25 @@ const mountLayout = () => {
   const root = document.documentElement; let fs = 1;
   try { fs = Number(localStorage.getItem("asada_fs")) || 1; if (localStorage.getItem("asada_hc") === "1") root.classList.add("hc"); } catch (e) { }
   root.style.setProperty("--fs", fs);
-  const setFs = d => { fs = Math.min(1.3, Math.max(.9, +(fs + d).toFixed(2))); root.style.setProperty("--fs", fs); try { localStorage.setItem("asada_fs", fs); } catch (e) { } };
-  $("#fs-m").onclick = () => setFs(-.1); $("#fs-p").onclick = () => setFs(.1);
-  $("#hc").onclick = () => { const on = root.classList.toggle("hc"); try { localStorage.setItem("asada_hc", on ? "1" : "0"); } catch (e) { } };
+  const aplicarFs = () => {
+    root.style.setProperty("--fs", fs);
+    try { localStorage.setItem("asada_fs", fs); } catch (e) { }
+  };
+  const accBubble = $("#acc-bubble"), accPanel = $("#acc-panel"), accSwitch = $("#acc-contraste");
+  const setAccAbierto = a => { if (accPanel) accPanel.hidden = !a; accBubble?.setAttribute("aria-expanded", String(!!a)); };
+  accBubble?.addEventListener("click", e => { e.stopPropagation(); setAccAbierto(accPanel?.hidden); });
+  document.addEventListener("click", e => { if (!e.target.closest("#accesibilidad-flotante")) setAccAbierto(false); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") setAccAbierto(false); });
+  $("#acc-fs-menos")?.addEventListener("click", () => { fs = Math.max(0.9, +(fs - 0.1).toFixed(2)); aplicarFs(); });
+  $("#acc-fs-mas")?.addEventListener("click", () => { fs = Math.min(1.3, +(fs + 0.1).toFixed(2)); aplicarFs(); });
+  $("#acc-fs-reset")?.addEventListener("click", () => { fs = 1; aplicarFs(); });
+  const actualizarSwitch = () => accSwitch?.setAttribute("aria-checked", String(root.classList.contains("hc")));
+  accSwitch?.addEventListener("click", () => {
+    const on = root.classList.toggle("hc");
+    try { localStorage.setItem("asada_hc", on ? "1" : "0"); } catch (e) { }
+    actualizarSwitch();
+  });
+  actualizarSwitch();
 };
 
 /* ---------- TARJETAS ---------- */

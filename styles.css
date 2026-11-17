@@ -1,7 +1,7 @@
 :root{--navy:#002347;--blue:#005293;--sky:#007bc4;--teal:#0e9aa7;--green:#15803d;--green-bg:#dcfce7;--amber:#b45309;--amber-bg:#fef3c7;--red:#991b1b;--red-bg:#fee2e2;--bg:#f4f7fa;--card-bg:#fff;--ink:#1f2937;--mute:#5b6b7c;--line:#dbe4ee;--tint:#eaf3fb;--shadow:0 1px 3px rgba(0,35,71,.08),0 8px 24px rgba(0,35,71,.06);--radius:8px;--fs:1}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Open Sans',system-ui,-apple-system,sans-serif;font-size:calc(15px*var(--fs));line-height:1.6;color:var(--ink);background-color:var(--bg);background-image:radial-gradient(circle at 10% 20%,rgba(14,154,167,.04) 0,transparent 40%),radial-gradient(circle at 90% 80%,rgba(0,82,147,.04) 0,transparent 40%);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+html{scroll-behavior:smooth;font-size:calc(16px*var(--fs,1))}
+body{font-family:'Open Sans',system-ui,-apple-system,sans-serif;font-size:0.9375rem;line-height:1.6;color:var(--ink);background-color:var(--bg);background-image:radial-gradient(circle at 10% 20%,rgba(14,154,167,.04) 0,transparent 40%),radial-gradient(circle at 90% 80%,rgba(0,82,147,.04) 0,transparent 40%);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
 main{flex:1}
 img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
 h1,h2,h3,h4,.brand{font-family:'Montserrat',system-ui,sans-serif;color:var(--navy);letter-spacing:-.01em;line-height:1.25}
@@ -19,9 +19,9 @@ p+p{margin-top:1em}
 /* barra gubernamental */
 .topbar{background:var(--navy);color:#cfe3f5;font:600 12px 'Montserrat',sans-serif;border-bottom:2px solid var(--teal);letter-spacing:.02em}
 .topbar .wrap{max-width:none;padding:8px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.tools{display:flex;gap:6px;align-items:center}
-.tools button,.topbar #open-admin{font:700 11px 'Montserrat',sans-serif;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:4px;padding:3px 9px;cursor:pointer;transition:background .2s}
-.tools button:hover,.topbar #open-admin:hover{background:rgba(255,255,255,.25)}
+/* Los controles de accesibilidad viven ahora en la burbuja flotante */
+.topbar #open-admin{font:700 11px 'Montserrat',sans-serif;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:6px 12px;cursor:pointer;transition:background .2s}
+.topbar #open-admin:hover{background:rgba(255,255,255,.25)}
 /* encabezado */
 .header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.98);backdrop-filter:blur(10px);box-shadow:0 2px 14px rgba(0,35,71,.08)}
 .header .wrap{max-width:none;padding:12px 24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
@@ -132,7 +132,7 @@ textarea{min-height:110px;resize:vertical}
 .hc{--navy:#000;--blue:#002366;--sky:#002366;--teal:#002366;--ink:#000;--mute:#222;--line:#000;--tint:#fff;--bg:#fff}
 .hc body{background:#fff}.hc .card,.hc .row,.hc .article,.hc .form,.hc .team,.hc .tile,.hc .acc-item,.hc .table{border:2px solid #000;box-shadow:none}
 .hc input,.hc select,.hc textarea{border:2px solid #000}.hc .hero,.hc .page-head,.hc .section.dark{background:#000}.hc a{text-decoration:underline}
-@media print{.topbar,.header,.footer,.modal,.btn{display:none!important}body{background:#fff}.card,.row,.article{box-shadow:none}}
+@media print{.topbar,.header,.footer,.modal,.btn,.acc-float,.skip-link{display:none!important}body{background:#fff}.card,.row,.article{box-shadow:none}}
 @media(max-width:900px){
 .grid>*{grid-column:span 12!important}.burger{display:block}
 .nav{display:none;width:100%;flex-direction:column;align-items:stretch}.nav.open{display:flex}
@@ -223,3 +223,55 @@ textarea{min-height:110px;resize:vertical}
 @media(max-width:1100px){.admin-shell{grid-template-columns:1fr}.admin-sidebar{position:fixed;left:0;top:0;bottom:0;width:300px;transform:translateX(-100%);transition:transform .2s;z-index:80;height:auto}.admin-shell.menu-open .admin-sidebar{transform:translateX(0)}.admin-menu-toggle{display:inline-flex}.admin-content{padding:20px 16px 32px}.admin-work.grid{display:grid}}
 @media(max-width:900px){.admin-work.grid{grid-template-columns:1fr}.admin-work.grid>*{grid-column:span 12!important}}
 .admin-gate[hidden],.admin-shell[hidden]{display:none!important}
+
+/* ============================================================
+   BURBUJA DE ACCESIBILIDAD Y ADAPTACIÓN MÓVIL / ZOOM
+   ============================================================ */
+.skip-link{position:fixed;top:-70px;left:12px;z-index:500;background:#fff;color:var(--blue);padding:10px 16px;border-radius:0 0 8px 8px;font-weight:700;box-shadow:var(--shadow);transition:top .15s ease}
+.skip-link:focus{top:0}
+.acc-float{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:300;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.acc-bubble{width:52px;height:52px;border:0;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,35,71,.28);transition:transform .15s ease,box-shadow .15s ease}
+.acc-bubble:hover{transform:scale(1.05);box-shadow:0 8px 24px rgba(0,35,71,.35)}
+.acc-bubble svg{width:26px;height:26px}
+.acc-panel{width:min(280px,calc(100vw - 32px));background:#fff;border:1px solid var(--line);border-top:3px solid var(--teal);border-radius:12px;box-shadow:0 14px 40px rgba(0,35,71,.22);padding:16px}
+.acc-panel[hidden]{display:none!important}
+.acc-title{font:700 .95rem 'Montserrat',sans-serif;color:var(--navy);margin:0 0 12px}
+.acc-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
+.acc-row>span{font-size:13px;color:var(--ink)}
+.acc-btns{display:flex;gap:4px}
+.acc-btns button{min-width:38px;min-height:38px;border:1px solid var(--line);border-radius:8px;background:var(--tint);color:var(--blue);font:700 13px 'Montserrat',sans-serif;cursor:pointer}
+.acc-btns button:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+.acc-switch{width:48px;height:28px;border:0;border-radius:999px;background:#c5d3e0;padding:3px;cursor:pointer;transition:background .2s ease}
+.acc-switch span{display:block;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s ease}
+.acc-switch[aria-checked="true"]{background:var(--teal)}
+.acc-switch[aria-checked="true"] span{transform:translateX(20px)}
+.acc-hint{font-size:11px;color:var(--mute);margin:12px 0 0}
+@media(hover:none) and (pointer:coarse){.btn,.acc-btns button,.nav>a,.dd>button,.admin-menu-toggle{min-height:44px}input:not([type=checkbox]):not([type=radio]),select,textarea{min-height:44px}.acc-bubble{width:48px;height:48px}}
+img{max-width:100%;height:auto}.tbl,.table{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.modal-box{max-height:calc(100dvh - 32px);overflow-y:auto}
+@media(max-width:768px){
+.topbar .wrap,.header .wrap{padding-left:16px;padding-right:16px}
+.wrap{padding:0 16px}
+.brand img{height:42px}.brand{font-size:.98rem}
+.nav>a,.dd>button{padding:10px 12px}
+.hero{padding:40px 0 90px}.section{padding:36px 0}
+.article,.form,.card{padding:20px}.card-body{padding:18px}
+.acc-float{right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom))}
+.acc-panel{width:min(280px,calc(100vw - 24px));padding:14px}
+}
+@media(max-width:480px){
+body{font-size:.875rem}h1{font-size:1.5rem}h2{font-size:1.2rem}
+.wrap{padding:0 12px}.topbar .wrap,.header .wrap{padding-left:12px;padding-right:12px}
+.brand img{height:38px}.brand small{font-size:.7rem}
+.hero{padding:32px 0 76px}.hero h1{font-size:clamp(1.55rem,7vw,2rem)}
+.article,.form,.card,.modal-box{padding:16px}
+.topbar #open-admin{padding:6px 9px;font-size:10px}
+.acc-row{flex-wrap:wrap}
+.admin-content{padding:16px 12px 28px}.admin-gate-card{padding:26px 20px}
+.admin-top h1{font-size:1.4rem}
+}
+.hc .acc-bubble{background:#000;color:#fff;border:2px solid #000}
+.hc .acc-panel{background:#fff;border:2px solid #000;box-shadow:none}
+.hc .acc-btns button{background:#fff;color:#000;border:2px solid #000}
+.hc .acc-switch{background:#000}
+.hc .skip-link{background:#fff;color:#000;border:2px solid #000}
