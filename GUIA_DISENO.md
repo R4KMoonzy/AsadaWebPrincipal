@@ -123,6 +123,18 @@ Se tomó del documento `INFORME_SELLO_2026_ASADA_BIJAGUA.docx` (enero 2026):
 
 - El enlace **Programa Educación Ambiental** del menú ya no se pone verde ni oscuro al pasar el cursor: usa el mismo hover que los demás enlaces (fondo blanco translúcido y texto blanco), así que las letras se leen igual.
 - Los tres accesos del hero —**Conocer servicios**, **Reportar una avería** y **Programa Educación Ambiental**— quedan en **una sola fila**. Se ajustó el separador y el tamaño de los botones para que quepan juntos, y se quitó el margen extra que bajaba al tercero. En pantallas menores a 640 px vuelven a envolverse para no salirse de la pantalla.
+- La etiqueta superior del inicio dice ahora **«Calidad, Servicio y Desarrollo»** en lugar de «Bijagua, Upala · Sello de Calidad Sanitaria 2026». Se edita en *Información y textos → Inicio - etiqueta* (`Inicio - etiqueta`).
+
+### Fotos que aparecen detrás del texto del inicio
+
+- Se suben en **Panel → ASADA (Sitio) → General y páginas → Fondos e imágenes** (`sitio_fondo`).
+- Hay **tres espacios** para el carrusel: *Mapeo de acueductos (foto principal)* (foto 1), *Foto del inicio 2* y *Foto del inicio 3*. Cada espacio admite una imagen; si sube otra en el mismo espacio, reemplaza a la anterior.
+- Las fotos se ven con transparencia sobre los colores del sitio para que el texto siga siendo legible. Si algún espacio está vacío, el carrusel reutiliza la foto principal.
+- Actualmente solo hay una foto cargada (la principal), así que los tres slides muestran esa misma imagen hasta que se suban la 2 y la 3.
+- Las fotos se reducen automáticamente antes de subirse (máximo 1800 px y JPEG al 82 %) para evitar el error «No se pudo guardar…» con fotografías grandes de teléfono. Los PDF no se modifican.
+- Si todavía falla, el aviso del panel indica el paso exacto: **Appwrite** (subida del archivo) o **Firestore** (guardado del registro), en lugar de un mensaje genérico.
+- Si Firestore responde `429 RESOURCE_EXHAUSTED`, se agotó la **cuota del plan** (lecturas/escrituras). No es un problema de permisos ni de la foto: se reinicia diariamente o requiere mejorar el plan de Firebase. Mientras tanto, el sitio puede seguir mostrando la última información cargada, pero no se podrán guardar cambios nuevos.
+- Para reducir el consumo, conviene cerrar otras pestañas o la consola de Firebase que mantengan escuchas activas (`Listen/channel`) sobre el mismo proyecto.
 
 ## Contacto: números y WhatsApp
 

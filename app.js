@@ -47,7 +47,7 @@ const FIELD_EXAMPLES = {
   "Dirección/ubicación": "Bijagua, Upala, Alajuela",
   "Horario de oficina": "Lunes a viernes, 8:00 a.m. – 4:00 p.m.",
   // Inicio: portada
-  "Inicio - etiqueta": "Bijagua, Upala · Agua para nuestra comunidad",
+  "Inicio - etiqueta": "Calidad, Servicio y Desarrollo",
   "Inicio - título": "El agua que cuida<br>nuestro pueblo",
   "Inicio - subtítulo": "Gestionamos y protegemos el agua potable de Bijagua con transparencia y compromiso comunal.",
   "Inicio - nota (etiqueta)": "Nuestra prioridad",
@@ -146,6 +146,12 @@ const FIELD_EXAMPLES = {
   "prog_logo.logoId": "Logo del programa Creciendo por la vida",
   "documento.archivoId": "Reglamento de tarifas 2026.pdf"
 };
+// La etiqueta del hero se fija de inmediato para que no se vea un texto anterior
+// mientras se cargan los valores guardados desde Firestore.
+{
+  const pill = document.getElementById("lf-hero-pill");
+  if (pill) pill.textContent = DEFAULT_PAGE_TEXT["Inicio - etiqueta"];
+}
 const exampleFor = (key, label = "", type = "text", k = "") => {
   const exact = (k && FIELD_EXAMPLES[k + "." + key]) || FIELD_EXAMPLES[key];
   let ex = exact;
@@ -165,9 +171,10 @@ const exampleFor = (key, label = "", type = "text", k = "") => {
   return String(ex).replace(/^ej:\s*/i, "");
 };
 const DEFAULT_SERVICIOS = [
-  { titulo: "Abastecimiento", descripcion: "Captación, conducción y distribución de agua potable en Bijagua y comunidades integradas.", orden: 1, visible: "Sí" },
-  { titulo: "Mantenimiento", descripcion: "Limpieza y desinfección de fuentes y tanques, reparación de fugas e instalación de hidrantes.", orden: 2, visible: "Sí" },
-  { titulo: "Atención al abonado", descripcion: "Reportes de averías, consultas, lectura de medidores y trámites de nuevas conexiones.", orden: 3, visible: "Sí" }
+  { titulo:"Abastecimiento", descripcion:"Captamos el agua en nuestras fuentes y la distribuimos en Bijagua y comunidades integradas. La red instalada suma 101,6 km.", chips:"Captación y conducción\nRed de distribución\n101,6 km instalados", icono:"drop", orden:1, visible:"Sí" },
+  { titulo:"Mantenimiento", descripcion:"Limpiamos y desinfectamos las fuentes y los 10 tanques de almacenamiento, con 755 m³ de capacidad total. Reparamos fugas, mejoramos la red y damos mantenimiento a los 23 hidrantes instalados.", chips:"Limpieza y desinfección\nReparación de fugas\n23 hidrantes\n10 tanques · 755 m³", icono:"tool", orden:2, visible:"Sí" },
+  { titulo:"Atención al abonado", descripcion:"Recibimos reportes de averías y consultas. También tomamos lecturas de medidores y gestionamos los trámites del servicio.", chips:"Reportes de averías\nLectura de medidores\nTrámites", icono:"bolt", orden:3, visible:"Sí" },
+  { titulo:"Control de calidad", descripcion:"Probamos el cloro libre en la red todos los días y realizamos análisis trimestrales con el AyA y el Laboratorio Nacional de Aguas.", chips:"Cloro diario\nAnálisis trimestrales\nSello de Calidad Sanitaria", icono:"shield", orden:4, visible:"Sí" }
 ];
 const DEFAULT_TARIFAS = [
   { servicio: "Acueducto", categoria: "Residencial", bloque: "Cargo fijo mensual", cuota: "₡ 2 800", vigente: "₡ 2 800", variacion: "0,00%", orden: 1, visible: "Sí" },
@@ -264,13 +271,36 @@ const listDocs = async (c, o = "creadoEn", dir = "desc", n = 100) => {
   return s.docs.map(d => ({ id: d.id, ...d.data() }));
 };
 const getOne = async (c, id) => { const s = await getDoc(doc(db, c, id)); return s.exists() ? { id: s.id, ...s.data() } : null; };
-const createDoc = (c, data) => addDoc(collection(db, c), { ...data, creadoEn: serverTimestamp() });
-const updateOne = (c, id, data) => updateDoc(doc(db, c, id), { ...data, actualizadoEn: serverTimestamp() });
+const createDoc = async (c, data) => { try { return await addDoc(collection(db, c), { ...data, creadoEn: serverTimestamp() }); } catch (e) { e.paso = "firestore"; throw e; } };
+const updateOne = async (c, id, data) => { try { return await updateDoc(doc(db, c, id), { ...data, actualizadoEn: serverTimestamp() }); } catch (e) { e.paso = "firestore"; throw e; } };
 const removeDoc = async (c, item) => {
   await deleteDoc(doc(db, c, item.id));
   for (const [k, v] of Object.entries(item)) if (/Id$/.test(k) && typeof v === "string" && k !== "id") { try { await storage.deleteFile(APPWRITE_CONFIG.bucketId, v); } catch (e) { } }
 };
-const uploadFile = async file => (await storage.createFile(APPWRITE_CONFIG.bucketId, ID.unique(), file)).$id;
+// Las fotos de teléfono suelen ser demasiado grandes para el bucket: se reducen antes de subir.
+const prepareImage = async file => {
+  if (!file || !file.type || !file.type.startsWith("image/") || file.type === "image/svg+xml") return file;
+  try {
+    const bitmap = await createImageBitmap(file);
+    const max = 1800;
+    const scale = Math.min(1, max / Math.max(bitmap.width, bitmap.height));
+    const w = Math.max(1, Math.round(bitmap.width * scale));
+    const h = Math.max(1, Math.round(bitmap.height * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = w; canvas.height = h;
+    canvas.getContext("2d").drawImage(bitmap, 0, 0, w, h);
+    bitmap.close?.();
+    const blob = await new Promise(res => canvas.toBlob(res, "image/jpeg", 0.82));
+    if (!blob) return file;
+    const name = String(file.name || "imagen").replace(/\.[^.]+$/, "") + ".jpg";
+    return new File([blob], name, { type: "image/jpeg" });
+  } catch (e) { return file; /* si el navegador no la decodifica, se intenta subir tal cual */ }
+};
+const uploadFile = async file => {
+  const listo = await prepareImage(file);
+  try { return (await storage.createFile(APPWRITE_CONFIG.bucketId, ID.unique(), listo)).$id; }
+  catch (e) { e.paso = "archivo"; throw e; }
+};
 
 /* ---------- CMS helpers ---------- */
 const slugify = s => String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "seccion";
@@ -1740,7 +1770,7 @@ const pages = {
         if (editing) { await updateOne(c.c, editing, data); msg.textContent = "Cambios guardados correctamente."; }
         else { await createDoc(c.c, data); msg.textContent = "Publicado correctamente."; }
         form.reset(); resetEdit(); msg.className = "notice"; refresh();
-      } catch (er) { console.error(er); msg.className = "notice err"; msg.textContent = "No se pudo guardar. Revise la configuracion y los permisos de Firestore y Appwrite."; }
+      } catch (er) { console.error(er); msg.className = "notice err"; const raw = String(er?.message || er?.response || "revise la conexión y los permisos"); const detalle = /quota|resource_exhausted|429/i.test(raw) ? "Se agotó la cuota de Firestore. Espere a que se renueve (se reinicia cada día) o mejore el plan de Firebase." : raw; msg.textContent = (er?.paso === "archivo" ? "No se pudo subir el archivo a Appwrite: " : er?.paso === "firestore" ? "No se pudo guardar el registro en Firestore: " : "No se pudo guardar: ") + detalle; }
       msg.hidden = false; btn.disabled = false; btn.textContent = editing ? "Guardar cambios" : "Publicar"; };
     $("#logout").onclick = () => { sessionStorage.removeItem("asada_admin"); location.href = "/"; };
     const k0 = location.hash.slice(1);
