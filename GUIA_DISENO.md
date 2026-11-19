@@ -57,9 +57,36 @@ Con el PIN, menú **ASADA (Sitio)**:
 
 Se tomó del documento `INFORME_SELLO_2026_ASADA_BIJAGUA.docx` (enero 2026):
 
-- **Textos del sitio:** portada (etiqueta, título, subtítulo y los tres datos: 101,6 km de red, 4 fuentes, 21 hidrantes), nota, accesos, *Sobre nosotros*, *Historia*, *Tecnología*, *Servicios*, *Beneficiarios*, *Cobertura*, ubicación del mapa, nota de tarifas y contenido de *Calidad del agua*.
-- **Fichas nuevas:** 5 miembros de junta, 8 colaboradores, 3 tarjetas de tecnología, 6 zonas de cobertura, 5 cifras del inicio, 3 beneficiarios, 4 proyectos, 1 noticia del Sello y 4 noticias de educación ambiental.
+- **Textos del sitio:** portada (etiqueta, título, subtítulo y los tres datos: 101,6 km de red, 4 fuentes, 23 hidrantes), nota, accesos, *Sobre nosotros*, *Historia*, *Tecnología*, *Servicios*, *Beneficiarios*, *Cobertura*, ubicación del mapa, nota de tarifas y contenido de *Calidad del agua*.
+- **Fichas nuevas:** 5 miembros de junta, 8 colaboradores, 3 tarjetas de tecnología, 5 cifras del inicio, 8 beneficiarios, 4 proyectos, 1 noticia del Sello y 4 noticias de educación ambiental. Las zonas de cobertura y los beneficiarios se actualizaron con los datos de noviembre de 2026 que se detallan abajo.
 - Se conservaron el correo, la dirección y el subtítulo del encabezado que ya estaban guardados. El teléfono se completó con el número del informe (2466-86-71). No se inventaron horarios, montos de tarifas ni documentos PDF que el informe no indica.
+
+## Sectores y abastecimiento (datos confirmados por la ASADA, 19/11/2026)
+
+- La sección **Cobertura** muestra ahora 8 fichas: **20 sectores**, **2.379 abonados**, **Naciente Bijagua (1.514 abonados)**, **Naciente El Roble (579)**, **Naciente Altamira (174)** y las tres líneas de tubería que se conservaron: **Sistema Bijagua 41,5 km**, **Sistema El Roble 46,3 km** y **Sistema Altamira 13,8 km** (101,6 km en total).
+- Se eliminaron las fichas antiguas que no correspondían a infraestructura: *San Miguel 100*, *Altamira 200* y *Buena Vista y Cuatro Cruces 900*. Las cifras del inicio se mantuvieron, salvo la actualización de infraestructura que se indica abajo.
+- El texto de **Cobertura** y el bloque «Brindamos Servicio en:» del mapa también indican el total de 20 sectores.
+- Los tres conteos de nacientes suman 2.267 abonados, mientras que el total informado es 2.379. La diferencia (112) no se inventó ni se atribuyó a ninguna fuente: si la ASADA confirma otro origen, se puede agregar como una ficha nueva desde el panel.
+
+## Redacción de servicios
+
+- Se reemplazó la lista con comas pegadas («Abastecimiento de agua potable, mantenimiento de red e hidrantes, control de calidad y atención al abonado») por frases completas. El texto del inicio dice ahora: *«Captamos y distribuimos agua potable en Bijagua y comunidades integradas. Mantenemos la red, los tanques y los hidrantes; controlamos la calidad del agua y atendemos los reportes y trámites de los abonados.»*
+- La descripción de la página **Nuestros servicios** quedó como: *«Nuestro trabajo va desde la fuente hasta el grifo. Protegemos las nacientes y cuidamos 101,6 km de red; limpiamos y desinfectamos tanques, reparamos fugas y mantenemos los hidrantes. También hacemos control diario de cloro y atención a los abonados.»*
+- Las fichas pasaron de 3 a **4**: Abastecimiento, Mantenimiento, Atención al abonado y **Control de calidad** (prueba diaria de cloro y análisis trimestrales con el AyA y el Laboratorio Nacional de Aguas). En «Atención al abonado» se cambió «trámites de nuevas conexiones» por «trámites del servicio».
+- Cada ficha tiene destacados e icono, y se edita en **Panel → Servicios (Nuestros servicios)**. Los textos de encabezado se editan en *Página: Servicios* e *Información y textos*.
+
+## Infraestructura: hidrantes y tanques (datos confirmados, 19/11/2026)
+
+- Se pasó de **21 a 23 hidrantes**. El dato aparece en la portada (*Inicio - dato 3*), en la cifra «hidrantes instalados» y en la ficha **Mantenimiento**.
+- Se agregó la cifra **10 tanques de almacenamiento · 755 m³ en total** en *Cifras del inicio*. La ficha **Mantenimiento** también quedó con ese dato y con los 23 hidrantes.
+- Estos valores se pueden corregir desde **Panel → Cifras del inicio**, **Panel → Servicios (Nuestros servicios)** e **Información y textos → dato 3 de la portada**.
+
+## Beneficiarios del servicio (datos confirmados, 19/11/2026)
+
+- Se eliminaron las fichas antiguas por agrupación de proyecto: *900 habitantes en Buena Vista y Cuatro Cruces*, *100 nuevos abonados de San Miguel* y *200 servicios incorporados de Altamira*.
+- En su lugar hay **8 fichas**: **2.379 abonados** (total del servicio), **20 sectores**, **Zonas turísticas**, **Domicilios**, **Escuelas**, **Colegios**, **Comercios** e **Instituciones** (oficinas públicas y centros de salud).
+- El texto de la sección dice ahora: *«El servicio atiende a 2.379 abonados en 20 sectores de Bijagua y comunidades integradas. Entre los beneficiarios hay zonas turísticas, domicilios, escuelas, colegios, comercios e instituciones.»*
+- Se edita en **Panel → Beneficiarios** y en *Información y textos → Beneficiarios - texto*.
 
 ## Textos que faltaban en páginas interiores
 
@@ -67,7 +94,7 @@ Se tomó del documento `INFORME_SELLO_2026_ASADA_BIJAGUA.docx` (enero 2026):
 - **Quienes somos** ya no tiene texto de plantilla: la historia (1965 → 2025), la misión, la visión y los textos de *Junta Directiva* y *Colaboradores* se editan desde el panel.
 - Se agregaron tres espacios nuevos en **Información y textos del sitio**: *Página: Quienes somos*, *Páginas: otros encabezados* y *Página: Contacto*. El panel pasó de 72 a **90 campos**, todos con ejemplo.
 - Cualquier elemento con `data-cfg="Nombre del campo"` toma automáticamente el valor guardado, así que no hace falta tocar el HTML para cambiarlo.
-- Se cargaron 3 servicios editables y 4 preguntas frecuentes con respuestas tomadas del informe.
+- Se cargaron 4 servicios editables y 4 preguntas frecuentes con respuestas tomadas del informe.
 - Se subieron dos resoluciones de ARESEP a **Transparencia**, con descripción propia: **RE-0012-IA-2025** (Informe; fija la TPRH de Bijagua para 2025-2029 y financia la protección de nacientes y zonas de recarga) y **RE-034-IA-2024** (Reglamento; publicación en La Gaceta del 17/12/2024 que actualiza las tarifas de las ASADAS con Sello Regulatorio de Calidad desde el 01/02/2025). Ambos PDF quedaron en el bucket de Appwrite y se descargan desde el panel.
 - Donde el informe no da el dato, se dejó una referencia honesta: el horario indica que se consulte por teléfono al 2466-86-71. La misión y la visión de la ASADA se redactaron a partir de los objetivos del informe y se pueden reemplazar desde el panel.
 - El lugar de «Consultar en oficina» lo tomaron las **tarifas 2026** que se indican abajo.
@@ -91,6 +118,11 @@ Se tomó del documento `INFORME_SELLO_2026_ASADA_BIJAGUA.docx` (enero 2026):
 - El menú «Institución» lleva tilde. «Nueva conexión» pasó a llamarse **Trámites** en menús, página, panel y textos guardados.
 - Se usa **abonado/abonados** en lugar de «asociado/asociados» cuando se habla de las personas atendidas (se conservó «Asociación» en el nombre legal y «ecosistemas asociados» en el programa).
 - En Transparencia se quitó la categoría **Acta**: solo quedan *Reglamento*, *Formulario* e *Informe*.
+
+## Menú y botones del inicio
+
+- El enlace **Programa Educación Ambiental** del menú ya no se pone verde ni oscuro al pasar el cursor: usa el mismo hover que los demás enlaces (fondo blanco translúcido y texto blanco), así que las letras se leen igual.
+- Los tres accesos del hero —**Conocer servicios**, **Reportar una avería** y **Programa Educación Ambiental**— quedan en **una sola fila**. Se ajustó el separador y el tamaño de los botones para que quepan juntos, y se quitó el margen extra que bajaba al tercero. En pantallas menores a 640 px vuelven a envolverse para no salirse de la pantalla.
 
 ## Contacto: números y WhatsApp
 

@@ -24,7 +24,7 @@ const SITE = { nombre: "ASADA Bijagua", subtitulo: "Asociación Administradora d
 let SITE_CFG = {};
 const DEFAULT_PAGE_TEXT = {
   "Servicios - título": "Nuestros servicios",
-  "Servicios - descripción": "Lo que la ASADA ofrece a sus abonados.",
+  "Servicios - descripción": "Nuestro trabajo va desde la fuente hasta el grifo. Protegemos las nacientes y cuidamos 101,6 km de red; limpiamos y desinfectamos tanques, reparamos fugas y mantenemos los hidrantes. También hacemos control diario de cloro y atención a los abonados.",
   "Tarifas - título": "Tarifas",
   "Tarifas - descripción": "Cuotas vigentes del servicio.",
   "Tarifas - nota": "Tarifas aprobadas por la Intendencia de Agua de ARESEP, vigentes del 1 de enero al 31 de diciembre de 2026. El cargo fijo de ₡ 2 800 mensuales aplica a todas las categorías del Servicio de Acueducto. La Tarifa de Protección del Recurso Hídrico se cobra por metro cúbico consumido. «Tarifa anterior» es la que estaba vigente antes del 1 de enero de 2026.",
@@ -52,9 +52,9 @@ const FIELD_EXAMPLES = {
   "Inicio - subtítulo": "Gestionamos y protegemos el agua potable de Bijagua con transparencia y compromiso comunal.",
   "Inicio - nota (etiqueta)": "Nuestra prioridad",
   "Inicio - nota (texto)": "Cuidar cada gota es cuidar la salud de todas las familias.",
-  "Inicio - dato 1": "1.200", "Inicio - dato 1 detalle": "familias atendidas",
-  "Inicio - dato 2": "98%", "Inicio - dato 2 detalle": "de cobertura en la red",
-  "Inicio - dato 3": "24/7", "Inicio - dato 3 detalle": "atención de emergencias",
+  "Inicio - dato 1": "101,6 km", "Inicio - dato 1 detalle": "de red instalada en los sistemas",
+  "Inicio - dato 2": "4", "Inicio - dato 2 detalle": "fuentes de abastecimiento protegidas",
+  "Inicio - dato 3": "23", "Inicio - dato 3 detalle": "hidrantes instalados en la comunidad",
   // Inicio: botones y accesos
   "Inicio - botón 1 texto": "Conocer nuestros servicios", "Inicio - botón 1 enlace": "/servicios",
   "Inicio - botón 2 texto": "Realizar un trámite", "Inicio - botón 2 enlace": "/afiliacion",
@@ -67,10 +67,10 @@ const FIELD_EXAMPLES = {
   "Sobre nosotros - título": "Sobre nosotros", "Sobre nosotros - texto": "Somos una asociación comunal sin fines de lucro encargada de administrar el acueducto de Bijagua.",
   "Historia - título": "Nuestra historia", "Historia - texto": "Desde 1998 trabajamos por llevar agua potable a cada hogar de la comunidad.",
   "Tecnología - título": "Tecnología al servicio del agua", "Tecnología - texto": "Monitoreo de la red, mantenimiento preventivo y lectura digital de medidores.",
-  "Servicios - título inicio": "Nuestros servicios", "Servicios - descripción inicio": "Atención al abonado, trámites, lectura y mantenimiento.",
+  "Servicios - título inicio": "Nuestros servicios", "Servicios - descripción inicio": "Captamos y distribuimos agua potable en Bijagua y comunidades integradas. Mantenemos la red, los tanques y los hidrantes; controlamos la calidad del agua y atendemos los reportes y trámites de los abonados.",
   "Avisos - título inicio": "Avisos para la comunidad", "Avisos - descripción inicio": "Cortes programados, mantenimientos y noticias importantes.",
   "Noticias - título inicio": "Últimas actividades",
-  "Beneficiarios - título": "Beneficiarios del servicio", "Beneficiarios - texto": "Atendemos familias, comercios, escuelas y instituciones de la zona.",
+  "Beneficiarios - título": "Beneficiarios del servicio", "Beneficiarios - texto": "El servicio atiende a 2.379 abonados en 20 sectores. Entre los beneficiarios hay zonas turísticas, domicilios, escuelas, colegios, comercios e instituciones.",
   // Mapa y cobertura
   "Cobertura - título": "Zonas de cobertura", "Cobertura - texto": "Nuestra red llega a Bijagua y comunidades vecinas del cantón de Upala.",
   "Mapa - etiqueta lateral": "Estamos aquí", "Mapa - título lateral": "Nuestra ubicación", "Mapa - texto lateral": "Visítenos en la oficina de la ASADA, en el centro de Bijagua.",
@@ -78,7 +78,7 @@ const FIELD_EXAMPLES = {
   "Mapa - etiqueta cobertura": "Brindamos Servicio en:", "Mapa - valor cobertura": "Bijagua y comunidades vecinas",
   "Mapa - coordenadas": "10.7167, -85.0667", "Mapa (URL para insertar)": "https://www.google.com/maps?q=Bijagua,Upala&output=embed",
   // Páginas interiores
-  "Servicios - título": "Nuestros servicios", "Servicios - descripción": "Los servicios que ofrecemos a nuestros abonados.",
+  "Servicios - título": "Nuestros servicios", "Servicios - descripción": "Nuestro trabajo va desde la fuente hasta el grifo. Protegemos las nacientes y cuidamos la red; limpiamos tanques, reparamos fugas y controlamos la calidad del agua.",
   "Tarifas - título": "Tarifas", "Tarifas - descripción": "Cuotas aprobadas por ARESEP, vigentes del 1 de enero al 31 de diciembre de 2026.",
   "Tarifas - nota": "Tarifas aprobadas por la Intendencia de Agua de ARESEP, vigentes del 1 de enero al 31 de diciembre de 2026. El cargo fijo de ₡ 2 800 mensuales aplica a todas las categorías del Servicio de Acueducto. La Tarifa de Protección del Recurso Hídrico se cobra por metro cúbico consumido. «Tarifa anterior» es la que estaba vigente antes del 1 de enero de 2026.",
   "Calidad del agua - título": "Calidad del agua", "Calidad del agua - descripción": "Control y vigilancia del agua de consumo.",
@@ -132,6 +132,13 @@ const FIELD_EXAMPLES = {
   "sitio_tarifa.cuota": "₡ 277",
   "sitio_tarifa.vigente": "₡ 264",
   "sitio_tarifa.variacion": "+₡ 13 / +4,80%",
+  "lf_zona.nombre": "Naciente El Roble (o: Total de sectores)",
+  "lf_zona.km": "1.514 (o: 41.5 km de tubería)",
+  "lf_zona.descripcion": "abonados abastecidos por la naciente El Roble",
+  "lf_cifra.numero": "23 (o: 10)",
+  "lf_cifra.etiqueta": "hidrantes instalados en la comunidad (o: tanques de almacenamiento · 755 m³ en total)",
+  "lf_beneficio.numero": "2.379 abonados (o: Zonas turísticas)",
+  "lf_beneficio.etiqueta": "total del servicio en la red (o: hoteles, alojamientos y restaurantes de la zona)",
   "sitio_fondo.clave": "Fondo Inicio (hero)",
   "prog_fondo.clave": "Fondo Inicio del programa (hero)",
   "prog_texto.clave": "Misión (también: Historia, Valores, Objetivo principal…)",
@@ -354,10 +361,10 @@ const DEFAULT_LF = {
     { anio:"Hoy", titulo:"Presente y futuro", descripcion:"Seguimos creciendo con el compromiso de brindar un servicio sostenible a Bijagua, Upala." }
   ],
   servicios: [
-    { titulo:"Abastecimiento de agua potable", descripcion:"Captación, conducción y distribución de agua para consumo humano en los sectores atendidos por la ASADA.", chips:["Captación y conducción","Red de distribución","Atención a los abonados"], icono:"drop" },
-    { titulo:"Mantenimiento de la red", descripcion:"Reparación de fugas, mejoras en la infraestructura y revisiones periódicas para mantener la continuidad del servicio.", chips:["Reparación de fugas","Mejoras de infraestructura","Continuidad del servicio"], icono:"tool" },
-    { titulo:"Atención de emergencias", descripcion:"Respuesta rápida ante averías y situaciones de emergencia, con personal comprometido con la comunidad.", chips:["Reporte de averías","Respuesta oportuna","Comunicación de avisos"], icono:"bolt" },
-    { titulo:"Protección del recurso hídrico", descripcion:"Trabajamos junto a la comunidad en reforestación, monitoreo y educación ambiental para cuidar nuestras fuentes de agua.", chips:["Reforestación","Monitoreo","Educación ambiental"], icono:"leaf" }
+    { titulo:"Abastecimiento", descripcion:"Captamos el agua en nuestras fuentes y la distribuimos en Bijagua y comunidades integradas. La red instalada suma 101,6 km.", chips:["Captación y conducción","Red de distribución","101,6 km instalados"], icono:"drop" },
+    { titulo:"Mantenimiento", descripcion:"Limpiamos y desinfectamos las fuentes y los 10 tanques de almacenamiento, con 755 m³ de capacidad total. Reparamos fugas, mejoramos la red y damos mantenimiento a los 23 hidrantes instalados.", chips:["Limpieza y desinfección","Reparación de fugas","23 hidrantes","10 tanques · 755 m³"], icono:"tool" },
+    { titulo:"Atención al abonado", descripcion:"Recibimos reportes de averías y consultas. También tomamos lecturas de medidores y gestionamos los trámites del servicio.", chips:["Reportes de averías","Lectura de medidores","Trámites"], icono:"bolt" },
+    { titulo:"Control de calidad", descripcion:"Probamos el cloro libre en la red todos los días y realizamos análisis trimestrales con el AyA y el Laboratorio Nacional de Aguas.", chips:["Cloro diario","Análisis trimestrales","Sello de Calidad Sanitaria"], icono:"shield" }
   ],
   tecnologias: [
     { titulo:"Control de calidad", descripcion:"Seguimiento periódico para que el agua que llega a su hogar cumpla con los estándares de consumo.", icono:"shield" },
@@ -377,10 +384,14 @@ const DEFAULT_LF = {
     { prefijo:"", numero:"1", etiqueta:"fuente: nuestro bosque" }
   ],
   benef: [
-    { numero:"Familias", etiqueta:"de Bijagua atendidas por el acueducto", icono:"users" },
-    { numero:"Escuelas", etiqueta:"y centros de la comunidad", icono:"school" },
-    { numero:"24 horas", etiqueta:"de compromiso con el servicio", icono:"clock" },
-    { numero:"Agua", etiqueta:"potable para el desarrollo del distrito", icono:"drop" }
+    { numero:"2.379 abonados", etiqueta:"total del servicio en la red", icono:"users" },
+    { numero:"20 sectores", etiqueta:"atendidos en Bijagua y comunidades integradas", icono:"map" },
+    { numero:"Zonas turísticas", etiqueta:"hoteles, alojamientos y restaurantes de la zona", icono:"map" },
+    { numero:"Domicilios", etiqueta:"hogares de Bijagua y comunidades atendidas", icono:"users" },
+    { numero:"Escuelas", etiqueta:"centros educativos de la comunidad", icono:"school" },
+    { numero:"Colegios", etiqueta:"educación secundaria y técnica", icono:"school" },
+    { numero:"Comercios", etiqueta:"negocios y servicios locales", icono:"chart" },
+    { numero:"Instituciones", etiqueta:"oficinas públicas y centros de salud", icono:"shield" }
   ]
 };
 const LF_IMPORT = {
@@ -1164,7 +1175,7 @@ const pages = {
     };
 
     if (file === "servicios") {
-      setHead("Servicios - título", "Servicios - descripción", "Nuestros servicios", "Lo que la ASADA ofrece a sus abonados.");
+      setHead("Servicios - título", "Servicios - descripción", "Nuestros servicios", "Nuestro trabajo va desde la fuente hasta el grifo. Protegemos las nacientes y cuidamos 101,6 km de red; limpiamos y desinfectamos tanques, reparamos fugas y mantenemos los hidrantes. También hacemos control diario de cloro y atención a los abonados.");
       const box = $("#servicios-list");
       if (box) try {
         const items = (await listDocs("servicios", "orden", "asc", 100)).filter(x => x.visible !== "No" && x.visible !== false);
@@ -1372,7 +1383,7 @@ const pages = {
       lf_tecnologia: { t: "Tecnología y procesos", c: "sitio_tecnologia", o: ["orden", "asc"], editable: 1, f: [["titulo", "Título", "text"], ["descripcion", "Descripción", "area"], ["icono", "Icono", "select", ["shield", "chart", "bolt", "drop", "tool", "leaf"]], ["orden", "Orden (número)", "number"], ["visible", "Visible", "select", ["Sí", "No"]]] },
       lf_zona: { t: "Zonas de cobertura", c: "sitio_cobertura", o: ["orden", "asc"], editable: 1, f: [["nombre", "Nombre de la zona", "text"], ["km", "Cifra o distancia (ej: 12, 8.5)", "text"], ["descripcion", "Descripción corta", "text"], ["imagenId", "Imagen", "file", "image/*", 1], ["orden", "Orden (número)", "number"], ["visible", "Visible", "select", ["Sí", "No"]]] },
       lf_cifra: { t: "Cifras del inicio", c: "sitio_cifras", o: ["orden", "asc"], editable: 1, f: [["prefijo", "Prefijo (ej: Más de)", "text", "", 1], ["numero", "Número o texto destacado", "text"], ["etiqueta", "Etiqueta", "text"], ["orden", "Orden (número)", "number"], ["visible", "Visible", "select", ["Sí", "No"]]] },
-      lf_beneficio: { t: "Beneficiarios", c: "sitio_beneficiarios", o: ["orden", "asc"], editable: 1, f: [["numero", "Cifra o título destacado", "text"], ["etiqueta", "Descripción", "text"], ["icono", "Icono", "select", ["users", "school", "clock", "drop", "team", "shield"]], ["orden", "Orden (número)", "number"], ["visible", "Visible", "select", ["Sí", "No"]]] },
+      lf_beneficio: { t: "Beneficiarios", c: "sitio_beneficiarios", o: ["orden", "asc"], editable: 1, f: [["numero", "Cifra o título destacado", "text"], ["etiqueta", "Descripción", "text"], ["icono", "Icono", "select", ["users", "school", "clock", "drop", "team", "shield", "map", "chart"]], ["orden", "Orden (número)", "number"], ["visible", "Visible", "select", ["Sí", "No"]]] },
       noticia: { t: "Noticias del sitio", c: "noticias", o: ["creadoEn", "desc"], editable: 1, f: [["titulo", "Titulo", "text"], ["resumen", "Resumen breve", "text"], ["descripcion", "Contenido completo", "area"], ["imagenId", "Imagen principal", "file", "image/*"]] },
       corte: { t: "Cortes de agua", c: "cortes", o: ["fecha", "desc"], editable: 1, fix: { tipo: "Corte de agua" }, f: [["sector", "Sector afectado", "text"], ["fecha", "Fecha", "date"], ["horario", "Horario", "text"], ["motivo", "Motivo", "area"], ["estado", "Estado", "select", estados]] },
       mantenimiento: { t: "Mantenimientos", c: "cortes", o: ["fecha", "desc"], editable: 1, fix: { tipo: "Mantenimiento" }, f: [["sector", "Sector o infraestructura", "text"], ["fecha", "Fecha", "date"], ["horario", "Horario", "text"], ["motivo", "Descripcion de los trabajos", "area"], ["estado", "Estado", "select", estados]] },
