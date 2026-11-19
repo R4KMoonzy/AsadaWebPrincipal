@@ -81,6 +81,12 @@ Se tomó del documento `INFORME_SELLO_2026_ASADA_BIJAGUA.docx` (enero 2026):
 - Se agregó la cifra **10 tanques de almacenamiento · 755 m³ en total** en *Cifras del inicio*. La ficha **Mantenimiento** también quedó con ese dato y con los 23 hidrantes.
 - Estos valores se pueden corregir desde **Panel → Cifras del inicio**, **Panel → Servicios (Nuestros servicios)** e **Información y textos → dato 3 de la portada**.
 
+## Cifras nuevas de *Sobre nosotros* (19/11/2026)
+
+- La sección quedó con **8 tarjetas** (dos filas de cuatro): 101,6 km de red, 4 fuentes, 23 hidrantes, 1.700 árboles sembrados en 2025, 100% de micromedición, 10 tanques · 755 m³, **2.379 abonados atendidos en la red** y **Vigente — una de las únicas ASADAs a nivel nacional con programa ambiental consolidado**.
+- La redacción nacional es la indicada por el usuario; el informe del Sello respalda el programa vigente (cámaras trampa, monitoreo de ríos, reforestación «Sembrando Futuro») y la alianza con Bandera Azul Ecológica.
+- Se editan en **Panel → Cifras del inicio** (`sitio_cifras`, órdenes 7 y 8). Los mismos ocho valores quedaron como respaldo en `app.js` para que la sección nunca quede vacía si Firestore no responde.
+
 ## Beneficiarios del servicio (datos confirmados, 19/11/2026)
 
 - Se eliminaron las fichas antiguas por agrupación de proyecto: *900 habitantes en Buena Vista y Cuatro Cruces*, *100 nuevos abonados de San Miguel* y *200 servicios incorporados de Altamira*.
@@ -112,7 +118,7 @@ Se tomó del documento `INFORME_SELLO_2026_ASADA_BIJAGUA.docx` (enero 2026):
 - Las flechas del carrusel de noticias desplazan el contenido de inmediato en todos los navegadores.
 - El bloque «Creciendo por la vida» usa contraste alto (títulos azul marino, fechas gris oscuro) y la hoja amarilla decorativa queda completamente dentro del contenedor.
 - Todas las noticias se muestran en un solo carrusel: se eliminaron las dos tarjetas estrechas apiladas que aparecían a la derecha.
-- El recuadro «Nuestra prioridad» está en flujo normal, alineado a la derecha y debajo de los tres datos del hero, así que no tapa «Bijagua» ni corta «Bosque y agua».
+- El recuadro «Nuestra prioridad» está en flujo normal, alineado a la derecha y debajo de los tres datos del hero, así que no tapa «101.6 km» ni corta «23 hidrantes instalados».
 - El subtítulo del hero lleva un fondo blanco translúcido y texto azul oscuro para leerse sobre la fotografía.
 - El botón «Preguntas frecuentes» del cierre es blanco con borde blanco sobre el azul marino, también en estado normal.
 - El menú «Institución» lleva tilde. «Nueva conexión» pasó a llamarse **Trámites** en menús, página, panel y textos guardados.
@@ -124,6 +130,14 @@ Se tomó del documento `INFORME_SELLO_2026_ASADA_BIJAGUA.docx` (enero 2026):
 - El enlace **Programa Educación Ambiental** del menú ya no se pone verde ni oscuro al pasar el cursor: usa el mismo hover que los demás enlaces (fondo blanco translúcido y texto blanco), así que las letras se leen igual.
 - Los tres accesos del hero —**Conocer servicios**, **Reportar una avería** y **Programa Educación Ambiental**— quedan en **una sola fila**. Se ajustó el separador y el tamaño de los botones para que quepan juntos, y se quitó el margen extra que bajaba al tercero. En pantallas menores a 640 px vuelven a envolverse para no salirse de la pantalla.
 - La etiqueta superior del inicio dice ahora **«Calidad, Servicio y Desarrollo»** en lugar de «Bijagua, Upala · Sello de Calidad Sanitaria 2026». Se edita en *Información y textos → Inicio - etiqueta* (`Inicio - etiqueta`).
+
+### Sin textos incorrectos durante la carga
+
+- El HTML estático de la portada ya contiene los **mismos valores guardados en Firestore** (títulos, subtítulos, los tres datos del hero, mapa, avisos, beneficiarios y pie de página). Por eso no aparecen durante milisegundos textos viejos como «Gestión comunal / Sin fines de lucro», «Bosque y agua / Una sola fuente» ni los teléfonos `0000-0000`.
+- Los tres datos del hero son ahora **101.6 km**, **4** y **23**, con sus detalles actualizados. La tarjeta «Avisos de servicio» dejó de mostrar una descripción de tarifas: se corrigió el valor guardado en `Acceso 1 - descripción`.
+- El pie de página de **las 16 páginas** muestra ya la dirección, los teléfonos `+506 2466 8671` y el correo `asadabijagua@gmail.com`, en lugar de los marcadores de ejemplo.
+- El bloque «Últimas actividades» del inicio dice «Cargando actividades…» mientras llegan los datos, en vez de «Pronto compartiremos aquí las novedades…», que era engañoso.
+- Si en el futuro se cambia un texto desde el panel, conviene actualizar también el respaldo estático correspondiente para mantener este comportamiento.
 
 ### Fotos que aparecen detrás del texto del inicio
 

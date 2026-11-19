@@ -43,7 +43,7 @@ const FIELD_EXAMPLES = {
   "Subtítulo del encabezado": "Asociación Administradora del Acueducto, Upala",
   "Teléfono": "+506 2478 1234",
   "Teléfono emergencias": "+506 8812 3456 (atención de fugas 24 horas)",
-  "Correo": "info@asadabijagua.cr",
+  "Correo": "nombre@ejemplo.cr",
   "Dirección/ubicación": "Bijagua, Upala, Alajuela",
   "Horario de oficina": "Lunes a viernes, 8:00 a.m. – 4:00 p.m.",
   // Inicio: portada
@@ -135,8 +135,8 @@ const FIELD_EXAMPLES = {
   "lf_zona.nombre": "Naciente El Roble (o: Total de sectores)",
   "lf_zona.km": "1.514 (o: 41.5 km de tubería)",
   "lf_zona.descripcion": "abonados abastecidos por la naciente El Roble",
-  "lf_cifra.numero": "23 (o: 10)",
-  "lf_cifra.etiqueta": "hidrantes instalados en la comunidad (o: tanques de almacenamiento · 755 m³ en total)",
+  "lf_cifra.numero": "23 (también: 2.379 o Vigente)",
+  "lf_cifra.etiqueta": "hidrantes instalados (o: abonados atendidos en la red / una de las únicas ASADAs a nivel nacional con programa ambiental consolidado)",
   "lf_beneficio.numero": "2.379 abonados (o: Zonas turísticas)",
   "lf_beneficio.etiqueta": "total del servicio en la red (o: hoteles, alojamientos y restaurantes de la zona)",
   "sitio_fondo.clave": "Fondo Inicio (hero)",
@@ -408,10 +408,14 @@ const DEFAULT_LF = {
     { nombre:"Comunidades vecinas", km:"—", descripcion:"Áreas atendidas por la red" }
   ],
   cifras: [
-    { prefijo:"", numero:"100%", etiqueta:"compromiso comunitario" },
-    { prefijo:"", numero:"24/7", etiqueta:"atención de emergencias" },
-    { prefijo:"", numero:"2017", etiqueta:"educación ambiental" },
-    { prefijo:"", numero:"1", etiqueta:"fuente: nuestro bosque" }
+    { prefijo:"", numero:"101.6 km", etiqueta:"de red instalada" },
+    { prefijo:"", numero:"4", etiqueta:"fuentes de abastecimiento" },
+    { prefijo:"", numero:"23", etiqueta:"hidrantes instalados" },
+    { prefijo:"", numero:"1.700", etiqueta:"árboles sembrados en 2025" },
+    { prefijo:"", numero:"100%", etiqueta:"de micromedición" },
+    { prefijo:"", numero:"10", etiqueta:"tanques de almacenamiento · 755 m³ en total" },
+    { prefijo:"", numero:"2.379", etiqueta:"abonados atendidos en la red" },
+    { prefijo:"", numero:"Vigente", etiqueta:"una de las únicas ASADAs a nivel nacional con programa ambiental consolidado" }
   ],
   benef: [
     { numero:"2.379 abonados", etiqueta:"total del servicio en la red", icono:"users" },
