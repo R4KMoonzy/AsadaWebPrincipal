@@ -1,0 +1,88 @@
+/* ==========================================================================
+   BOTONES CON ICONO PROPIO — ASADA Bijagua
+   Cada botón toma el color de su icono. Se carga después de styles.css y
+   antes de dark.css, para que el modo oscuro pueda ajustar los tonos.
+   ========================================================================== */
+
+.btn,
+.top-admin {
+  --btn-color:#0d7fb5;
+  --btn-hover:#0a6693;
+}
+.btn[data-icon],
+.top-admin[data-icon]{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.btn-ico{
+  width:16px;
+  height:16px;
+  flex:none;
+  stroke-width:1.9;
+}
+.btn.sm[data-icon] .btn-ico,
+.top-admin[data-icon] .btn-ico{width:14px;height:14px}
+
+/* Los iconos sustituyen a la flecha anterior */
+.btn[data-icon] > i[aria-hidden="true"]{display:none!important}
+
+/* Botones rellenos */
+.btn[data-icon]:not(.ghost),
+.top-admin[data-icon]{
+  background:var(--btn-color)!important;
+  color:#fff!important;
+  border:1px solid var(--btn-color)!important;
+  box-shadow:0 4px 12px rgba(8,35,60,.18)!important;
+}
+.btn[data-icon]:not(.ghost):hover,
+.top-admin[data-icon]:hover{
+  background:var(--btn-hover)!important;
+  color:#fff!important;
+  border-color:var(--btn-hover)!important;
+  transform:translateY(-1px);
+}
+
+/* Botones delineados: el borde, el texto y el icono usan el mismo tono */
+.btn.ghost[data-icon]{
+  background:transparent!important;
+  color:var(--btn-color)!important;
+  border:1.5px solid var(--btn-color)!important;
+  box-shadow:none!important;
+}
+.btn.ghost[data-icon] .btn-ico{color:var(--btn-color)}
+.btn.ghost[data-icon]:hover{
+  background:var(--btn-color)!important;
+  color:#fff!important;
+}
+.btn.ghost[data-icon]:hover .btn-ico{color:#fff}
+
+/* Tonos por destino */
+.btn[data-tone="blue"],.top-admin[data-tone="blue"]{--btn-color:#0d7fb5;--btn-hover:#0a6693}
+.btn[data-tone="green"],.top-admin[data-tone="green"]{--btn-color:#16834a;--btn-hover:#0f6b3c}
+.btn[data-tone="amber"],.top-admin[data-tone="amber"]{--btn-color:#a86312;--btn-hover:#8a500d}
+.btn[data-tone="teal"],.top-admin[data-tone="teal"]{--btn-color:#0e8f8a;--btn-hover:#0b7470}
+.btn[data-tone="gold"],.top-admin[data-tone="gold"]{--btn-color:#9a711f;--btn-hover:#7c5916}
+.btn[data-tone="navy"],.top-admin[data-tone="navy"]{--btn-color:#123a60;--btn-hover:#0b2a4a}
+.btn[data-tone="purple"],.top-admin[data-tone="purple"]{--btn-color:#55418a;--btn-hover:#43336f}
+.btn[data-tone="red"],.top-admin[data-tone="red"]{--btn-color:#a83232;--btn-hover:#8b2828}
+.btn[data-tone="gray"],.top-admin[data-tone="gray"]{--btn-color:#4c6478;--btn-hover:#3b5061}
+
+/* Los tres botones del hero siguen en una sola fila */
+.hero-actions .btn[data-icon]{
+  gap:6px;
+  padding:11px 11px;
+  font-size:.78rem;
+}
+.hero-actions .btn[data-icon] .btn-ico{width:15px;height:15px}
+@media(max-width:640px){
+  .hero-actions .btn[data-icon]{white-space:normal}
+  .hero-actions .btn[data-icon] .btn-ico{width:14px;height:14px}
+}
+
+/* Accesos y CTA con colores propios */
+.lf-cta .btn[data-icon]:not(.ghost),
+.pp-btn[data-icon]:not(.ghost){box-shadow:0 8px 18px rgba(4,26,45,.22)!important}
+.lf-cta .btn.ghost[data-icon]{color:#fff!important;border-color:rgba(255,255,255,.85)!important}
+.lf-cta .btn.ghost[data-icon]:hover{color:#fff!important;background:rgba(255,255,255,.14)!important}

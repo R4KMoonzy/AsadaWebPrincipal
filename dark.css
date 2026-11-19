@@ -1,0 +1,552 @@
+/* ==========================================================================
+   MODO OSCURO — ASADA Bijagua
+   Azul marino en lugar de blanco y todo el texto en blanco.
+   Se carga después de styles.css / programa.css / buttons.css.
+   ========================================================================== */
+
+html.dark {
+  color-scheme: dark;
+  --navy:#fff;
+  --navy-deep:#fff;
+  /* Fondos que antes usaban --navy: ahora son azul marino, no blanco */
+  --navy-bg:#071d33;
+  --navy-bg-deep:#06182a;
+  /* Estas variables también se usan como FONDO en el diseño original:
+     van en tonos medios oscuros, nunca en blanco (el texto se fuerza a #fff). */
+  --blue:#1b6fa8;
+  --sky:#2387bd;
+  --teal:#1b8f89;
+  --green:#2a9d5c;
+  --green-bg:#123a2c;
+  --amber:#f4c430;
+  --amber-bg:#3a2b0e;
+  --red:#f0a6a1;
+  --red-bg:#5a2426;
+  --gold:#f4c430;
+  --gold-soft:#fff;
+  --ink:#fff;
+  --mute:#fff;
+  --line:#2c5b83;
+  --tint:#0e3050;
+  --bg:#0a2540;
+  --card-bg:#103257;
+  --paper:#0a2540;
+  --surface-deep:#071d33;
+  --surface-raised:#123a60;
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --radius:10px;
+  /* Programa de Educación Ambiental: tonos medios, nunca blanco como fondo */
+  --pine:#1b6b45;
+  --leaf:#2a9d5c;
+  --sprout:#3bb56d;
+  --mist:#0e2b46;
+  --sun:#f4c430;
+}
+
+/* Todo el texto en blanco, sin excepciones visuales */
+html.dark body,
+html.dark body * {
+  color:#fff!important;
+}
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color:#c7dcec!important;
+}
+
+/* Algunas reglas del diseño claro usan !important con mayor especificidad;
+   se compensan aquí para que ningún texto quede oscuro sobre fondo oscuro. */
+html.dark .hero p.lead,
+html.dark #lf-hero-sub {
+  color:#fff!important;
+  background:rgba(16,50,87,.92)!important;
+  border-left-color:var(--gold)!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.25)!important;
+}
+html.dark .promo-prog .pp,
+html.dark .pp {
+  color:#fff!important;
+  background:var(--card-bg)!important;
+}
+html.dark .promo-prog .pp p,
+html.dark .pp p,
+html.dark .pp-t p {
+  color:#fff!important;
+}
+html.dark #home-prog a,
+html.dark #home-prog p,
+html.dark .pp-n a,
+html.dark .pp-n p {
+  color:#fff!important;
+  background:var(--surface-raised)!important;
+  border-color:var(--line)!important;
+}
+html.dark #home-prog a:hover,
+html.dark .pp-n a:hover {
+  background:var(--surface-deep)!important;
+}
+html.dark #home-prog time,
+html.dark .pp-n time,
+html.dark .pp-n a time,
+html.dark .pp-n p time {
+  color:#fff!important;
+}
+
+/* ---------- Fondos: blanco -> azul marino ---------- */
+html.dark body,
+html.dark .admin-body,
+html.dark .lf-about,
+html.dark .lf-services,
+html.dark .lf-coverage,
+html.dark .lf-news,
+html.dark .section.warm,
+html.dark .promo-prog,
+html.dark #p-custom-home .custom-sec:nth-of-type(odd) {
+  background-color:var(--bg)!important;
+  background-image:none!important;
+}
+html.dark .card,
+html.dark .tile,
+html.dark .row,
+html.dark .article,
+html.dark .form,
+html.dark .acc-item,
+html.dark .team,
+html.dark .empty,
+html.dark .b-item,
+html.dark .admin-item,
+html.dark .admin-card,
+html.dark .admin-gate-card,
+html.dark .admin-domain,
+html.dark .admin-side-link,
+html.dark .admin-tab-panel,
+html.dark .cms-logo,
+html.dark .cms-editor,
+html.dark .lf-about-card,
+html.dark .lf-tl-card,
+html.dark .lf-svc-row,
+html.dark .lf-tech-card,
+html.dark .lf-zone,
+html.dark .lf-aviso-card,
+html.dark .aya-news-card,
+html.dark .lf-stat,
+html.dark .lf-news-feature,
+html.dark .tarifa-cat,
+html.dark .site-space,
+html.dark .acc-panel,
+html.dark .modal-box,
+html.dark .skip-link,
+html.dark .header-search-panel,
+html.dark .dd-menu,
+html.dark .pp,
+html.dark .pp-n a,
+html.dark .pp-n p,
+html.dark #home-prog a,
+html.dark #home-prog p,
+html.dark .promo-prog .pp,
+html.dark .promo-prog .pp .pp-n a,
+html.dark .promo-prog .pp .pp-n p,
+html.dark .table,
+html.dark .tarifas-table,
+html.dark .lf-map-wrap,
+html.dark .lf-map-badge,
+html.dark .aya-carousel-arrow,
+html.dark .lf-carousel-btn,
+html.dark .aya-news-arrow,
+html.dark .lf-lightbox button,
+html.dark .site-search-results a {
+  background-color:var(--card-bg)!important;
+  background-image:none!important;
+  border-color:var(--line)!important;
+  box-shadow:var(--shadow);
+}
+html.dark .tarifa-cat>summary {
+  background:var(--surface-raised)!important;
+}
+html.dark .table th {
+  background:var(--surface-raised)!important;
+}
+html.dark .table td,
+html.dark .tarifas-table td {
+  border-color:var(--line)!important;
+}
+html.dark .tag,
+html.dark .notice,
+html.dark .admin-tip,
+html.dark #admin-link.notice,
+html.dark #admin-gate .notice,
+html.dark .admin-badge {
+  background:var(--tint)!important;
+  border-color:var(--line)!important;
+}
+html.dark .notice.err {
+  background:var(--red-bg)!important;
+  border-color:var(--red)!important;
+}
+html.dark .admin-gate-icon {
+  background:var(--tint)!important;
+}
+html.dark input,
+html.dark select,
+html.dark textarea,
+html.dark #al-q {
+  background:var(--surface-deep)!important;
+  border-color:var(--line)!important;
+}
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  background:var(--surface-deep)!important;
+  border-color:#fff!important;
+  box-shadow:0 0 0 3px rgba(255,255,255,.16)!important;
+}
+html.dark .lf-tl-dot {
+  background:var(--card-bg)!important;
+  box-shadow:0 0 0 5px var(--bg)!important;
+}
+html.dark .lf-benef-card,
+html.dark .lf-map-loc {
+  background:rgba(255,255,255,.05)!important;
+  border-color:rgba(255,255,255,.16)!important;
+}
+html.dark .lf-benef-ico {
+  background:rgba(255,255,255,.09)!important;
+}
+html.dark .section.warm .sec-head h2 {
+  background:transparent!important;
+}
+
+/* Panel administrativo */
+html.dark .admin-sidebar,
+html.dark .admin-side-head,
+html.dark .admin-side-foot {
+  background:var(--surface-deep)!important;
+  border-color:var(--line)!important;
+}
+html.dark .admin-nav-item:hover,
+html.dark .dom-asada .admin-nav-item.on,
+html.dark .dom-prog .admin-nav-item.on,
+html.dark .admin-ico,
+html.dark .admin-domain.dom-asada .admin-domain-title,
+html.dark .admin-domain.dom-prog .admin-domain-title,
+html.dark .admin-side-link:hover {
+  background:var(--surface-raised)!important;
+  border-color:var(--line)!important;
+}
+html.dark .admin-group+.admin-group {
+  border-color:var(--line)!important;
+}
+html.dark .site-space.on {
+  background:var(--surface-raised)!important;
+  border-color:#fff!important;
+}
+
+/* ---------- Bloques azul marino del diseño ---------- */
+html.dark .topbar,
+html.dark .header,
+html.dark .header-main,
+html.dark .footer,
+html.dark .aya-footer,
+html.dark .section.dark,
+html.dark .lf-benef,
+html.dark .lf-cta,
+html.dark .aya-services,
+html.dark .lf-aviso-side,
+html.dark .lf-hero-note,
+html.dark .nav>a.on,
+html.dark .admin-shell.dom-prog .btn.dark {
+  background-color:var(--surface-deep)!important;
+  background-image:none!important;
+  border-color:var(--line)!important;
+}
+html.dark .lf-news-panel,
+html.dark .lf-map-side {
+  background:linear-gradient(135deg,#071d33,#123a60)!important;
+}
+html.dark .hero {
+  --hero-overlay:linear-gradient(135deg,rgba(4,18,32,.92),rgba(8,40,68,.84) 60%,rgba(12,61,98,.78));
+  background-color:var(--surface-deep)!important;
+}
+html.dark .page-head {
+  --head-overlay:linear-gradient(135deg,rgba(4,18,32,.92),rgba(8,40,68,.84));
+  background-color:var(--surface-deep)!important;
+}
+html.dark .hero p.lead,
+html.dark #lf-hero-sub {
+  background:rgba(16,50,87,.92)!important;
+  border-left-color:var(--gold)!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.25)!important;
+}
+html.dark .hero .lf-hero-facts>div {
+  background:rgba(16,50,87,.92)!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+html.dark .lf-hero-note {
+  border-left-color:var(--gold)!important;
+}
+html.dark .lf-benef-ico,
+html.dark .lf-list-footer-label {
+  color:var(--gold)!important;
+}
+html.dark #lf-map-side-label {
+  color:#fff!important;
+}
+html.dark .lf-social-links a {
+  background:rgba(255,255,255,.09)!important;
+}
+html.dark .lf-social-links a:hover {
+  background:var(--gold)!important;
+}
+html.dark .lf-float-contact {
+  background:#0e8f8a!important;
+}
+html.dark .lf-wa-bubble {
+  background:#1ebe5d!important;
+}
+
+/* ---------- Botones: el color lo marca su icono ---------- */
+html.dark .btn[data-tone="blue"],
+html.dark .top-admin[data-tone="blue"]{--btn-color:#0f6ea6;--btn-hover:#0b5a8b}
+html.dark .btn[data-tone="green"],
+html.dark .top-admin[data-tone="green"]{--btn-color:#177d48;--btn-hover:#0f663a}
+html.dark .btn[data-tone="amber"],
+html.dark .top-admin[data-tone="amber"]{--btn-color:#96600f;--btn-hover:#7a4d0b}
+html.dark .btn[data-tone="teal"],
+html.dark .top-admin[data-tone="teal"]{--btn-color:#0d7d78;--btn-hover:#0a6662}
+html.dark .btn[data-tone="gold"],
+html.dark .top-admin[data-tone="gold"]{--btn-color:#8a641f;--btn-hover:#705018}
+html.dark .btn[data-tone="navy"],
+html.dark .top-admin[data-tone="navy"]{--btn-color:#17456f;--btn-hover:#0e3356}
+html.dark .btn[data-tone="purple"],
+html.dark .top-admin[data-tone="purple"]{--btn-color:#4c3a7c;--btn-hover:#3b2d64}
+html.dark .btn[data-tone="red"],
+html.dark .top-admin[data-tone="red"]{--btn-color:#9b3030;--btn-hover:#802727}
+html.dark .btn[data-tone="gray"],
+html.dark .top-admin[data-tone="gray"]{--btn-color:#40586d;--btn-hover:#324759}
+
+html.dark .btn[data-icon]:not(.ghost),
+html.dark .top-admin[data-icon],
+html.dark .hero .btn[data-icon],
+html.dark .lf-cta .btn[data-icon]:not(.ghost),
+html.dark .pp-btn[data-icon]:not(.ghost) {
+  background:var(--btn-color)!important;
+  color:#fff!important;
+  border-color:var(--btn-color)!important;
+  box-shadow:none!important;
+}
+html.dark .btn.ghost[data-icon],
+html.dark .lf-cta .btn.ghost[data-icon] {
+  background:transparent!important;
+  color:#fff!important;
+  border-color:var(--btn-color)!important;
+  box-shadow:inset 0 0 0 1.5px var(--btn-color)!important;
+}
+html.dark .btn.ghost[data-icon]:hover,
+html.dark .lf-cta .btn.ghost[data-icon]:hover {
+  background:var(--btn-color)!important;
+  color:#fff!important;
+}
+html.dark .btn[data-icon]:hover,
+html.dark .top-admin[data-icon]:hover {
+  background:var(--btn-hover)!important;
+  color:#fff!important;
+  border-color:var(--btn-hover)!important;
+}
+
+/* ---------- Accesibilidad ---------- */
+html.dark .acc-bubble {
+  background:linear-gradient(135deg,var(--btn-color,#0f6ea6),#0d7d78)!important;
+}
+html.dark .acc-btns button {
+  background:var(--surface-raised)!important;
+  border-color:var(--line)!important;
+}
+html.dark .acc-switch {
+  background:#2c4d6b!important;
+}
+html.dark .acc-switch[aria-checked="true"] {
+  background:#0d7d78!important;
+}
+html.dark .acc-switch span {
+  background:#fff!important;
+}
+
+/* ---------- Cargador ---------- */
+html.dark .site-loader {
+  background:linear-gradient(160deg,#071d33 0%,#0b3052 55%,#124264 100%)!important;
+}
+html.dark .loader-wave.w1 { background:rgba(124,224,214,.16)!important; }
+html.dark .loader-wave.w2 { background:rgba(138,201,245,.14)!important; }
+html.dark .loader-wave.w3 { background:linear-gradient(180deg,rgba(5,24,42,.96),rgba(12,58,94,.96))!important; }
+html.dark .loader-splash { background:rgba(255,255,255,.65)!important; }
+
+/* ==========================================================================
+   PROGRAMA DE EDUCACIÓN AMBIENTAL
+   ========================================================================== */
+html.dark body[data-theme="programa"] .topbar,
+html.dark body[data-theme="programa"] .header-main,
+html.dark body[data-theme="programa"] .header,
+html.dark body[data-theme="programa"] .footer,
+html.dark body[data-theme="programa"] .aya-footer,
+html.dark body[data-theme="programa"] .sec.pine,
+html.dark body[data-theme="programa"] .box.dk,
+html.dark body[data-theme="programa"] .page-head {
+  background-color:var(--surface-deep)!important;
+  background-image:none!important;
+  border-color:var(--line)!important;
+}
+html.dark body[data-theme="programa"] .hero {
+  --prog-hero-overlay:linear-gradient(180deg,rgba(4,18,32,.92),rgba(8,40,68,.86));
+  background-color:var(--bg)!important;
+}
+html.dark body[data-theme="programa"] .stat,
+html.dark body[data-theme="programa"] .card,
+html.dark body[data-theme="programa"] .empty,
+html.dark body[data-theme="programa"] .box:not(.dk),
+html.dark body[data-theme="programa"] .chips li,
+html.dark body[data-theme="programa"] .proj article,
+html.dark body[data-theme="programa"] .vals li,
+html.dark body[data-theme="programa"] .cms-logo,
+html.dark body[data-theme="programa"] dialog,
+html.dark body[data-theme="programa"] .modal-box,
+html.dark body[data-theme="programa"] .acc-panel,
+html.dark body[data-theme="programa"] .header-search-panel,
+html.dark body[data-theme="programa"] .dd-menu {
+  background-color:var(--surface-raised)!important;
+  background-image:none!important;
+  border-color:var(--line)!important;
+  box-shadow:var(--shadow);
+}
+html.dark body[data-theme="programa"] .sec.mist,
+html.dark body[data-theme="programa"] .custom-sec:nth-of-type(even) {
+  background:var(--bg)!important;
+}
+html.dark body[data-theme="programa"] .pill {
+  background:#17603a!important;
+}
+html.dark body[data-theme="programa"] .pill:before {
+  background:var(--gold)!important;
+}
+html.dark body[data-theme="programa"] .ally i,
+html.dark body[data-theme="programa"] .ally i:has(img),
+html.dark body[data-theme="programa"] .brand img {
+  background:var(--surface-raised)!important;
+}
+html.dark body[data-theme="programa"] .burger {
+  border-color:#fff!important;
+}
+html.dark body[data-theme="programa"] .sub a:hover,
+html.dark body[data-theme="programa"] .sub a.on {
+  background:var(--surface-deep)!important;
+}
+html.dark body[data-theme="programa"] .link {
+  border-color:var(--gold)!important;
+}
+html.dark body[data-theme="programa"] .acc-bubble {
+  background:linear-gradient(135deg,#177d48,#0d7d78)!important;
+}
+html.dark body[data-theme="programa"] .acc-btns button {
+  background:var(--surface-raised)!important;
+  border-color:var(--line)!important;
+}
+html.dark body[data-theme="programa"] .acc-switch[aria-checked="true"] {
+  background:#177d48!important;
+}
+
+/* ==========================================================================
+   BARRIDO FINAL — ninguna superficie clara en modo oscuro
+   Cubre el velo del hero, secciones, tablas, fechas, iconos, carruseles y
+   menú móvil que tenían colores claros en el diseño original.
+   ========================================================================== */
+
+/* Velo del hero: azul marino en lugar de blanco translúcido */
+html.dark .aya-hero-shade{
+  background-color:transparent!important;
+  background-image:linear-gradient(90deg,rgba(7,29,51,.96) 0%,rgba(7,29,51,.86) 34%,rgba(7,29,51,.45) 66%,rgba(7,29,51,.15) 100%)!important;
+}
+html.dark .hero{
+  --hero-overlay:linear-gradient(135deg,rgba(7,29,51,.92),rgba(10,48,80,.78) 60%,rgba(12,66,104,.62));
+  background-image:var(--hero-overlay),var(--site-hero-bg,none),radial-gradient(900px 300px at 85% -10%,rgba(13,125,120,.26),transparent 70%)!important;
+}
+
+/* Gotas decorativas del cargador: azul en vez de blanco */
+html.dark .water-drops span{
+  background-image:none!important;
+  background-color:rgba(138,201,245,.26)!important;
+}
+html.dark .water-drops span:after{background:rgba(255,255,255,.16)!important}
+
+/* Tablas (incluye las filas alternas y el hover) */
+html.dark .table tr:nth-child(even) td,
+html.dark .tarifas-table td{background-color:var(--card-bg)!important}
+html.dark .table tr:hover td{background-color:var(--surface-raised)!important}
+html.dark .table tbody tr td,
+html.dark .tarifas-table tbody tr td{background-color:var(--card-bg)!important}
+
+/* Secciones completas que seguían claras */
+html.dark .section.lf-timeline,
+html.dark .section.lf-tech,
+html.dark .section.lf-avisos,
+html.dark #lf-news-side{
+  background-color:var(--bg)!important;
+  background-image:none!important;
+}
+html.dark .lf-tech-img,
+html.dark .lf-map-inner{background-color:var(--surface-raised)!important}
+
+/* Carruseles: fotos sobre azul marino */
+html.dark .aya-slide,
+html.dark .aya-slide[data-s="1"],
+html.dark .aya-slide[data-s="2"]{background-color:#071d33!important}
+html.dark .aya-slide{background-image:var(--site-hero-bg,none),linear-gradient(120deg,#071d33,#0d3a5c 55%,#0b4a2e)!important}
+html.dark .aya-slide[data-s="1"]{background-image:var(--site-hero-bg2,var(--site-hero-bg,none)),linear-gradient(120deg,#071d33,#0d3a5c 55%,#0b4a2e)!important}
+html.dark .aya-slide[data-s="2"]{background-image:var(--site-hero-bg3,var(--site-hero-bg,none)),linear-gradient(120deg,#071d33,#0d3a5c 55%,#0b4a2e)!important}
+
+/* Iconos de servicios y puntos de navegación */
+html.dark .aya-tile-ico,
+html.dark .tile:nth-child(2) .aya-tile-ico,
+html.dark .tile:nth-child(3) .aya-tile-ico,
+html.dark .tile:nth-child(4) .aya-tile-ico{background-color:var(--surface-raised)!important}
+html.dark .lf-dot,
+html.dark .aya-dot{background-color:var(--surface-raised)!important;border-color:var(--line)!important}
+html.dark .lf-dot.active,
+html.dark .aya-dot.active{background-color:var(--gold)!important;border-color:var(--gold)!important}
+
+/* Menú móvil y botón del panel */
+html.dark .nav#nav,
+html.dark .admin-menu-toggle{background-color:var(--surface-deep)!important}
+
+/* Decoraciones del bloque ambiental y salpicadura del cargador */
+html.dark .pp-l{background-color:#1c5a45!important}
+html.dark .pp-l2{background-color:var(--gold)!important}
+html.dark .loader-splash{background:rgba(255,255,255,.32)!important}
+
+/* Líneas decorativas: usar tonos visibles en vez de blanco puro */
+/* Bloque detrás de «Sobre nosotros»: antes era un degradado blanco */
+html.dark .lf-about:before{
+  background:linear-gradient(180deg,rgba(7,29,51,.92),rgba(10,48,80,.78))!important;
+}
+/* Espacio de foto de tarjetas (junta y colaboradores, p. ej. Melvin Rojas):
+   cuando no hay imagen, antes quedaba un degradado azul muy claro. */
+html.dark .card-img{
+  background-image:linear-gradient(135deg,#0e3050,#123a60)!important;
+}
+html.dark .team .card-img{border-radius:6px}
+
+/* Cuadros de los iconos de «Nuestros servicios» */
+html.dark .lf-iconbox,
+html.dark .lf-iconbox.green,
+html.dark .lf-iconbox.amber,
+html.dark .lf-iconbox.red{
+  background-color:var(--surface-raised)!important;
+  color:#fff!important;
+}
+/* Etiqueta de la sección de beneficiarios: dorada, no blanca */
+html.dark .lf-benef .sec-head::before,
+html.dark .lf-benef .sec-head[data-label]::before{
+  background:var(--gold)!important;
+  border-color:var(--gold)!important;
+  color:var(--gold)!important;
+}
+html.dark .lf-tl-line{background:linear-gradient(90deg,var(--gold),#4aa8d8 50%,#4e9f6e)!important}
+html.dark body[data-theme="programa"] .grow{background:linear-gradient(90deg,#86d99d,#d7f0b5,#f2c66d)!important}
+

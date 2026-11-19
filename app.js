@@ -327,6 +327,75 @@ const fixLinks = (root = document) => {
   if (!IS_LOCAL || !root.querySelectorAll) return;
   root.querySelectorAll('a[href^="/"]').forEach(a => { const v = a.getAttribute("href"), n = toHref(v); if (n !== v) a.setAttribute("href", n); });
 };
+
+/* ---------- ICONOS DE BOTONES SEGÚN SU DESTINO ---------- */
+const btnIco = paths => `<svg class="btn-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+const BTN_ICONS = {
+  leaf: btnIco('<path d="M5 19c0-8 5-13 14-14 0 9-5 14-14 14Z"/><path d="M5 19c2-5 5-8 10-10"/>'),
+  drop: btnIco('<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/>'),
+  wrench: btnIco('<path d="M14.5 6.5a4 4 0 0 0-5 5L4 17l3 3 5.5-5.5a4 4 0 0 0 5-5l-3 3-3-3 3-3Z"/>'),
+  help: btnIco('<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.4 2.3c-.7.3-.9.8-.9 1.7"/><circle cx="12" cy="17" r=".7" fill="currentColor" stroke="none"/>'),
+  doc: btnIco('<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M9 12h7M9 16h7"/>'),
+  news: btnIco('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h6M16 9h2M16 13h2"/>'),
+  users: btnIco('<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M16 5.5a3 3 0 0 1 0 5.8M18 20c0-2.2-.8-3.6-2-4.5"/>'),
+  mail: btnIco('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>'),
+  home: btnIco('<path d="M4 11 12 4l8 7"/><path d="M6 10v10h12V10"/>'),
+  download: btnIco('<path d="M12 4v11m0 0 4-4m-4 4-4-4"/><path d="M5 19h14"/>'),
+  check: btnIco('<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'),
+  x: btnIco('<path d="m6 6 12 12M18 6 6 18"/>'),
+  pencil: btnIco('<path d="m4 20 4-1 11-11-3-3L5 16l-1 4Z"/><path d="m14 6 3 3"/>'),
+  trash: btnIco('<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>'),
+  plus: btnIco('<path d="M12 5v14M5 12h14"/>'),
+  search: btnIco('<circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/>'),
+  lock: btnIco('<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>'),
+  arrow: btnIco('<path d="M5 12h14m0 0-5-5m5 5-5 5"/>'),
+  back: btnIco('<path d="M19 12H5m0 0 5-5m-5 5 5 5"/>'),
+  up: btnIco('<path d="M12 19V5m0 0-5 5m5-5 5 5"/>'),
+  down: btnIco('<path d="M12 5v14m0 0 5-5m-5 5-5-5"/>'),
+  map: btnIco('<path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/>'),
+  card: btnIco('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/>')
+};
+const BTN_RULES = [
+  { i: "leaf", t: "green", r: /programa|ambient|creciendo/i },
+  { i: "wrench", t: "amber", r: /reportar|aver[ií]a|fuga|reporte/i },
+  { i: "help", t: "teal", r: /faq|pregunta|frecuente/i },
+  { i: "doc", t: "gold", r: /document|formulario|descargar|transparencia/i },
+  { i: "news", t: "blue", r: /noticia|ver m[aá]s|leer m[aá]s/i },
+  { i: "users", t: "purple", r: /junta|directiva|equipo|nosotros/i },
+  { i: "mail", t: "teal", r: /contacto|escrib|whatsapp/i },
+  { i: "drop", t: "blue", r: /servicio|abastecimiento/i },
+  { i: "map", t: "teal", r: /cobertura|mapa|zona/i },
+  { i: "card", t: "gold", r: /tarifa|cuota/i },
+  { i: "check", t: "green", r: /guardar|publicar|verificar|ingresar c[oó]digo/i },
+  { i: "trash", t: "red", r: /eliminar|quitar|borrar/i },
+  { i: "x", t: "gray", r: /cancelar|descartar/i },
+  { i: "pencil", t: "blue", r: /editar/i },
+  { i: "plus", t: "green", r: /agregar|a[nñ]adir|crear/i },
+  { i: "search", t: "teal", r: /buscar/i },
+  { i: "lock", t: "navy", r: /admin|acceso administrativo/i },
+  { i: "home", t: "navy", r: /volver|inicio|atr[aá]s/i },
+  { i: "up", t: "gray", r: /↑|subir|arriba/i },
+  { i: "down", t: "gray", r: /↓|bajar|abajo/i }
+];
+const decorateButtons = (root = document) => {
+  if (!root || !root.querySelectorAll) return;
+  const nodes = [];
+  if (root.matches?.(".btn,.top-admin")) nodes.push(root);
+  nodes.push(...root.querySelectorAll(".btn,.top-admin"));
+  nodes.forEach(btn => {
+    if (btn.dataset.iconReady === "1") return;
+    const texto = (btn.textContent || "").trim();
+    const href = btn.getAttribute("href") || "";
+    const id = btn.id || "";
+    const fuente = `${texto} ${href} ${id}`;
+    const regla = BTN_RULES.find(x => x.r.test(fuente)) || { i: "arrow", t: "blue" };
+    btn.dataset.iconReady = "1";
+    btn.dataset.icon = regla.i;
+    btn.dataset.tone = regla.t;
+    if (!btn.querySelector(".btn-ico")) btn.insertAdjacentHTML("afterbegin", BTN_ICONS[regla.i]);
+    btn.querySelectorAll(':scope > i[aria-hidden="true"]').forEach(i => i.remove());
+  });
+};
 const renderBlocks = (blocks, fallback = null) => {
   if (Array.isArray(blocks) && blocks.length) {
     const logos = [], out = [];
@@ -830,8 +899,8 @@ const mountLayout = () => {
           </div>
         </div>
         <div class="acc-row">
-          <span>Alto contraste</span>
-          <button type="button" class="acc-switch" id="acc-contraste" role="switch" aria-checked="false" aria-label="Alternar alto contraste"><span></span></button>
+          <span class="acc-row-label"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>Modo oscuro</span>
+          <button type="button" class="acc-switch" id="acc-oscuro" role="switch" aria-checked="false" aria-label="Alternar modo oscuro"><span></span></button>
         </div>
         <p class="acc-hint">Toque la burbuja para abrir o cerrar.</p>
       </div>
@@ -851,7 +920,11 @@ const mountLayout = () => {
 
   $("#burger").onclick = () => $("#nav").classList.toggle("open");
   fixLinks(document);
-  if (IS_LOCAL) new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) fixLinks(n); }))).observe(document.body, { childList: true, subtree: true });
+  new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => {
+    if (n.nodeType !== 1) return;
+    fixLinks(n);
+    decorateButtons(n);
+  }))).observe(document.body, { childList: true, subtree: true });
   markLogos();
   const hideLoader = () => { const l = $("#site-loader"); if (!l || l.classList.contains("done")) return; l.classList.add("done"); document.body.classList.add("site-ready"); setTimeout(() => l.remove(), 700); };
   // La ola se muestra mientras cargan la fuente y las imágenes, sin dejar la pantalla bloqueada demasiado tiempo.
@@ -877,13 +950,18 @@ const mountLayout = () => {
   $("#pin-in").onkeydown = e => { if (e.key === "Enter") check(); if (e.key === "Escape") modal.classList.remove("open"); };
   window.openPin = open;
   const root = document.documentElement; let fs = 1;
-  try { fs = Number(localStorage.getItem("asada_fs")) || 1; if (localStorage.getItem("asada_hc") === "1") root.classList.add("hc"); } catch (e) { }
+  try {
+    fs = Number(localStorage.getItem("asada_fs")) || 1;
+    // Se respeta el valor anterior de alto contraste para no perder la preferencia del visitante.
+    const modoOscuro = localStorage.getItem("asada_dark") ?? localStorage.getItem("asada_hc");
+    if (modoOscuro === "1") root.classList.add("dark");
+  } catch (e) { }
   root.style.setProperty("--fs", fs);
   const aplicarFs = () => {
     root.style.setProperty("--fs", fs);
     try { localStorage.setItem("asada_fs", fs); } catch (e) { }
   };
-  const accBubble = $("#acc-bubble"), accPanel = $("#acc-panel"), accSwitch = $("#acc-contraste");
+  const accBubble = $("#acc-bubble"), accPanel = $("#acc-panel"), accSwitch = $("#acc-oscuro");
   const setAccAbierto = a => { if (accPanel) accPanel.hidden = !a; accBubble?.setAttribute("aria-expanded", String(!!a)); };
   accBubble?.addEventListener("click", e => { e.stopPropagation(); setAccAbierto(accPanel?.hidden); });
   document.addEventListener("click", e => { if (!e.target.closest("#accesibilidad-flotante")) setAccAbierto(false); });
@@ -891,13 +969,14 @@ const mountLayout = () => {
   $("#acc-fs-menos")?.addEventListener("click", () => { fs = Math.max(0.9, +(fs - 0.1).toFixed(2)); aplicarFs(); });
   $("#acc-fs-mas")?.addEventListener("click", () => { fs = Math.min(1.3, +(fs + 0.1).toFixed(2)); aplicarFs(); });
   $("#acc-fs-reset")?.addEventListener("click", () => { fs = 1; aplicarFs(); });
-  const actualizarSwitch = () => accSwitch?.setAttribute("aria-checked", String(root.classList.contains("hc")));
+  const actualizarSwitch = () => accSwitch?.setAttribute("aria-checked", String(root.classList.contains("dark")));
   accSwitch?.addEventListener("click", () => {
-    const on = root.classList.toggle("hc");
-    try { localStorage.setItem("asada_hc", on ? "1" : "0"); } catch (e) { }
+    const on = root.classList.toggle("dark");
+    try { localStorage.setItem("asada_dark", on ? "1" : "0"); } catch (e) { }
     actualizarSwitch();
   });
   actualizarSwitch();
+  decorateButtons(document);
 };
 
 /* ---------- TARJETAS ---------- */

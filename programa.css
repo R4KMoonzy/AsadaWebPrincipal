@@ -1,4 +1,4 @@
-:root{--pine:#0f3d2e;--leaf:#2f8f4e;--sprout:#a9dc76;--mist:#eef6e2;--sun:#f4c430;--ink:#12261b;--mute:#4c6354;--line:#d3e3c3;--bg:#f8fbf1;--fs:1}
+:root{--pine:#0f3d2e;--navy-bg:#192952;--navy-bg-deep:#12203f;--leaf:#2f8f4e;--sprout:#a9dc76;--mist:#eef6e2;--sun:#f4c430;--ink:#12261b;--mute:#4c6354;--line:#d3e3c3;--bg:#f8fbf1;--fs:1}
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;scroll-padding-top:90px;font-size:calc(16px*var(--fs,1))}
 body{font:400 1rem/1.65 'Figtree',system-ui,sans-serif;color:var(--ink);background:var(--bg);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
 main{flex:1}img{max-width:100%;display:block}a{color:inherit;text-decoration:none}[hidden]{display:none!important}
@@ -104,6 +104,8 @@ label{display:block;font-weight:600;font-size:.85rem;margin-bottom:6px}input{wid
 .acc-title{font:700 .95rem 'Figtree';color:var(--pine);margin:0 0 12px}
 .acc-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
 .acc-row>span{font-size:13px;color:var(--ink)}
+.acc-row-label{display:inline-flex;align-items:center;gap:8px}
+.acc-row-label svg{width:16px;height:16px;color:var(--sun);flex:none}
 .acc-btns{display:flex;gap:4px}
 .acc-btns button{min-width:38px;min-height:38px;border:1px solid var(--line);border-radius:10px;background:var(--mist);color:var(--pine);font:700 13px 'Figtree';cursor:pointer}
 .acc-btns button:hover{background:var(--pine);color:#fff;border-color:var(--pine)}
@@ -152,7 +154,7 @@ dialog{max-width:calc(100% - 16px)}
    ========================================================================== */
 body{font-family:'Montserrat',system-ui,sans-serif}
 h1,h2,h3,h4,.brand{font-family:'Montserrat',system-ui,sans-serif}
-.header{background:var(--navy,#192952);border:0;box-shadow:0 2px 14px rgba(17,29,58,.22);z-index:60}
+.header{background:var(--navy-bg,#192952);border:0;box-shadow:0 2px 14px rgba(17,29,58,.22);z-index:60}
 .header-main{background:#192952;color:#fff}
 .header .wrap,.header-wrap{max-width:none;padding:0 28px;min-height:92px;display:flex;align-items:center;gap:22px}
 .brand{color:#fff;font-size:1.05rem}

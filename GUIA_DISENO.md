@@ -131,6 +131,15 @@ Se tomó del documento `INFORME_SELLO_2026_ASADA_BIJAGUA.docx` (enero 2026):
 - Los tres accesos del hero —**Conocer servicios**, **Reportar una avería** y **Programa Educación Ambiental**— quedan en **una sola fila**. Se ajustó el separador y el tamaño de los botones para que quepan juntos, y se quitó el margen extra que bajaba al tercero. En pantallas menores a 640 px vuelven a envolverse para no salirse de la pantalla.
 - La etiqueta superior del inicio dice ahora **«Calidad, Servicio y Desarrollo»** en lugar de «Bijagua, Upala · Sello de Calidad Sanitaria 2026». Se edita en *Información y textos → Inicio - etiqueta* (`Inicio - etiqueta`).
 
+### Iconos y color por botón
+
+- Todos los botones del sitio llevan un **icono lineal minimalista** (16 px, trazo de 1.9) que representa su destino. El icono se elige por el texto, el enlace o el `id` del botón, así que también aparece en los botones que se generan desde Firestore y en los del panel administrativo.
+- El **color del botón es el color de su icono**: azul para servicios y noticias, verde para el programa ambiental y acciones de guardar, ámbar para reportes de averías, turquesa para preguntas y contacto, dorado para documentos y tarifas, morado para la junta directiva, rojo para eliminar y gris para cancelar.
+- El botón **Programa Educación Ambiental** dejó de ser blanco: ahora es **verde** con el icono de una hoja, tanto en el hero como en el bloque «Creciendo por la vida» y en el menú del panel.
+- Los botones delineados (`ghost`) usan el mismo tono en el borde y en el texto; al pasar el cursor se rellenan con ese color y el texto pasa a blanco.
+- Los tres botones del hero siguen en **una sola fila** y el icono no rompe el ajuste: en pantallas menores a 640 px se envuelven como antes.
+- Las reglas viven en `buttons.css` (carga después de `styles.css` y antes de `dark.css`); la asignación de iconos está en `app.js` (`BTN_ICONS`, `BTN_RULES` y `decorateButtons`).
+
 ### Sin textos incorrectos durante la carga
 
 - El HTML estático de la portada ya contiene los **mismos valores guardados en Firestore** (títulos, subtítulos, los tres datos del hero, mapa, avisos, beneficiarios y pie de página). Por eso no aparecen durante milisegundos textos viejos como «Gestión comunal / Sin fines de lucro», «Bosque y agua / Una sola fuente» ni los teléfonos `0000-0000`.
@@ -161,7 +170,16 @@ Se tomó del documento `INFORME_SELLO_2026_ASADA_BIJAGUA.docx` (enero 2026):
 ## Animaciones y accesibilidad
 
 - Botones con onda al presionar, flechas con escalado, indicadores con pulso, tarjetas que se elevan y entradas de sección con `IntersectionObserver`.
-- Respeta `prefers-reduced-motion` y el modo de alto contraste.
+- Respeta `prefers-reduced-motion`.
+- La burbuja de accesibilidad conserva **Tamaño de texto**, pero el interruptor de «Alto contraste» fue reemplazado por **Modo oscuro**.
+- El modo oscuro cubre encabezado, menú, tarjetas, tablas de tarifas, panel administrativo, cargador, pie de página y la página del Programa de Educación Ambiental; no invierte fotografías ni logos.
+- La paleta es **azul marino** en lugar de blanco (`--bg:#0a2540`, superficies `#103257` / `#071d33`) y **todo el texto va en blanco**, incluidos títulos, párrafos, enlaces, etiquetas y botones. Se ajustaron las reglas con `!important` más específicas del subtítulo del hero y del bloque «Creciendo por la vida» para que ningún texto quedara oscuro sobre el fondo azul.
+- Cada botón conserva su color propio en modo oscuro (más oscuro para mantener el contraste) y sus letras siguen siendo blancas.
+- La preferencia se guarda en `localStorage.asada_dark` y se aplica con un script diminuto antes de cargar los estilos, así que no hay destello de la versión clara. Si no hay preferencia guardada, sigue la preferencia del sistema (`prefers-color-scheme: dark`). Las visitas que tenían guardado el antiguo alto contraste conservan el modo oscuro automáticamente.
+- Para probarlo: abra la burbuja azul inferior derecha → **Modo oscuro**. Para volver a la versión clara, repita la acción.
+- **Barrido completo de superficies:** ya no queda ningún cuadro blanco. Se cambiaron a azul marino el velo del hero (`.aya-hero-shade`), las gotas del cargador, las filas alternas y celdas de las tablas de tarifas, las secciones «Sobre nosotros / historia / tecnología / avisos», el fondo detrás del mapa y las imágenes de tecnología, los fondos de las diapositivas del carrusel, los iconos de los servicios, los puntos de navegación, el menú móvil, las líneas decorativas de la historia y del programa, y las fechas y tarjetas de noticias.
+- Las tarjetas de junta y colaboradores (p. ej. Melvin Rojas) usan ahora un degradado azul marino en el espacio de la foto cuando no hay imagen, en vez del azul claro `#cfe3f5` del diseño original.
+- Siguen como acentos de marca, por ser pequeños e intencionales: el botón dorado de búsqueda, los puntos activos del carrusel, la etiqueta «Programa de Educación Ambiental», las hojas decorativas, el botón verde de WhatsApp, las rayas del menú hamburguesa y el control deslizante de accesibilidad.
 
 ## Prueba local
 
