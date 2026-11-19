@@ -1,17 +1,191 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Inicio | ASADA Bijagua</title><meta name="description" content="ASADA Bijagua, Upala, Alajuela. Inicio">
-<link rel="icon" href="logo1.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Inicio | ASADA Bijagua</title><meta name="description" content="ASADA Bijagua, Upala, Alajuela. Agua potable, transparencia y compromiso con la comunidad.">
+<link rel="icon" href="logo.svg"><link rel="preload" as="image" href="logo.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css"></head>
-<body data-page="index"><div id="site-header"></div>
-<main><section class="hero"><div class="wrap"><h1 class="rise">Agua potable para la comunidad de Bijagua</h1>
-<p class="lead rise">Administramos el acueducto con transparencia, responsabilidad y compromiso con las familias de Bijagua, Upala.</p>
-<div class="rise"><a class="btn" href="contacto.html">Reportar una averia</a><a class="btn ghost" href="cortes.html">Ver avisos de servicio</a><a class="btn leaf" href="programa.html">Programa Educación Ambiental</a></div></div></section><section class="section "><div class="wrap"><div class="sec-head"><h2>Servicios al asociado</h2><p>Gestiones frecuentes de la ASADA.</p></div><div class="grid">
-<a class="tile c3" href="cortes.html"><h3>Avisos de servicio</h3><p>Cortes y mantenimientos.</p></a>
-<a class="tile c3" href="tarifas.html"><h3>Tarifas</h3><p>Cuotas vigentes.</p></a>
-<a class="tile c3" href="afiliacion.html"><h3>Nueva conexion</h3><p>Requisitos y proceso.</p></a>
-<a class="tile c3" href="documentos.html"><h3>Transparencia</h3><p>Reglamentos y formularios.</p></a></div></div></section><section class="section warm"><div class="wrap"><div class="sec-head"><h2>Cortes y mantenimientos activos o proximos</h2><p>Informacion actualizada por la administracion.</p></div><div id="home-cortes"></div><p style="margin-top:24px"><a class="link" href="cortes.html">Ver todos los avisos</a></p></div></section><section class="section "><div class="wrap"><div class="sec-head"><h2>Ultimas noticias</h2><p>Novedades de la ASADA Bijagua.</p></div><div class="cards" id="home-news"></div><p style="margin-top:32px"><a class="link" href="noticias.html">Ver todas las noticias</a></p></div></section><section class="section promo-prog"><div class="wrap"><div class="pp"><div class="pp-t"><span class="pp-pill">Programa de Educación Ambiental</span><h2>Creciendo por la vida</h2><p>Cultura del agua, reforestación y ciencia ciudadana con la comunidad de Bijagua. Conozca el programa, sus aliados y las actividades más recientes.</p><a class="btn pp-btn" href="programa.html">Conocer el programa</a></div><div class="pp-n"><h3>Últimas actividades</h3><div id="home-prog"><p>Pronto compartiremos aquí las novedades del programa.</p></div></div><i class="pp-l pp-l1"></i><i class="pp-l pp-l2"></i><i class="pp-l pp-l3"></i></div></div></section>
-<div id="site-custom-sections"></div>
-<section class="section dark"><div class="wrap"><div class="grid"><div class="c8"><h2>Una fuga se atiende mas rapido cuando se reporta a tiempo</h2></div><div class="c4"><a class="btn" href="contacto.html">Enviar reporte</a></div></div></div></section></main>
-<div id="site-footer"></div><script type="module" src="app.js"></script></body></html>
+<body data-page="index">
+<div id="site-loader" class="site-loader" aria-hidden="true">
+<div class="loader-content"><img class="loader-mark" src="logo.svg" alt="" width="86" height="86"><div class="loader-name">ASADA Bijagua</div><div class="loader-sub">Agua para nuestra comunidad</div></div>
+<div class="loader-ocean"><div class="loader-wave w1"></div><div class="loader-wave w2"></div><div class="loader-wave w3"></div><div class="loader-splash"></div></div>
+</div>
+<div id="site-header">
+<header class="header"><div class="header-main"><div class="wrap header-wrap">
+<a class="brand" href="/"><img src="logo.svg" alt="Logotipo ASADA Bijagua" width="52" height="52"><span>ASADA Bijagua<small>Asociación Administradora del Acueducto, Upala</small></span></a>
+<nav class="nav" id="nav" aria-label="Principal">
+<a href="/">Inicio</a><a href="/programa" class="nav-prog">Programa Educación Ambiental</a><a href="/noticias">Noticias</a><a href="/cortes">Avisos de servicio</a>
+<div class="dd"><button type="button">Institución<span class="caret">▾</span></button><div class="dd-menu"><a href="/nosotros">Quienes somos</a><a href="/#historia">Nuestra historia</a><a href="/#cobertura">Cobertura</a><a href="/proyectos">Proyectos</a><a href="/documentos">Transparencia</a></div></div>
+<div class="dd"><button type="button">Servicios<span class="caret">▾</span></button><div class="dd-menu"><a href="/servicios">Nuestros servicios</a><a href="/tarifas">Tarifas</a><a href="/calidad-agua">Calidad del agua</a><a href="/afiliacion">Trámites</a></div></div>
+<a href="/faq">Preguntas frecuentes</a><a href="/contacto">Contacto</a>
+</nav>
+<div class="header-tools"><button class="header-search-btn" type="button" id="header-search" aria-label="Buscar en el sitio" aria-expanded="false" aria-controls="header-search-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-4-4"/></svg></button></div>
+<button class="burger" type="button" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+</div></div>
+<div class="header-search-panel" id="header-search-panel" hidden><div class="wrap"><label for="site-search">Buscar información</label><input id="site-search" type="search" placeholder="Escriba un tema: tarifas, avisos, cobertura…" autocomplete="off"><div id="site-search-results" class="site-search-results"></div></div></div>
+</header>
+<div class="modal" id="pin-modal" role="dialog" aria-modal="true"><div class="modal-box"><h3>Acceso administrativo</h3><p class="meta">Ingrese el código de verificación.</p><div class="field"><label for="pin-in">Código</label><input id="pin-in" type="password" autocomplete="off"></div><p class="notice err" id="pin-err" hidden>El código no es correcto.</p><div class="modal-actions"><button class="btn dark" type="button" id="pin-ok">Verificar</button><button class="btn" type="button" id="pin-x">Cancelar</button></div></div></div>
+</div>
+<main>
+  <!-- HERO (carrusel estilo AyA, adaptado a ASADA Bijagua) -->
+  <section class="hero" id="inicio">
+    <div class="aya-carousel" id="hero-carousel">
+      <div class="aya-slide active" data-s="0"></div><div class="aya-slide" data-s="1"></div><div class="aya-slide" data-s="2"></div>
+      <div class="lf-hero-art" id="lf-hero-art" aria-hidden="true"><span class="lf-hero-frame"></span></div>
+      <div class="aya-hero-shade" aria-hidden="true"></div>
+    </div>
+    <div class="wrap">
+      <div class="lf-hero-copy">
+        <span class="lf-pill rise" id="lf-hero-pill">Sin bosques no hay agua, sin agua no hay vida</span>
+        <h1 class="rise" id="lf-hero-title">Agua para el desarrollo<br>de nuestra comunidad</h1>
+        <p class="lead rise" id="lf-hero-sub">Administramos el acueducto de Bijagua con transparencia, responsabilidad y compromiso con las familias de Upala.</p>
+        <div class="hero-actions rise">
+          <a class="btn" id="lf-hero-btn1" href="#servicios"><span id="lf-hero-btn1-txt">Conocer servicios</span><i aria-hidden="true">→</i></a>
+          <a class="btn gold" id="lf-hero-btn2" href="/contacto"><span id="lf-hero-btn2-txt">Reportar una avería</span><i aria-hidden="true">→</i></a>
+          <a class="btn leaf" id="lf-hero-btn3" href="/programa"><span id="lf-hero-btn3-txt">Programa Educación Ambiental</span><i aria-hidden="true">→</i></a>
+        </div>
+        <div class="lf-hero-facts rise">
+          <div><b id="lf-fact1-t">Bijagua</b><span id="lf-fact1-s">Upala, Alajuela</span></div>
+          <div><b id="lf-fact2-t">Gestión comunal</b><span id="lf-fact2-s">Sin fines de lucro</span></div>
+          <div><b id="lf-fact3-t">Bosque y agua</b><span id="lf-fact3-s">Una sola fuente</span></div>
+        </div>
+        <div class="lf-hero-note rise"><small id="lf-hero-note-label">Nuestra prioridad</small><b id="lf-hero-note-text">Cuidar la fuente, cuidar al pueblo</b></div>
+      </div>
+    </div>
+    <button type="button" class="aya-carousel-arrow prev" aria-label="Imagen anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg></button>
+    <button type="button" class="aya-carousel-arrow next" aria-label="Imagen siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+    <div class="aya-carousel-dots"><button type="button" class="aya-dot active" data-s="0" aria-label="Ir a la imagen 1"></button><button type="button" class="aya-dot" data-s="1" aria-label="Ir a la imagen 2"></button><button type="button" class="aya-dot" data-s="2" aria-label="Ir a la imagen 3"></button></div>
+  </section>
+
+  <!-- ACCESOS RÁPIDOS (franja azul estilo AyA) -->
+  <section class="section aya-services"><div class="wrap">
+    <div class="aya-services-head">
+      <div><span class="aya-eyebrow">Atención al abonado</span><h2>Accede fácilmente a tus servicios</h2></div>
+      <p>Desde un solo clic puedes encontrar la información y los trámites de la ASADA Bijagua.</p>
+    </div>
+    <div class="grid aya-tiles" id="tiles-grid">
+      <a class="tile c3" id="lf-tile1-a" href="/cortes"><span class="aya-tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></span><span class="aya-tile-copy"><h3 id="lf-tile1-t">Avisos de servicio</h3><p id="lf-tile1-d">Cortes y mantenimientos.</p></span><span class="aya-tile-arrow" aria-hidden="true">→</span></a>
+      <a class="tile c3" id="lf-tile2-a" href="/tarifas"><span class="aya-tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M7 4h10v16l-3-2-2 2-2-2-3 2z"/></svg></span><span class="aya-tile-copy"><h3 id="lf-tile2-t">Tarifas</h3><p id="lf-tile2-d">Cuotas vigentes.</p></span><span class="aya-tile-arrow" aria-hidden="true">→</span></a>
+      <a class="tile c3" id="lf-tile3-a" href="/afiliacion"><span class="aya-tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/><circle cx="12" cy="12" r="9"/></svg></span><span class="aya-tile-copy"><h3 id="lf-tile3-t">Trámites</h3><p id="lf-tile3-d">Solicitudes y formularios.</p></span><span class="aya-tile-arrow" aria-hidden="true">→</span></a>
+      <a class="tile c3" id="lf-tile4-a" href="/documentos"><span class="aya-tile-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span><span class="aya-tile-copy"><h3 id="lf-tile4-t">Transparencia</h3><p id="lf-tile4-d">Reglamentos y formularios.</p></span><span class="aya-tile-arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div></section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section class="section lf-about" id="sobre-nosotros"><div class="wrap">
+    <div class="sec-head lf-reveal" data-label="Sobre nosotros">
+      <h2 id="lf-about-title">Comprometidos con el futuro del agua</h2>
+      <p class="lf-intro" id="lf-about-text">La ASADA Bijagua es una organización comunitaria sin fines de lucro dedicada a la administración y mantenimiento del sistema de acueducto del distrito.</p>
+    </div>
+    <div class="lf-about-grid lf-stagger" id="lf-equipo"></div>
+    <div class="lf-stat-grid lf-stagger" id="lf-stats"></div>
+  </div></section>
+
+  <!-- LÍNEA DE TIEMPO -->
+  <section class="section lf-timeline" id="historia"><div class="wrap">
+    <div class="sec-head lf-reveal" data-label="Nuestra historia">
+      <h2 id="lf-historia-title">Evolución del acueducto</h2>
+      <p class="lf-intro" id="lf-historia-text">La historia de la ASADA Bijagua es la historia de una comunidad que trabajó unida para garantizar el agua. Cada hito se puede editar desde el panel administrativo.</p>
+    </div>
+    <div class="lf-tl"><div class="lf-tl-line"></div><div id="lf-hitos"></div></div>
+  </div></section>
+
+  <!-- SERVICIOS -->
+  <section class="section lf-services" id="servicios"><div class="wrap">
+    <div class="sec-head lf-reveal" data-label="Nuestros servicios">
+      <h2 id="lf-serv-title">Servicios de la ASADA</h2>
+      <p class="lf-intro" id="lf-serv-text">Comprometidos con brindar agua potable de calidad y una atención cercana a nuestros abonados.</p>
+    </div>
+    <div id="lf-servicios"></div>
+  </div></section>
+
+  <!-- TECNOLOGÍA -->
+  <section class="section lf-tech" id="tecnologia"><div class="wrap">
+    <div class="sec-head lf-reveal" data-label="Tecnología">
+      <h2 id="lf-tec-title">Vanguardia en el cuidado del agua</h2>
+      <p class="lf-intro" id="lf-tec-text">Trabajamos con herramientas y procesos que nos permiten proteger el recurso hídrico y mejorar el servicio.</p>
+    </div>
+    <div class="lf-tech-grid">
+      <div class="lf-reveal-left" id="lf-tecnologias"></div>
+      <div class="lf-reveal-right"><div class="lf-tech-img" id="lf-tec-img"></div></div>
+    </div>
+  </div></section>
+
+  <!-- COBERTURA / MAPA -->
+  <section class="section lf-coverage" id="cobertura"><div class="wrap">
+    <div class="sec-head lf-reveal" data-label="Nuestra red">
+      <h2 id="lf-cob-title">Zona de cobertura</h2>
+      <p class="lf-intro" id="lf-cob-text">Conozca el área que atendemos y los sectores que forman parte de la red de agua potable de Bijagua.</p>
+    </div>
+    <div class="lf-map-wrap lf-reveal">
+      <div class="lf-map-inner" id="lf-map">
+        <span class="lf-map-badge" id="lf-map-badge" role="button" tabindex="0">Ampliar mapa</span>
+      </div>
+      <aside class="lf-map-side">
+        <span id="lf-map-side-label">Cobertura</span>
+        <h3 id="lf-map-side-title">El agua llega a cada rincón del distrito</h3>
+        <p id="lf-map-side-text">Desde la captación en el bosque hasta las viviendas de Bijagua y comunidades vecinas.</p>
+        <div class="lf-map-loc">
+          <div><span id="lf-map-loc-label">Estamos ubicados en:</span><b id="lf-map-loc-value">Bijagua</b></div>
+          <div><span id="lf-map-serve-label">Brindamos Servicio en:</span><b id="lf-map-serve-value">Bijagua</b></div>
+        </div>
+        <div class="lf-map-coords" id="lf-map-coords">10°43′50.40″ N · 85°03′21.46″ O<br>10.730667° N · 85.055961° O<br>Bijagua, Upala, Alajuela</div>
+      </aside>
+    </div>
+    <div class="lf-zone-grid lf-stagger" id="lf-zonas"></div>
+  </div></section>
+
+  <!-- BENEFICIARIOS -->
+  <section class="section lf-benef" id="beneficiarios"><div class="wrap">
+    <div class="sec-head lf-reveal" data-label="Beneficiarios">
+      <h2 id="lf-ben-title">Población beneficiada</h2>
+      <p class="lf-intro" id="lf-ben-text">Cada cifra representa familias, estudiantes y comercios que dependen de un servicio responsable.</p>
+    </div>
+    <div class="lf-benef-grid lf-stagger" id="lf-benef"></div>
+  </div></section>
+
+  <!-- AVISOS -->
+  <section class="section lf-avisos" id="avisos"><div class="wrap">
+    <div class="sec-head lf-reveal" data-label="Avisos">
+      <h2 id="lf-aviso-title">Avisos de servicio</h2>
+      <p class="lf-intro" id="lf-aviso-text">Manténgase informado sobre cortes, mantenimientos y actualizaciones importantes.</p>
+    </div>
+    <div id="home-cortes"></div>
+    <p style="margin-top:28px;text-align:center"><a class="link" href="/cortes">Ver todos los avisos →</a></p>
+  </div></section>
+
+  <!-- NOTICIAS -->
+  <section class="section lf-news" id="noticias"><div class="wrap">
+    <div class="lf-news-more">
+      <div class="lf-reveal"><span class="lf-pill">Noticias</span><h2 id="lf-news-title">Historias que construimos juntos</h2></div>
+      <a class="lf-reveal" href="/noticias">Ver todo el archivo →</a>
+    </div>
+    <div class="lf-news-grid"><div id="home-news"></div><div id="lf-news-side"></div></div>
+  </div></section>
+
+  <!-- PROGRAMA AMBIENTAL -->
+  <section class="section promo-prog"><div class="wrap"><div class="pp">
+    <div class="pp-t"><span class="pp-pill">Programa de Educación Ambiental</span><h2>Creciendo por la vida</h2><p>Cultura del agua, reforestación y ciencia ciudadana con la comunidad de Bijagua. Conozca el programa, sus aliados y las actividades más recientes.</p><a class="btn pp-btn" href="/programa">Conocer el programa</a></div>
+    <div class="pp-n"><h3>Últimas actividades</h3><div id="home-prog"><p>Pronto compartiremos aquí las novedades del programa.</p></div></div>
+    <i class="pp-l pp-l1"></i><i class="pp-l pp-l2"></i><i class="pp-l pp-l3"></i>
+  </div></div></section>
+
+  <div id="site-custom-sections"></div>
+
+  <!-- CTA de contacto y reportes -->
+  <section class="section lf-cta"><div class="wrap">
+    <h2 class="lf-reveal">¿Necesita reportar una fuga o tener más información?</h2>
+    <p class="lf-reveal">Estamos para atenderle. Envíe su reporte o comuníquese con nosotros y le responderemos a la brevedad.</p>
+    <div class="lf-reveal">
+      <a class="btn" href="/contacto">Enviar reporte</a>
+      <a class="btn ghost" href="/faq">Preguntas frecuentes</a>
+      <a class="btn dark" href="/nosotros">Conocer la Junta Directiva</a>
+    </div>
+  </div></section>
+</main>
+<div id="site-footer"><footer class="footer aya-footer"><div class="aya-footer-wave" aria-hidden="true"></div><div class="wrap"><div class="aya-footer-grid">
+<div class="aya-footer-brand"><img src="logo.svg" alt="ASADA Bijagua" width="62" height="62"><h4>ASADA Bijagua</h4><p>Administramos y protegemos el servicio de agua potable de la comunidad de Bijagua, Upala.</p></div>
+<div class="aya-footer-contact"><h4>Información de contacto</h4><ul class="list-footer"><li><span>Dirección</span><span class="site-dir">Bijagua, Upala, Alajuela</span></li><li><span>Teléfono</span><span class="site-tel">+506 0000-0000</span></li><li><span>Emergencias y fugas</span><span class="site-emerg">+506 0000-0000</span></li><li><span>Correo electrónico</span><span class="site-mail">info@asadabijagua.cr</span></li></ul></div>
+<div><h4>Enlaces de interés</h4><ul class="list-footer"><li><a href="/noticias">Noticias</a></li><li><a href="/cortes">Avisos de servicio</a></li><li><a href="/nosotros">Quienes somos</a></li><li><a href="/documentos">Transparencia</a></li><li><a href="/programa">Programa Educación Ambiental</a></li><li><a href="/faq">Preguntas frecuentes</a></li><li><a href="/contacto">Contacto</a></li></ul></div>
+</div><div class="legal"><span>&copy; 2026 ASADA Bijagua. Todos los derechos reservados.</span><button type="button" id="open-admin" class="top-admin footer-admin">Acceso Administrativo</button></div>
+</div></footer></div><script>(function(){var L=location.protocol==='file:'||/^(localhost|127\.0\.0\.1)$/i.test(location.hostname);function m(h){if(!L||!h||h.charAt(0)!=='/')return h;var x=h.match(/^(\/[^#?]*)([#?].*)?$/);if(!x)return h;var p=x[1].replace(/^\/+|\/+$/g,'')||'index';return p+'.html'+(x[2]||'')}function f(r){(r||document).querySelectorAll('a[href^="/"],img[src^="/"],link[href^="/"]').forEach(function(e){var a=e.hasAttribute('href')?'href':'src',v=e.getAttribute(a),n=m(v);if(n!==v)e.setAttribute(a,n)})}document.addEventListener('DOMContentLoaded',function(){f(document)});setTimeout(function(){f(document)},400);setTimeout(function(){var l=document.getElementById('site-loader');if(l){l.classList.add('done');setTimeout(function(){l.remove()},600)}},2200)})();</script>
+<script type="module" src="app.js"></script></body></html>

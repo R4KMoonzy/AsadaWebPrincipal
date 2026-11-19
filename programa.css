@@ -146,3 +146,120 @@ dialog{max-width:calc(100% - 16px)}
 .hc .acc-btns button{background:#fff;color:#000;border:2px solid #000}
 .hc .acc-switch{background:#000}
 .hc .skip-link{background:#fff;color:#000;border:2px solid #000}
+
+/* ==========================================================================
+   ENCABEZADO / PIE TIPO AyA — PROGRAMA DE EDUCACIÓN AMBIENTAL
+   ========================================================================== */
+body{font-family:'Montserrat',system-ui,sans-serif}
+h1,h2,h3,h4,.brand{font-family:'Montserrat',system-ui,sans-serif}
+.header{background:var(--navy,#192952);border:0;box-shadow:0 2px 14px rgba(17,29,58,.22);z-index:60}
+.header-main{background:#192952;color:#fff}
+.header .wrap,.header-wrap{max-width:none;padding:0 28px;min-height:92px;display:flex;align-items:center;gap:22px}
+.brand{color:#fff;font-size:1.05rem}
+.brand img{background:#fff;border-radius:4px;width:auto;height:52px}
+.brand small{color:#9fd8f2;font-family:'Montserrat',sans-serif}
+.nav{margin-left:auto;flex-wrap:wrap;gap:0}
+.nav a,.dd>button{position:relative;font:600 .87rem 'Montserrat',sans-serif;color:#fff;padding:34px 12px;border-radius:0;background:none;transition:background .22s,color .22s}
+.nav a:after,.dd>button:after{content:"";position:absolute;left:12px;right:12px;bottom:24px;height:3px;background:#f4c430;transform:scaleX(0);transform-origin:left;transition:transform .28s}
+.nav a:hover,.nav a.on,.dd>button:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav a:hover:after,.nav a.on:after,.dd>button:hover:after{transform:scaleX(1)}
+.nav a.back{background:#15803d;margin-left:8px;border-radius:6px;padding:10px 16px}
+.nav a.back:after{display:none}
+.caret{display:inline-block;margin-left:7px;color:#ffe08a;font-size:.7rem;transition:transform .25s}
+.dd{position:relative}
+.dd>button{border:0;cursor:pointer}
+.dd:hover .caret,.dd:focus-within .caret,.dd.open .caret{transform:rotate(180deg)}
+.dd-menu{position:absolute;top:100%;left:0;min-width:230px;background:#fff;border-radius:0 0 8px 8px;box-shadow:0 16px 30px rgba(17,29,58,.26);padding:6px 0;max-height:0;overflow:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;z-index:70;transition:max-height .3s,opacity .25s,transform .3s}
+.dd:hover .dd-menu,.dd:focus-within .dd-menu,.dd.open .dd-menu{max-height:420px;opacity:1;transform:none;pointer-events:auto}
+.dd-menu a{display:flex;justify-content:space-between;padding:10px 18px;font-size:.83rem;color:#192952;border-radius:0}
+.dd-menu a:hover{background:#eef5fb;color:#0b5fa5;padding-left:24px}
+.dd-menu a:after{content:"›";color:#39a7ce}
+.header-tools{display:flex;align-items:center}
+.header-search-btn{width:40px;height:40px;border:1px solid rgba(255,255,255,.45);border-radius:6px;background:rgba(255,255,255,.06);color:#fff;display:grid;place-items:center;cursor:pointer;transition:all .2s}
+.header-search-btn:hover{background:#f4c430;color:#192952;transform:translateY(-2px)}
+.header-search-btn svg{width:19px;height:19px}
+.header-search-panel{position:absolute;left:0;right:0;top:100%;background:#fff;border-top:3px solid #f4c430;box-shadow:0 18px 30px rgba(17,29,58,.22);padding:20px 0 24px;z-index:59;animation:ayaDrop .3s ease both}
+.header-search-panel[hidden]{display:none}
+.header-search-panel .wrap{max-width:none;padding:0 28px}
+.header-search-panel label{font-weight:700;color:#192952;margin-bottom:8px}
+.site-search-results{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.site-search-results a{padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:.83rem;color:#192952;transition:all .2s}
+.site-search-results a:hover{background:#192952;color:#fff;transform:translateY(-2px)}
+@keyframes ayaDrop{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+.burger{width:42px;height:42px;border:1px solid rgba(255,255,255,.4);border-radius:6px;background:none;display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer}
+.burger span{width:20px;height:2px;background:#fff;border-radius:2px}
+.btn{position:relative;overflow:hidden;font-family:'Montserrat',sans-serif;border-radius:6px;background:#192952;color:#fff;transition:transform .22s,box-shadow .22s,background .22s}
+.btn:hover{background:#0b5fa5;color:#fff;transform:translateY(-3px);box-shadow:0 10px 20px rgba(25,41,82,.25)}
+.btn.sun{background:#f4c430;color:#192952;border-radius:6px}
+.btn.sun:hover{background:#e0ae1c;color:#192952}
+.ripple-wave{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:ayaRipple .6s ease-out forwards;pointer-events:none}
+@keyframes ayaRipple{to{transform:scale(2.4);opacity:0}}
+.top-admin{font:700 .8rem 'Montserrat',sans-serif;border:1px solid #f4c430;background:rgba(244,196,48,.12);color:#ffe08a;border-radius:6px;padding:10px 18px;cursor:pointer;transition:all .22s}
+.top-admin:hover{background:#f4c430;color:#192952;transform:translateY(-2px)}
+.footer{background:#192952;border-top:0;padding:0;color:#d6e3ee;position:relative;overflow:hidden}
+.footer .wrap{padding-top:46px}
+.aya-footer-wave{height:12px;background:linear-gradient(90deg,#f4c430 0 18%,#39a7ce 18% 50%,#15803d 50% 76%,#0b5fa5 76%)}
+.footer h4{color:#fff;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.18);padding-bottom:10px}
+.footer p,.footer .legal span{color:#c4d6e4}
+.list-footer{list-style:none;display:grid;gap:10px}
+.list-footer li{display:flex;flex-direction:column;color:#fff;font-size:.86rem}
+.list-footer li>span:first-child{color:#ffe08a;font-size:.71rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.list-footer a{display:inline;color:#fff;text-decoration:underline;text-underline-offset:3px;padding:0}
+.list-footer a:hover{color:#f4c430}
+.footer .legal{border-top:1px solid rgba(255,255,255,.16);margin-top:34px;padding:18px 0 24px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.lf-social-links a:hover{background:#f4c430;color:#192952}
+@media(max-width:980px){
+  .header-wrap{min-height:74px;flex-wrap:wrap;padding:10px 18px}
+  .burger{display:flex}
+  .nav{display:none;width:100%;order:4;flex-direction:column;align-items:stretch;background:#111d3a;margin:8px -18px -10px;padding:8px 18px 16px}
+  .nav.open{display:flex;animation:ayaDrop .25s ease both}
+  .nav a,.dd>button{padding:13px 8px;text-align:left}
+  .nav a:after,.dd>button:after{bottom:6px;left:8px;right:auto;width:34px}
+  .dd-menu{position:static;box-shadow:none;background:rgba(255,255,255,.06)}
+  .dd:hover .dd-menu,.dd:focus-within .dd-menu{max-height:0;opacity:0;pointer-events:none}
+  .dd.open .dd-menu{max-height:420px;opacity:1;pointer-events:auto}
+  .dd-menu a{color:#fff}
+  .header-tools{margin-left:auto}
+  .footer .legal{flex-direction:column;align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){.ripple-wave,.header-search-panel{animation:none!important;transition:none!important}}
+
+/* ==========================================================================
+   AJUSTES FINALES — encabezado, pie y pantalla de carga
+   (esta página no carga styles.css, así que aquí deben vivir sus estilos)
+   ========================================================================== */
+/* En escritorio el menú no debe bajar de línea: se ve "corrido" si se envuelve */
+@media(min-width:981px){
+  .header .header-wrap{flex-wrap:nowrap}
+  .nav{flex-wrap:nowrap}
+}
+/* Misma especificidad que .header .wrap y va después: gana en móvil */
+@media(max-width:980px){
+  .header .header-wrap{min-height:74px;flex-wrap:wrap;padding:10px 18px}
+}
+
+/* El pie inyectado usa .aya-footer-grid; antes no tenía regla y quedaba apilado */
+.aya-footer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;align-items:start}
+.aya-footer-brand p{max-width:46ch;color:#c4d6e4;margin-top:10px}
+@media(max-width:980px){.aya-footer-grid{grid-template-columns:1fr;gap:22px}}
+
+/* Pantalla de carga con ola, igual que en el resto del sitio */
+.site-loader{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#f4fbff 0%,#e6f4fb 55%,#d8ecf5 100%);transition:opacity .5s ease,visibility .5s ease}
+.site-loader.done{opacity:0;visibility:hidden;pointer-events:none}
+.loader-content{position:relative;z-index:5;text-align:center;transform:translateY(-2vh);animation:loaderEnter .55s cubic-bezier(.2,.8,.2,1) both}
+.site-loader.done .loader-content{opacity:0;transform:translateY(-18px) scale(.98);animation:none}
+.loader-mark{width:86px;height:86px;object-fit:contain;margin:0 auto 14px;filter:drop-shadow(0 10px 18px rgba(11,95,165,.18));animation:loaderFloat 2.2s ease-in-out infinite}
+.loader-name{font:700 1.35rem 'Montserrat',sans-serif;color:#192952}
+.loader-sub{color:#4c6354;font-size:.86rem;margin-top:4px}
+.loader-ocean{position:absolute;left:0;right:0;bottom:0;height:52%;overflow:hidden;pointer-events:none}
+.loader-wave{position:absolute;left:-15%;bottom:-18%;width:130%;height:120%;border-radius:42% 46% 0 0}
+.loader-wave.w1{background:rgba(57,167,206,.35);animation:loaderRise 1.9s cubic-bezier(.22,.8,.3,1) .08s forwards}
+.loader-wave.w2{background:rgba(11,95,165,.28);bottom:-24%;animation:loaderRise 2s cubic-bezier(.22,.8,.3,1) .18s forwards}
+.loader-wave.w3{background:linear-gradient(180deg,rgba(25,41,82,.92),rgba(11,95,165,.96));bottom:-30%;animation:loaderRise 2.15s cubic-bezier(.22,.8,.3,1) .28s forwards}
+.loader-splash{position:absolute;left:50%;bottom:38%;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.75);transform:translate(-50%,40px) scale(.2);opacity:0;animation:loaderSplash .9s ease-out .95s forwards}
+@keyframes loaderRise{0%{transform:translateY(22%) rotate(0)}55%{transform:translateY(-6%) rotate(-1.2deg)}100%{transform:translateY(-115%)}}
+@keyframes loaderSplash{0%{opacity:0;transform:translate(-50%,40px) scale(.2)}35%{opacity:.9}100%{opacity:0;transform:translate(-50%,-70px) scale(8)}}
+@keyframes loaderFloat{50%{transform:translateY(-6px)}}
+@keyframes loaderEnter{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
+@media(max-width:560px){.loader-mark{width:72px;height:72px}.loader-name{font-size:1.15rem}}
+@media(prefers-reduced-motion:reduce){.loader-content,.loader-mark,.loader-wave,.loader-splash{animation:none!important}.site-loader{transition:none!important}}

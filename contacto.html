@@ -1,17 +1,50 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Contacto | ASADA Bijagua</title><meta name="description" content="ASADA Bijagua, Upala, Alajuela. Estamos para atender reportes y consultas de la comunidad.">
-<link rel="icon" href="logo1.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" href="logo.svg"><link rel="preload" as="image" href="logo.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css"></head>
-<body data-page="contacto"><div id="site-header"></div>
-<main><section class="page-head"><div class="wrap"><div class="crumbs"><a href="index.html">Inicio</a> / Contacto</div><h1>Contacto</h1><p>Estamos para atender reportes y consultas de la comunidad.</p></div></section><section class="section "><div class="wrap"><div class="grid"><div class="c7"><h2 style="margin-bottom:24px">Reporte de averias y fugas</h2>
+<body data-page="contacto">
+<div id="site-loader" class="site-loader" aria-hidden="true">
+<div class="loader-content"><img class="loader-mark" src="logo.svg" alt="" width="86" height="86"><div class="loader-name">ASADA Bijagua</div><div class="loader-sub">Agua para nuestra comunidad</div></div>
+<div class="loader-ocean"><div class="loader-wave w1"></div><div class="loader-wave w2"></div><div class="loader-wave w3"></div><div class="loader-splash"></div></div>
+</div>
+<div id="site-header">
+<header class="header"><div class="header-main"><div class="wrap header-wrap">
+<a class="brand" href="/"><img src="logo.svg" alt="Logotipo ASADA Bijagua" width="52" height="52"><span>ASADA Bijagua<small>Asociación Administradora del Acueducto, Upala</small></span></a>
+<nav class="nav" id="nav" aria-label="Principal">
+<a href="/">Inicio</a><a href="/programa" class="nav-prog">Programa Educación Ambiental</a><a href="/noticias">Noticias</a><a href="/cortes">Avisos de servicio</a>
+<div class="dd"><button type="button">Institución<span class="caret">▾</span></button><div class="dd-menu"><a href="/nosotros">Quienes somos</a><a href="/#historia">Nuestra historia</a><a href="/#cobertura">Cobertura</a><a href="/proyectos">Proyectos</a><a href="/documentos">Transparencia</a></div></div>
+<div class="dd"><button type="button">Servicios<span class="caret">▾</span></button><div class="dd-menu"><a href="/servicios">Nuestros servicios</a><a href="/tarifas">Tarifas</a><a href="/calidad-agua">Calidad del agua</a><a href="/afiliacion">Trámites</a></div></div>
+<a href="/faq">Preguntas frecuentes</a><a href="/contacto">Contacto</a>
+</nav>
+<div class="header-tools"><button class="header-search-btn" type="button" id="header-search" aria-label="Buscar en el sitio" aria-expanded="false" aria-controls="header-search-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-4-4"/></svg></button></div>
+<button class="burger" type="button" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+</div></div>
+<div class="header-search-panel" id="header-search-panel" hidden><div class="wrap"><label for="site-search">Buscar información</label><input id="site-search" type="search" placeholder="Escriba un tema: tarifas, avisos, cobertura…" autocomplete="off"><div id="site-search-results" class="site-search-results"></div></div></div>
+</header>
+<div class="modal" id="pin-modal" role="dialog" aria-modal="true"><div class="modal-box"><h3>Acceso administrativo</h3><p class="meta">Ingrese el código de verificación.</p><div class="field"><label for="pin-in">Código</label><input id="pin-in" type="password" autocomplete="off"></div><p class="notice err" id="pin-err" hidden>El código no es correcto.</p><div class="modal-actions"><button class="btn dark" type="button" id="pin-ok">Verificar</button><button class="btn" type="button" id="pin-x">Cancelar</button></div></div></div>
+</div>
+<main><section class="page-head"><div class="wrap"><div class="crumbs"><a href="/">Inicio</a> / Contacto</div><h1>Contacto</h1><p class="contact-lema" data-cfg="Contacto - lema">BIJAGUA · Calidad, Servicio y Desarrollo</p><p data-cfg="Contacto - descripción página">Estamos para atender reportes y consultas de la comunidad.</p></div></section><section class="section "><div class="wrap"><div class="grid"><div class="c7"><h2 style="margin-bottom:24px">Reporte de averías y fugas</h2>
 <form class="form" id="report-form"><div class="field"><label for="n">Nombre</label><input id="n" name="nombre" required></div>
-<div class="field"><label for="ab">Numero de abonado</label><input id="ab" name="abonado" inputmode="numeric" required></div>
-<div class="field"><label for="t">Telefono</label><input id="t" name="telefono" type="tel" required></div>
-<div class="field"><label for="s">Sector o direccion</label><input id="s" name="sector" required></div>
-<div class="field"><label for="k">Tipo de reporte</label><select id="k" name="tipo"><option>Fuga</option><option>Averia</option><option>Sin servicio</option><option>Agua turbia</option><option>Otro</option></select></div>
-<div class="field"><label for="d">Descripcion</label><textarea id="d" name="descripcion" required></textarea></div>
+<div class="field"><label for="ab">Número de abonado</label><input id="ab" name="abonado" inputmode="numeric" required></div>
+<div class="field"><label for="t">Teléfono</label><input id="t" name="telefono" type="tel" required></div>
+<div class="field"><label for="s">Sector o dirección</label><input id="s" name="sector" required></div>
+<div class="field"><label for="k">Tipo de reporte</label><select id="k" name="tipo"><option>Fuga</option><option>Avería</option><option>Sin servicio</option><option>Agua turbia</option><option>Otro</option></select></div>
+<div class="field"><label for="d">Descripción</label><textarea id="d" name="descripcion" required></textarea></div>
 <div><button class="btn dark" type="submit">Enviar reporte</button></div><p class="notice" id="report-msg" hidden></p></form></div>
-<div class="c5"><h3>Emergencias</h3><p style="margin:10px 0 28px">Teléfono: <span class="site-emerg">+506 0000-0000</span></p><h3>Oficina</h3><p style="margin:10px 0 28px"><span class="site-dir">Bijagua, Upala, Alajuela</span><br>Horario: <span class="site-horario">Complete aquí</span></p><h3>Correo</h3><p style="margin-top:10px"><span class="site-mail">info@asadabijagua.cr</span></p><div id="contacto-custom-btns" style="margin-top:18px"></div></div></div></div></section><div id="site-custom-sections"></div></main>
-<div id="site-footer"></div><script type="module" src="app.js"></script></body></html>
+<div class="c5"><h3>Emergencias</h3><p style="margin:10px 0 28px">Teléfono: <span class="site-emerg">+506 2466 8671</span></p>
+<h3>Servicio al cliente</h3><p style="margin:10px 0 28px"><a class="contact-phone" href="tel:+50683651396" data-cfg="Contacto - servicio al cliente">8365 1396</a></p>
+<h3>Números de fontanería</h3><div class="contact-numbers" data-cfg="Contacto - números de fontanería" data-cfg-html="1"><p>8436 5091</p><p>8541 0371</p><p>8641 0227</p><p>8892 6900</p><p>8651 2902</p><p>8792 1030</p></div>
+<h3 style="margin-top:28px">Oficina</h3><p style="margin:10px 0 28px"><span class="site-dir">Frente a Tienda Nidia, Bijagua centro, Upala, Alajuela</span><br>Horario: <span class="site-horario">Consulte el horario por teléfono al 2466-86-71</span></p>
+<h3>Correo</h3><p style="margin-top:10px"><span class="site-mail">asadabijagua@gmail.com</span></p>
+<a class="contact-wa-btn" id="wa-inline" href="https://wa.me/50683651396" target="_blank" rel="noopener" aria-label="Enviar mensaje por WhatsApp a la ASADA"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12.04 2C6.5 2 2 6.5 2 12.04c0 1.77.46 3.5 1.34 5.02L2 22l5.08-1.33A10 10 0 1 0 12.04 2Zm0 18.16a8.3 8.3 0 0 1-4.23-1.16l-.3-.18-3.02.79.81-2.94-.2-.3a8.3 8.3 0 1 1 6.94 3.79Zm4.55-6.2c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13-.17.25-.66.81-.81.98-.15.17-.3.19-.55.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.25-1.49-1.4-1.74-.15-.25-.02-.39.11-.51.11-.11.25-.3.37-.45.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.57-1.37-.78-1.88-.2-.49-.41-.42-.57-.43h-.49c-.17 0-.45.06-.68.32-.23.25-.89.87-.89 2.12s.91 2.46 1.04 2.63c.13.17 1.79 2.73 4.34 3.83.61.26 1.08.42 1.45.54.61.19 1.16.17 1.6.1.49-.07 1.48-.6 1.69-1.19.21-.58.21-1.08.15-1.19-.06-.11-.23-.17-.48-.3Z"/></svg>Escribir por WhatsApp</a>
+<p class="notice contact-aviso" data-cfg="Contacto - aviso de respuesta">La respuesta al formulario o al soporte puede verse perjudicada según la disponibilidad del personal para revisar el buzón de mensajes. Se recomienda hacer siempre una llamada telefónica al número directo de la ASADA.</p>
+<div id="contacto-custom-btns" style="margin-top:18px"></div></div></div></div></section><div id="site-custom-sections"></div></main>
+<div id="site-footer"><footer class="footer aya-footer"><div class="aya-footer-wave" aria-hidden="true"></div><div class="wrap"><div class="aya-footer-grid">
+<div class="aya-footer-brand"><img src="logo.svg" alt="ASADA Bijagua" width="62" height="62"><h4>ASADA Bijagua</h4><p>Administramos y protegemos el servicio de agua potable de la comunidad de Bijagua, Upala.</p></div>
+<div class="aya-footer-contact"><h4>Información de contacto</h4><ul class="list-footer"><li><span>Dirección</span><span class="site-dir">Bijagua, Upala, Alajuela</span></li><li><span>Teléfono</span><span class="site-tel">+506 0000-0000</span></li><li><span>Emergencias y fugas</span><span class="site-emerg">+506 0000-0000</span></li><li><span>Correo electrónico</span><span class="site-mail">info@asadabijagua.cr</span></li></ul></div>
+<div><h4>Enlaces de interés</h4><ul class="list-footer"><li><a href="/noticias">Noticias</a></li><li><a href="/cortes">Avisos de servicio</a></li><li><a href="/nosotros">Quienes somos</a></li><li><a href="/documentos">Transparencia</a></li><li><a href="/programa">Programa Educación Ambiental</a></li><li><a href="/faq">Preguntas frecuentes</a></li><li><a href="/contacto">Contacto</a></li></ul></div>
+</div><div class="legal"><span>&copy; 2026 ASADA Bijagua. Todos los derechos reservados.</span><button type="button" id="open-admin" class="top-admin footer-admin">Acceso Administrativo</button></div>
+</div></footer></div><script>(function(){var L=location.protocol==='file:'||/^(localhost|127\.0\.0\.1)$/i.test(location.hostname);function m(h){if(!L||!h||h.charAt(0)!=='/')return h;var x=h.match(/^(\/[^#?]*)([#?].*)?$/);if(!x)return h;var p=x[1].replace(/^\/+|\/+$/g,'')||'index';return p+'.html'+(x[2]||'')}function f(r){(r||document).querySelectorAll('a[href^="/"],img[src^="/"],link[href^="/"]').forEach(function(e){var a=e.hasAttribute('href')?'href':'src',v=e.getAttribute(a),n=m(v);if(n!==v)e.setAttribute(a,n)})}document.addEventListener('DOMContentLoaded',function(){f(document)});setTimeout(function(){f(document)},400);setTimeout(function(){var l=document.getElementById('site-loader');if(l){l.classList.add('done');setTimeout(function(){l.remove()},600)}},2200)})();</script>
+<script type="module" src="app.js"></script></body></html>
