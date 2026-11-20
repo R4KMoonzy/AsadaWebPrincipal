@@ -1229,7 +1229,10 @@ main{display:block}
 .header .brand{color:#fff}
 .header .brand small{color:#d9e7f2}
 .nav a,.dd>button{color:#fff}
-.dd-menu a{color:var(--navy)}
+/* El desplegable sobre el menú azul debe ser blanco en móvil;
+   el color azul marino solo aplica cuando el desplegable es blanco (escritorio). */
+@media(min-width:981px){.dd-menu a{color:var(--navy)}}
+@media(max-width:980px){.dd-menu a,.dd-menu a:hover{color:#fff}}
 
 /* Responsive: más compacto en móvil, intacto en PC */
 @media(max-width:980px){
