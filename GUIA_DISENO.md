@@ -22,7 +22,7 @@ El sitio conserva **todas** sus páginas, secciones, contenidos y funcionalidade
 
 ## Todo es editable desde `admin` (panel administrativo)
 
-Con el PIN, menú **ASADA (Sitio)**:
+Con la cuenta de administrador (correo y contraseña de Firebase Auth), menú **ASADA (Sitio)**:
 
 | Menú del panel | Qué controla |
 | --- | --- |

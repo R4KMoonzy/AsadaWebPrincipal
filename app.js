@@ -1,7 +1,8 @@
 /* ASADA Bijagua - app.js
-   Plantilla: completar FIREBASE_CONFIG, APPWRITE_CONFIG y ADMIN_PIN. */
+   La autenticación se valida en Firebase Auth (servidor), nunca en este archivo. */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, getDoc, doc, deleteDoc, updateDoc, query, orderBy, limit, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { Client, Storage, ID } from "https://cdn.jsdelivr.net/npm/appwrite@16.0.2/+esm";
 
 /* ---------- CONFIGURACION (plantilla) ---------- */
@@ -19,7 +20,6 @@ const APPWRITE_CONFIG = {
   projectId: "6af477840009bd198145",
   bucketId: "6af477980014e69c5286"
 };
-const ADMIN_PIN = "admin123";
 const SITE = { nombre: "ASADA Bijagua", subtitulo: "Asociación Administradora del Acueducto, Upala", telefono: "+506 2466 8671", correo: "asadabijagua@gmail.com", emergencia: "+506 2466 8671", horario: "Consulte el horario por teléfono al 2466-86-71", direccion: "Frente a Tienda Nidia, Bijagua centro, Upala, Alajuela" };
 let SITE_CFG = {};
 const DEFAULT_PAGE_TEXT = {
@@ -249,7 +249,11 @@ const PROG = {
 };
 /* Colecciones: noticias, cortes, documentos, faqs, junta, proyectos, contactos */
 
-const db = getFirestore(initializeApp(FIREBASE_CONFIG));
+const firebaseApp = initializeApp(FIREBASE_CONFIG);
+const db = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+// La sesión se conserva entre recargas; Firebase valida el token en el servidor.
+setPersistence(auth, browserLocalPersistence).catch(() => { });
 const storage = new Storage(new Client().setEndpoint(APPWRITE_CONFIG.endpoint).setProject(APPWRITE_CONFIG.projectId));
 
 /* ---------- UTILIDADES ---------- */
@@ -260,7 +264,13 @@ const toDate = v => v?.toDate ? v.toDate() : (v ? new Date(String(v).length === 
 const fmt = v => { const d = toDate(v); return d && !isNaN(d) ? d.toLocaleDateString("es-CR", { day: "numeric", month: "long", year: "numeric" }) : ""; };
 const fileView = id => id ? String(storage.getFileView(APPWRITE_CONFIG.bucketId, id)) : "";
 const fileDown = id => id ? String(storage.getFileDownload(APPWRITE_CONFIG.bucketId, id)) : "";
-const isAdmin = () => sessionStorage.getItem("asada_admin") === "1";
+/* isAdmin() solo refleja la sesión que Firebase validó en el servidor.
+   Cualquier bandera en sessionStorage/localStorage es falsificable y ya no se usa. */
+let authUser = null;
+const isAdmin = () => !!authUser;
+const authReady = new Promise(resolve => {
+  onAuthStateChanged(auth, user => { authUser = user || null; resolve(authUser); });
+});
 const paras = t => String(t ?? "").split(/\n{2,}|\n/).filter(Boolean).map(p => `<p>${esc(p)}</p>`).join("");
 const empty = (el, msg) => { el.innerHTML = `<p class="empty">${msg}</p>`; };
 const fail = el => { el.innerHTML = `<p class="notice err">No se pudo cargar la informacion. Verifique la configuracion de Firebase y Appwrite en app.js.</p>`; };
@@ -836,10 +846,11 @@ const mountLayout = () => {
     </div></div>
   </header>
   <div class="modal" id="pin-modal" role="dialog" aria-modal="true" aria-labelledby="pin-t"><div class="modal-box">
-    <h3 id="pin-t">Acceso administrativo</h3><p class="meta">Ingrese el código de verificación.</p>
-    <div class="field"><label for="pin-in">Código</label><input id="pin-in" type="password" autocomplete="off"></div>
-    <p class="notice err" id="pin-err" hidden>El código no es correcto.</p>
-    <div class="modal-actions"><button class="btn dark" type="button" id="pin-ok">Verificar</button><button class="btn" type="button" id="pin-x" style="background:none;color:var(--ink);border-color:var(--line)">Cancelar</button></div>
+    <h3 id="pin-t">Acceso administrativo</h3><p class="meta">Ingrese con su cuenta de administrador.</p>
+    <div class="field"><label for="pin-in">Correo electrónico</label><input id="pin-in" type="email" autocomplete="username"></div>
+    <div class="field"><label for="pin-pass">Contraseña</label><input id="pin-pass" type="password" autocomplete="current-password"></div>
+    <p class="notice err" id="pin-err" hidden>Correo o contraseña incorrectos.</p>
+    <div class="modal-actions"><button class="btn dark" type="button" id="pin-ok">Ingresar</button><button class="btn" type="button" id="pin-x" style="background:none;color:var(--ink);border-color:var(--line)">Cancelar</button></div>
   </div></div>`;
   $("#site-footer").innerHTML = `
   <footer class="footer aya-footer"><div class="aya-footer-wave" aria-hidden="true"></div><div class="wrap">
@@ -940,14 +951,26 @@ const mountLayout = () => {
   if (document.body.dataset.theme !== "programa") { loadSiteConfig(); initWaterDrops(); }
   initAyaUI();
   const modal = $("#pin-modal");
-  const open = () => { modal.classList.add("open"); $("#pin-in").value = ""; $("#pin-err").hidden = true; $("#pin-in").focus(); };
-  const check = () => {
-    if ($("#pin-in").value === ADMIN_PIN) { sessionStorage.setItem("asada_admin", "1"); modal.classList.remove("open"); location.href = toHref("/admin"); }
-    else $("#pin-err").hidden = false;
+  const open = () => { modal?.classList.add("open"); if ($("#pin-in")) $("#pin-in").value = ""; if ($("#pin-pass")) $("#pin-pass").value = ""; if ($("#pin-err")) $("#pin-err").hidden = true; $("#pin-in")?.focus(); };
+  const check = async () => {
+    const email = $("#pin-in")?.value.trim(), pass = $("#pin-pass")?.value, err = $("#pin-err");
+    if (!email || !pass || !err) { if (err) { err.textContent = "Ingrese su correo y contraseña."; err.hidden = false; } return; }
+    err.hidden = true;
+    const btn = $("#pin-ok"); btn.disabled = true; btn.textContent = "Ingresando…";
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      modal.classList.remove("open");
+      location.href = toHref("/admin");
+    } catch (e) {
+      err.textContent = "Correo o contraseña incorrectos, o la cuenta no está autorizada.";
+      err.hidden = false;
+    } finally { btn.disabled = false; btn.textContent = "Ingresar"; }
   };
   $("#open-admin")?.addEventListener("click", () => isAdmin() ? (location.href = toHref("/admin")) : open());
-  $("#pin-ok").onclick = check; $("#pin-x").onclick = () => modal.classList.remove("open");
-  $("#pin-in").onkeydown = e => { if (e.key === "Enter") check(); if (e.key === "Escape") modal.classList.remove("open"); };
+  if ($("#pin-ok")) $("#pin-ok").onclick = check;
+  $("#pin-x")?.addEventListener("click", () => modal?.classList.remove("open"));
+  $("#pin-in")?.addEventListener("keydown", e => { if (e.key === "Enter") $("#pin-pass")?.focus(); if (e.key === "Escape") modal?.classList.remove("open"); });
+  $("#pin-pass")?.addEventListener("keydown", e => { if (e.key === "Enter") check(); if (e.key === "Escape") modal?.classList.remove("open"); });
   window.openPin = open;
   const root = document.documentElement; let fs = 1;
   try {
@@ -1855,7 +1878,7 @@ const pages = {
         form.reset(); resetEdit(); msg.className = "notice"; refresh();
       } catch (er) { console.error(er); msg.className = "notice err"; const raw = String(er?.message || er?.response || "revise la conexión y los permisos"); const detalle = /quota|resource_exhausted|429/i.test(raw) ? "Se agotó la cuota de Firestore. Espere a que se renueve (se reinicia cada día) o mejore el plan de Firebase." : raw; msg.textContent = (er?.paso === "archivo" ? "No se pudo subir el archivo a Appwrite: " : er?.paso === "firestore" ? "No se pudo guardar el registro en Firestore: " : "No se pudo guardar: ") + detalle; }
       msg.hidden = false; btn.disabled = false; btn.textContent = editing ? "Guardar cambios" : "Publicar"; };
-    $("#logout").onclick = () => { sessionStorage.removeItem("asada_admin"); location.href = "/"; };
+    $("#logout").onclick = async () => { try { await firebaseSignOut(auth); } catch (e) { } location.href = "/"; };
     const k0 = location.hash.slice(1);
     setCurrent(T[k0] ? k0 : "sitio_info");
   }
@@ -1863,4 +1886,6 @@ const pages = {
 
 mountLayout();
 const p = document.body.dataset.page;
-if (pages[p]) pages[p]();
+// Las vistas que muestran controles de administración esperan a que Firebase
+// resuelva la sesión; así no parpadea el enlace ni se muestra el panel a un extraño.
+authReady.then(() => { if (pages[p]) pages[p](); });

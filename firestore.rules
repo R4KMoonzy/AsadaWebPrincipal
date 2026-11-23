@@ -1,0 +1,56 @@
+rules_version = '2';
+
+/* ==========================================================================
+   REGLAS DE SEGURIDAD — ASADA Bijagua
+   --------------------------------------------------------------------------
+   - El sitio público SOLO lee contenido publicado; nunca escribe.
+   - Toda edición (crear/editar/borrar) exige una sesión válida de Firebase
+     Auth. El PIN del cliente fue eliminado.
+   - El formulario de reportes permite crear en "contactos" sin sesión,
+     pero nadie sin sesión puede leer, editar ni borrar esos reportes.
+   - Colecciones nuevas NO quedan abiertas por defecto: hay que agregarlas.
+   ========================================================================== */
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function firmado() {
+      return request.auth != null;
+    }
+
+    /* --- Reportes del público ------------------------------------------- */
+    match /contactos/{id} {
+      allow create: if request.resource.data.estado == 'Nuevo';
+      allow read, update, delete: if firmado();
+    }
+
+    /* --- Colecciones de contenido público: solo lectura ------------------ */
+    match /sitio_config/{id}          { allow read: if true; }
+    match /sitio_secciones/{id}       { allow read: if true; }
+    match /sitio_botones/{id}         { allow read: if true; }
+    match /sitio_cifras/{id}          { allow read: if true; }
+    match /sitio_beneficiarios/{id}   { allow read: if true; }
+    match /sitio_logo/{id}            { allow read: if true; }
+    match /noticias/{id}              { allow read: if true; }
+    match /cortes/{id}                { allow read: if true; }
+    match /documentos/{id}            { allow read: if true; }
+    match /faqs/{id}                  { allow read: if true; }
+    match /junta/{id}                 { allow read: if true; }
+    match /colaboradores/{id}         { allow read: if true; }
+    match /proyectos/{id}             { allow read: if true; }
+    match /servicios/{id}             { allow read: if true; }
+    match /tarifas/{id}               { allow read: if true; }
+    match /programa_config/{id}       { allow read: if true; }
+    match /programa_textos/{id}       { allow read: if true; }
+    match /programa_aliados/{id}      { allow read: if true; }
+    match /programa_secciones/{id}    { allow read: if true; }
+    match /programa_botones/{id}      { allow read: if true; }
+    match /programa_noticias/{id}     { allow read: if true; }
+    match /programa_galeria/{id}      { allow read: if true; }
+    match /programa_logo/{id}         { allow read: if true; }
+
+    /* --- Escritura: solo administradores autenticados ------------------- */
+    match /{document=**} {
+      allow create, update, delete: if firmado();
+    }
+  }
+}
