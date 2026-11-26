@@ -43,11 +43,12 @@ Mientras no apliques esto, el panel seguirá funcionando con la configuración a
 
 1. Entra a <https://cloud.appwrite.io/> y abre el proyecto `6af477840009bd198145`.
 2. Ve a **Storage** → bucket `6af477980014e69c5286` → pestaña **Permissions**.
-3. Configura:
+3. En **Settings → Platforms** deja registrados `https://www.asadabijagua.com` y, solo para pruebas, `http://localhost:5500`. El dominio sin `www` no está registrado y hace que las subidas fallen con «Failed to fetch»; `vercel.json` redirige ese dominio al `www`.
+4. Configura:
    - **Read**: `Any` (para que las imágenes se vean en el sitio público).
    - **Create / Update / Delete**: actualmente deben permitir la subida desde el navegador o el panel dará 403. Para restringirlos de verdad, mueve la subida a una **Appwrite Function** que valide la sesión y use una API key de servidor; ahí sí puedes quitar `Create` al público.
-4. No dejes `Create` cerrado mientras el panel siga subiendo las fotos directamente: ese es el error 403 que apareció antes.
-5. Revisa **Settings → API keys** y elimina cualquier llave que no uses o que esté expuesta en el código.
+5. No dejes `Create` cerrado mientras el panel siga subiendo las fotos directamente: ese es el error 403 que apareció antes.
+6. Revisa **Settings → API keys** y elimina cualquier llave que no uses o que esté expuesta en el código.
 
 ## Verificación
 

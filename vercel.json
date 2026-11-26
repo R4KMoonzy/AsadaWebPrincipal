@@ -1,4 +1,13 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": { "eq": "asadabijagua.com" } }],
+      "destination": "https://www.asadabijagua.com/$1",
+      "permanent": true
+    }
+  ]
 }

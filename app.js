@@ -5,6 +5,13 @@ import { getFirestore, collection, addDoc, getDocs, getDoc, doc, deleteDoc, upda
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut as firebaseSignOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { Client, Storage, ID } from "https://cdn.jsdelivr.net/npm/appwrite@16.0.2/+esm";
 
+/* Appwrite solo permite subir archivos desde www.asadabijagua.com.
+   Si alguien entra por el dominio sin www, lo llevamos al dominio canonical
+   para que el panel pueda subir logos, fotos y documentos. */
+if (location.hostname === "asadabijagua.com") {
+  location.replace("https://www.asadabijagua.com" + location.pathname + location.search + location.hash);
+}
+
 /* ---------- CONFIGURACION (plantilla) ---------- */
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyBJgoW1gFTgnoKFSuVvkGOKaNrVSROhvj4",
@@ -1111,10 +1118,15 @@ const pages = {
     try { const pc = await listDocs("programa_config", "creadoEn", "desc", 20); const bg = pc.find(r => r.clave === "Fondo Inicio del programa (hero)" && r.imagenId); if (bg) document.documentElement.style.setProperty("--prog-hero-bg", `url("${fileView(bg.imagenId)}")`); } catch (e) { }
     try { (await listDocs("programa_textos")).reverse().forEach(d => { if (d.clave && d.contenido) tx[d.clave] = d.contenido; }); } catch (e) { }
     try { const key = s => String(s || "").trim().toLowerCase();
-      (await listDocs("programa_aliados", "creadoEn", "asc")).forEach(d => {
-        const i = al.findIndex(x => key(x.nombre) === key(d.nombre));
-        if (i >= 0) { if (d.logoId) al[i] = { ...al[i], logoId: d.logoId }; }
-        else if (d.nombre) al.push({ ...d, nombre: d.nombre.trim() });
+      const docs = (await listDocs("programa_aliados", "creadoEn", "asc")).filter(x => x.visible !== "No" && x.visible !== false && x.nombre);
+      docs.forEach(d => {
+        const dk = key(d.nombre);
+        // Coincidencia exacta; si el aliado fue renombrado (ej. "Casitas" ->
+        // "Casitas Tenorio B&B and Farm"), reemplaza la entrada fija anterior.
+        let i = al.findIndex(x => key(x.nombre) === dk);
+        if (i < 0) i = al.findIndex(x => dk.startsWith(key(x.nombre) + " "));
+        const registro = { ...d, nombre: String(d.nombre).trim() };
+        if (i >= 0) al[i] = registro; else al.push(registro);
       }); } catch (e) { }
     try { customSecs = (await listDocs("programa_secciones", "orden", "asc", 200)).filter(x => x.visible !== "No" && x.visible !== false); } catch (e) { }
     try { customBtns = (await listDocs("programa_botones", "orden", "asc", 200)).filter(x => x.visible !== "No" && x.visible !== false); } catch (e) { }
@@ -1688,6 +1700,16 @@ const pages = {
       }
       dl.innerHTML = [...opts.entries()].map(([v,l]) => `<option value="${esc(v)}" label="${esc(l)}">${esc(l)}</option>`).join("");
     };
+    const fillAliadoOptions = () => {
+      const selAliado = form.elements["nombre"];
+      if (current !== "prog_aliado_logo" || !selAliado || selAliado.tagName !== "SELECT") return;
+      const nombres = new Map();
+      const add = v => { const n = String(v || "").trim(); if (n) nombres.set(n.toLowerCase(), n); };
+      (cache.length ? cache.map(x => x?.nombre) : PROG.aliados).forEach(add);
+      const anterior = selAliado.value;
+      selAliado.innerHTML = [...nombres.values()].map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join("");
+      if (nombres.has(String(anterior || "").toLowerCase())) selAliado.value = nombres.get(String(anterior).toLowerCase());
+    };
     const prefillByClave = (k) => {
       const claveEl = form.elements["clave"]; if (!claveEl) return;
       const valEl = form.elements["valor"] || form.elements["contenido"];
@@ -1843,7 +1865,7 @@ const pages = {
         imp.disabled = false;
       };
       if (k === "prog_boton" || k === "sitio_boton") fillDestOptions(k);
-      refresh().then(() => { if (k === "sitio_info" || k === "prog_texto" || k === "sitio_fondo" || k === "prog_fondo") prefillByClave(k); }); };
+      refresh().then(() => { if (k === "sitio_info" || k === "prog_texto" || k === "sitio_fondo" || k === "prog_fondo") prefillByClave(k); if (k === "prog_aliado_logo") fillAliadoOptions(); }); };
     const refresh = async () => { const k = sel.value, c = T[k]; lst.innerHTML = `<p class="empty">Cargando...</p>`;
       try { cache = await listDocs(c.c, c.o[0], c.o[1]); if (count) count.textContent = cache.length + " registro" + (cache.length === 1 ? "" : "s"); lst.innerHTML = cache.length ? cache.map(it => `<div class="admin-item"><div><strong>${esc(it.titulo || it.sector || it.pregunta || it.nombre || it.clave || it.etiqueta || (it.logoId ? "Logo del programa" : "Registro"))}</strong><span class="meta" style="display:block">${esc([it.vista, it.ubicacion, it.slug ? "#" + it.slug : "", it.destino, Array.isArray(it.bloques) ? it.bloques.length + " bloques" : "", it.visible === "No" ? "Oculto" : "", it.tipo, it.abonado ? "Abonado " + it.abonado : "", it.sector && it.titulo ? it.sector : "", fmt(it.fecha || it.creadoEn)].filter(Boolean).join(" · "))}</span></div><div style="display:flex;gap:8px;flex-wrap:wrap">${c.editable ? `<button class="btn sm" data-edit="${it.id}" type="button">Editar</button>` : ""}<button class="btn sm danger" data-id="${it.id}" type="button">Eliminar</button></div></div>`).join("") : `<p class="empty">Sin registros aún. Cree el primero desde el formulario.</p>`;
         $$("button[data-edit]", lst).forEach(b => b.onclick = () => { const it = cache.find(x => x.id === b.dataset.edit); if (!it) return; editing = it.id; if (formTitle) formTitle.textContent = "Editar registro"; setMode("Editando"); const sb = $("button[type=submit]", form); if (sb) sb.textContent = "Guardar cambios"; const ce = $("#cancel-edit"); if (ce) ce.hidden = false; msg.hidden = true;
@@ -1871,9 +1893,18 @@ const pages = {
           else data[n] = t === "number" ? Number(el.value || 0) : el.value; }
         if (c.blocks) data.bloques = await collectBlocks();
         if (editing) { await updateOne(c.c, editing, data); msg.textContent = "Cambios guardados correctamente."; }
+        else if (k === "prog_aliado_logo") {
+          const exist = cache.find(x => String(x?.nombre || "").trim().toLowerCase() === String(data.nombre || "").trim().toLowerCase());
+          if (exist) { await updateOne(c.c, exist.id, { nombre: data.nombre, logoId: data.logoId }); msg.textContent = "Logo del aliado actualizado correctamente."; }
+          else { await createDoc(c.c, data); msg.textContent = "Logo del aliado publicado correctamente."; }
+        }
         else { await createDoc(c.c, data); msg.textContent = "Publicado correctamente."; }
         form.reset(); resetEdit(); msg.className = "notice"; refresh();
-      } catch (er) { console.error(er); msg.className = "notice err"; const raw = String(er?.message || er?.response || "revise la conexión y los permisos"); const detalle = /quota|resource_exhausted|429/i.test(raw) ? "Se agotó la cuota de Firestore. Espere a que se renueve (se reinicia cada día) o mejore el plan de Firebase." : raw; msg.textContent = (er?.paso === "archivo" ? "No se pudo subir el archivo a Appwrite: " : er?.paso === "firestore" ? "No se pudo guardar el registro en Firestore: " : "No se pudo guardar: ") + detalle; }
+      } catch (er) { console.error(er); msg.className = "notice err"; const raw = String(er?.message || er?.response || "revise la conexión y los permisos");
+        const sinConexion = er?.paso === "archivo" && /failed to fetch|networkerror|network request failed/i.test(raw);
+        const detalle = /quota|resource_exhausted|429/i.test(raw) ? "Se agotó la cuota de Firestore. Espere a que se renueve (se reinicia cada día) o mejore el plan de Firebase." : raw;
+        msg.textContent = sinConexion ? "No se pudo conectar para subir el archivo. Use https://www.asadabijagua.com y revise su conexión."
+          : (er?.paso === "archivo" ? "No se pudo subir el archivo a Appwrite: " : er?.paso === "firestore" ? "No se pudo guardar el registro en Firestore: " : "No se pudo guardar: ") + detalle; }
       msg.hidden = false; btn.disabled = false; btn.textContent = editing ? "Guardar cambios" : "Publicar"; };
     $("#logout").onclick = async () => { try { await firebaseSignOut(auth); } catch (e) { } location.href = "/"; };
     const k0 = location.hash.slice(1);
