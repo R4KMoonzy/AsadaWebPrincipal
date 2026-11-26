@@ -1,0 +1,84 @@
+rules_version = '2';
+
+/* ==========================================================================
+   REGLAS DE SEGURIDAD — ASADA Bijagua
+   --------------------------------------------------------------------------
+   - El sitio público SOLO lee contenido publicado; nunca escribe.
+   - Toda edición (crear/editar/borrar) exige sesión activa de Firebase Auth
+     con el UID de administrador explícitamente autorizado.
+   - El formulario de reportes permite crear en "contactos" sin sesión,
+     validando los campos exactos del formulario (nombre, abonado, telefono,
+     sector, tipo, descripcion y estado) y sus límites de tamaño.
+   - Colecciones nuevas o de otros sistemas quedan cerradas por defecto.
+   ========================================================================== */
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function esAdmin() {
+      return request.auth != null && request.auth.uid == "fwKIC4mAZCbRoBAKZJoggW95Len1";
+    }
+
+    /* --- Reportes del público ------------------------------------------- */
+    match /contactos/{id} {
+      allow create: if request.resource.data.estado == 'Nuevo'
+                    && request.resource.data.keys().hasAll([
+                      'nombre',
+                      'abonado',
+                      'telefono',
+                      'sector',
+                      'tipo',
+                      'descripcion',
+                      'estado'
+                    ])
+                    && request.resource.data.nombre is string
+                    && request.resource.data.nombre.size() >= 2
+                    && request.resource.data.nombre.size() <= 100
+                    && request.resource.data.abonado is string
+                    && request.resource.data.abonado.size() >= 1
+                    && request.resource.data.abonado.size() <= 30
+                    && request.resource.data.telefono is string
+                    && request.resource.data.telefono.size() >= 7
+                    && request.resource.data.telefono.size() <= 30
+                    && request.resource.data.sector is string
+                    && request.resource.data.sector.size() >= 2
+                    && request.resource.data.sector.size() <= 150
+                    && request.resource.data.tipo is string
+                    && request.resource.data.tipo.size() >= 2
+                    && request.resource.data.tipo.size() <= 50
+                    && request.resource.data.descripcion is string
+                    && request.resource.data.descripcion.size() >= 5
+                    && request.resource.data.descripcion.size() <= 1500;
+      allow read, update, delete: if esAdmin();
+    }
+
+    /* --- Colecciones del portal principal ------------------------------- */
+    match /sitio_config/{id}          { allow read: if true; allow write: if esAdmin(); }
+    match /sitio_secciones/{id}       { allow read: if true; allow write: if esAdmin(); }
+    match /sitio_botones/{id}         { allow read: if true; allow write: if esAdmin(); }
+    match /sitio_cifras/{id}          { allow read: if true; allow write: if esAdmin(); }
+    match /sitio_beneficiarios/{id}   { allow read: if true; allow write: if esAdmin(); }
+    match /sitio_historia/{id}        { allow read: if true; allow write: if esAdmin(); }
+    match /sitio_tecnologia/{id}      { allow read: if true; allow write: if esAdmin(); }
+    match /sitio_cobertura/{id}       { allow read: if true; allow write: if esAdmin(); }
+    match /sitio_logo/{id}            { allow read: if true; allow write: if esAdmin(); }
+    match /noticias/{id}              { allow read: if true; allow write: if esAdmin(); }
+    match /cortes/{id}                { allow read: if true; allow write: if esAdmin(); }
+    match /documentos/{id}            { allow read: if true; allow write: if esAdmin(); }
+    match /faqs/{id}                  { allow read: if true; allow write: if esAdmin(); }
+    match /junta/{id}                 { allow read: if true; allow write: if esAdmin(); }
+    match /colaboradores/{id}         { allow read: if true; allow write: if esAdmin(); }
+    match /proyectos/{id}             { allow read: if true; allow write: if esAdmin(); }
+    match /servicios/{id}             { allow read: if true; allow write: if esAdmin(); }
+    match /tarifas/{id}               { allow read: if true; allow write: if esAdmin(); }
+
+    /* --- Colecciones del programa ambiental ----------------------------- */
+    match /programa_config/{id}       { allow read: if true; allow write: if esAdmin(); }
+    match /programa_textos/{id}       { allow read: if true; allow write: if esAdmin(); }
+    match /programa_aliados/{id}      { allow read: if true; allow write: if esAdmin(); }
+    match /programa_secciones/{id}    { allow read: if true; allow write: if esAdmin(); }
+    match /programa_botones/{id}      { allow read: if true; allow write: if esAdmin(); }
+    match /programa_noticias/{id}     { allow read: if true; allow write: if esAdmin(); }
+    match /programa_galeria/{id}      { allow read: if true; allow write: if esAdmin(); }
+    match /programa_logo/{id}         { allow read: if true; allow write: if esAdmin(); }
+  }
+}

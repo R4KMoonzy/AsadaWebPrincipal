@@ -32,9 +32,10 @@ const DEFAULT_PAGE_TEXT = {
   "Calidad del agua - descripción": "Control y vigilancia del agua de consumo.",
   "Calidad del agua - contenido": "La ASADA realiza controles periodicos de la calidad del agua. Publique aqui los resultados mas recientes y enlace los informes en Transparencia.\n\nConsultar informes: /documentos",
   "Trámites - título": "Trámites",
-  "Trámites - descripción": "Solicitudes, requisitos y formularios del servicio de agua.",
-  "Trámites - requisitos": "La lista actualizada de requisitos y formularios se entrega en la oficina de la ASADA, frente a Tienda Nidia, Bijagua centro. Escríbanos a asadabijagua@gmail.com o llame al 2466-86-71 para recibirla.",
-  "Trámites - proceso": "La solicitud se presenta a la Junta Directiva y se resuelve según la disponibilidad del servicio."
+  "Trámites - descripción": "Realice sus solicitudes de agua potable y alcantarillado sanitario en Bijagua y comunidades atendidas. Aquí encontrará los formularios vigentes, una guía general de requisitos y el proceso de atención. Si necesita orientación, llame al +506 2466 8671 o escriba a asadabijagua@gmail.com.",
+  "Trámites - requisitos": "Cada formulario indica los requisitos, condiciones y plazos aplicables a su trámite. Descargue el que corresponda, complételo y preséntelo en la oficina de la ASADA, frente a Tienda Nidia, Bijagua centro, de lunes a viernes de 8:00 a.m. a 4:00 p.m. También puede consultar la lista actualizada al correo asadabijagua@gmail.com o al teléfono +506 2466 8671.",
+  "Trámites - proceso": "1. Descargue y complete el formulario según lo que desea solicitar.\n\n2. Preséntelo en la oficina de la ASADA con la documentación que indique el formulario.\n\n3. La Junta Directiva revisa la solicitud y resuelve según la disponibilidad del servicio en el sector y la normativa vigente.\n\n4. Para consultar el estado de su trámite, comuníquese al +506 2466 8671 o escriba a asadabijagua@gmail.com.",
+  "Trámites - formularios": "Seleccione el formulario según el trámite que desea realizar. Cada descarga incluye sus requisitos y condiciones. Si no sabe cuál necesita, consulte en la oficina o llame al +506 2466 8671."
 };
 /* Ejemplos que se muestran debajo de cada campo del panel (no se guardan ni se usan como valor). */
 const FIELD_EXAMPLES = {
@@ -83,9 +84,10 @@ const FIELD_EXAMPLES = {
   "Tarifas - nota": "Tarifas aprobadas por la Intendencia de Agua de ARESEP, vigentes del 1 de enero al 31 de diciembre de 2026. El cargo fijo de ₡ 2 800 mensuales aplica a todas las categorías del Servicio de Acueducto. La Tarifa de Protección del Recurso Hídrico se cobra por metro cúbico consumido. «Tarifa anterior» es la que estaba vigente antes del 1 de enero de 2026.",
   "Calidad del agua - título": "Calidad del agua", "Calidad del agua - descripción": "Control y vigilancia del agua de consumo.",
   "Calidad del agua - contenido": "Publicamos aquí los resultados de los análisis periódicos del agua.",
-  "Trámites - título": "Trámites", "Trámites - descripción": "Solicitudes y formularios del servicio de agua potable.",
-  "Trámites - requisitos": "Identificación, plano catastrado y solicitud formal.",
-  "Trámites - proceso": "La solicitud se presenta a la Junta Directiva y se resuelve según disponibilidad.",
+  "Trámites - título": "Trámites", "Trámites - descripción": "Ejemplo: Realice sus solicitudes en Bijagua. Aquí encontrará los formularios vigentes, requisitos y el proceso de atención. Llame al +506 2466 8671 si necesita orientación.",
+  "Trámites - requisitos": "Ejemplo: Cada formulario indica los requisitos, condiciones y plazos aplicables. Preséntelo en la oficina de la ASADA, frente a Tienda Nidia, Bijagua centro, de lunes a viernes de 8:00 a.m. a 4:00 p.m.",
+  "Trámites - proceso": "Ejemplo: 1. Descargue y complete el formulario. 2. Preséntelo en la oficina con la documentación indicada. 3. La Junta Directiva revisa y resuelve según disponibilidad. 4. Consulte el estado al +506 2466 8671.",
+  "Trámites - formularios": "Ejemplo: Seleccione el formulario según su trámite. Cada descarga incluye requisitos y condiciones. Si no sabe cuál necesita, llame al +506 2466 8671.",
   // Quienes somos
   "Nosotros - título": "Quienes somos", "Nosotros - descripción": "La ASADA Bijagua es una asociación comunal que gestiona el agua potable del distrito.",
   "Nosotros - historia": "Desde 1965, los vecinos construyeron la primera captación. En 2010 se constituyó la ASADA Bijagua.",
@@ -820,20 +822,10 @@ const initWaterDrops = () => {
 };
 
 const mountLayout = () => {
-  if (!$("#site-loader") && document.body.dataset.page !== "admin") {
-    document.body.insertAdjacentHTML("afterbegin", `<div id="site-loader" class="site-loader" aria-hidden="true">
-      <div class="loader-content">
-        <img class="loader-mark" src="logo.svg" alt="" width="86" height="86" fetchpriority="high" decoding="async">
-        <div class="loader-name">ASADA Bijagua</div>
-        <div class="loader-sub">Agua para nuestra comunidad</div>
-      </div>
-      <div class="loader-ocean"><div class="loader-wave w1"></div><div class="loader-wave w2"></div><div class="loader-wave w3"></div><div class="loader-splash"></div></div>
-    </div>`);
-  }
   $("#site-header").innerHTML = `
   <header class="header">
     <div class="header-main"><div class="wrap header-wrap">
-      <a class="brand" href="/"><img src="logo.svg" alt="Logotipo ASADA Bijagua" width="52" height="52" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><span><span class="site-name">ASADA Bijagua</span><small class="site-subtitle">Asociación Administradora del Acueducto, Upala</small></span></a>
+      <a class="brand" href="/"><img src="logo.png" alt="Logotipo ASADA Bijagua" width="52" height="52" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><span><span class="site-name">ASADA Bijagua</span><small class="site-subtitle">Asociación Administradora del Acueducto, Upala</small></span></a>
       <nav class="nav" id="nav" aria-label="Principal">${navHtml}</nav>
       <div class="header-tools"><button class="header-search-btn" type="button" id="header-search" aria-label="Buscar en el sitio" aria-expanded="false" aria-controls="header-search-panel">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-4-4"/></svg></button></div>
@@ -855,7 +847,7 @@ const mountLayout = () => {
   $("#site-footer").innerHTML = `
   <footer class="footer aya-footer"><div class="aya-footer-wave" aria-hidden="true"></div><div class="wrap">
     <div class="aya-footer-grid">
-      <div class="aya-footer-brand"><img src="logo.svg" alt="ASADA Bijagua" width="62" height="62" loading="lazy" decoding="async" onerror="this.style.display='none'"><h4 class="site-name">ASADA Bijagua</h4><p>Administramos y protegemos el servicio de agua potable de la comunidad de Bijagua, Upala.</p>
+      <div class="aya-footer-brand"><img src="logo.png" alt="ASADA Bijagua" width="62" height="62" loading="lazy" decoding="async" onerror="this.style.display='none'"><h4 class="site-name">ASADA Bijagua</h4><p>Administramos y protegemos el servicio de agua potable de la comunidad de Bijagua, Upala.</p>
         <div class="lf-social-links"><a href="/contacto" aria-label="Escríbanos" title="Escríbanos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></a><a href="/programa" aria-label="Programa ambiental" title="Programa ambiental"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3c0 7 4 12 14 14 0-9-5-14-14-14zm0 14c2 2 5 3 8 4"/></svg></a><a href="/#cobertura" aria-label="Ver cobertura" title="Ver cobertura"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3L3 6v15l6-3 6 3 6-3V3l-6 3-6-3zm0 0v15m6-12v15"/></svg></a></div></div>
       <div class="aya-footer-contact"><h4>Información de contacto</h4><ul class="list-footer">
         <li><span>Dirección</span><span class="site-dir">${SITE.direccion}</span></li>
@@ -937,17 +929,7 @@ const mountLayout = () => {
     decorateButtons(n);
   }))).observe(document.body, { childList: true, subtree: true });
   markLogos();
-  const hideLoader = () => { const l = $("#site-loader"); if (!l || l.classList.contains("done")) return; l.classList.add("done"); document.body.classList.add("site-ready"); setTimeout(() => l.remove(), 700); };
-  // La ola se muestra mientras cargan la fuente y las imágenes, sin dejar la pantalla bloqueada demasiado tiempo.
-  const readyLoader = async () => {
-    try { await Promise.race([document.fonts?.ready || Promise.resolve(), new Promise(r => setTimeout(r, 1200))]); } catch (e) { }
-    await new Promise(r => setTimeout(r, 420));
-    hideLoader();
-  };
-  if ($("#site-loader")) {
-    if (document.readyState === "complete") readyLoader(); else window.addEventListener("load", readyLoader, { once: true });
-    setTimeout(hideLoader, 2300);
-  } else document.body.classList.add("site-ready");
+  document.body.classList.add("site-ready");
   if (document.body.dataset.theme !== "programa") { loadSiteConfig(); initWaterDrops(); }
   initAyaUI();
   const modal = $("#pin-modal");
@@ -1012,14 +994,17 @@ const cutRow = c => {
 };
 
 /* ---------- LOGO DE LA ASADA (editable desde el panel) ---------- */
-const LOGO_SEL = ".brand img, .aya-footer-brand img, .site-logo, .loader-mark";
+const LOGO_SEL = ".brand img, .aya-footer-brand img, .site-logo";
+// El logo oficial ya está incluido como logo.png; si el panel sigue teniendo ese mismo
+// archivo, no hay que reemplazar las imágenes (evita un cambio innecesario al cargar).
+const BUNDLED_LOGO_ID = "6aff14750019b250a8b9";
 const markLogos = () => $$(LOGO_SEL).forEach(img => {
   if (img.dataset.logoBound) return; img.dataset.logoBound = "1";
   const show = () => img.classList.add("loaded");
   img.addEventListener("load", show);
   img.addEventListener("error", () => {
     // Si falla un logo subido, volvemos al isotipo local en lugar de dejar un cuadro vacío.
-    if (!img.src.endsWith("/logo.svg")) img.src = "/logo.svg";
+    if (!img.src.endsWith("/logo.png")) img.src = "/logo.png";
     show();
   });
   if (img.complete && img.naturalWidth > 0) show();
@@ -1032,15 +1017,17 @@ const applySiteLogo = async () => {
     const [l] = await listDocs("sitio_logo", "creadoEn", "desc", 1);
     if (!l?.logoId) return;
     const src = fileView(l.logoId);
-    $$(LOGO_SEL).forEach(img => {
-      img.classList.remove("loaded"); img.style.display = ""; img.src = src;
-      if (img.complete && img.naturalWidth > 0) img.classList.add("loaded");
-    });
-    const fav = $('link[rel="icon"]'); if (fav) fav.href = src;
-    const side = $(".aya-footer-brand");
-    if (side && !side.querySelector("img")) {
-      side.insertAdjacentHTML("afterbegin", `<img class="site-logo" src="${src}" alt="ASADA Bijagua">`);
-      markLogos();
+    if (l.logoId !== BUNDLED_LOGO_ID) {
+      $$(LOGO_SEL).forEach(img => {
+        img.classList.remove("loaded"); img.style.display = ""; img.src = src;
+        if (img.complete && img.naturalWidth > 0) img.classList.add("loaded");
+      });
+      const fav = $('link[rel="icon"]'); if (fav) fav.href = src;
+      const side = $(".aya-footer-brand");
+      if (side && !side.querySelector("img")) {
+        side.insertAdjacentHTML("afterbegin", `<img class="site-logo" src="${src}" alt="ASADA Bijagua">`);
+        markLogos();
+      }
     }
   } catch (e) { }
 };
@@ -1353,10 +1340,19 @@ const pages = {
       const cont = cfg("Calidad del agua - contenido");
       if (cont) { const box = $("#calidad-texto") || $("#calidad-content"); if (box) box.innerHTML = paras(cont); }
     } else if (file === "afiliacion") {
-      setHead("Trámites - título", "Trámites - descripción", "Trámites", "Solicitudes y formularios del servicio de agua.");
-      const req = cfg("Trámites - requisitos"), proc = cfg("Trámites - proceso");
+      setHead("Trámites - título", "Trámites - descripción", "Trámites", "Realice sus solicitudes de agua potable y alcantarillado sanitario en Bijagua y comunidades atendidas. Aquí encontrará los formularios vigentes, una guía general de requisitos y el proceso de atención. Si necesita orientación, llame al +506 2466 8671 o escriba a asadabijagua@gmail.com.");
+      const req = cfg("Trámites - requisitos"), proc = cfg("Trámites - proceso"), forms = cfg("Trámites - formularios");
       if (req && $("#afiliacion-req")) $("#afiliacion-req").innerHTML = `<h3>Requisitos</h3><div class="prose">${paras(req)}</div>`;
       if (proc && $("#afiliacion-proc")) $("#afiliacion-proc").innerHTML = `<h3>Proceso</h3><div class="prose">${paras(proc)}</div>`;
+      if (forms && $("#afiliacion-forms-text")) $("#afiliacion-forms-text").innerHTML = paras(forms);
+      const box = $("#afiliacion-forms");
+      if (box) try {
+        const items = (await listDocs("documentos")).filter(d => d.categoria === "Formulario" && d.archivoId);
+        if (items.length) {
+          items.sort((a, b) => String(a.titulo || "").localeCompare(String(b.titulo || ""), "es"));
+          box.innerHTML = items.map(d => `<div class="row"><div><span class="tag">Formulario</span></div><div><h3>${esc(d.titulo)}</h3><p>${esc(d.descripcion || "")}</p></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("");
+        }
+      } catch (e) { console.error(e); }
     }
 
     await renderSitePageSections(pageNames[file] || "");
@@ -1475,11 +1471,12 @@ const pages = {
         ["Calidad del agua - descripción", "Descripción de la página", "area"],
         ["Calidad del agua - contenido", "Contenido principal", "area"]
       ]},
-      { id: "pag_afiliacion", l: "Página: Trámites", page: "afiliacion.html", d: "Encabezado, requisitos y proceso de la página de trámites.", fields: [
+      { id: "pag_afiliacion", l: "Página: Trámites", page: "afiliacion.html", d: "Encabezado, requisitos, proceso y texto de la sección de formularios de la página de trámites.", fields: [
         ["Trámites - título", "Título de la página", "text"],
         ["Trámites - descripción", "Descripción de la página", "area"],
         ["Trámites - requisitos", "Requisitos", "area"],
-        ["Trámites - proceso", "Proceso", "area"]
+        ["Trámites - proceso", "Proceso", "area"],
+        ["Trámites - formularios", "Texto de la sección de formularios", "area"]
       ]},
       { id: "pag_nosotros", l: "Página: Quienes somos", page: "nosotros.html", d: "Encabezado, historia, misión, visión y textos de Junta Directiva y colaboradores.", fields: [
         ["Nosotros - título", "Título de la página", "text"],
