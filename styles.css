@@ -78,6 +78,7 @@ time,.meta{font-size:12.5px;color:var(--mute)}
 .lift{margin-top:-60px;position:relative;z-index:2;padding-top:0}
 /* filas */
 .rows{display:grid;gap:14px}
+#afiliacion-forms .row p{white-space:pre-line;line-height:1.55}
 .row{display:grid;grid-template-columns:170px 1fr auto;gap:24px;padding:20px 22px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--sky);border-radius:var(--radius);box-shadow:var(--shadow);align-items:start}
 .row h3{font-size:1.1rem;margin-bottom:4px}.row .meta{display:block}
 .tag{display:inline-flex;align-items:center;font:700 11.5px 'Montserrat',sans-serif;padding:3px 10px;border-radius:20px;white-space:nowrap;color:var(--blue);background:var(--tint)}
@@ -1159,7 +1160,7 @@ body.site-ready .header{animation:fadeSoft .5s ease both}
 .admin-tab-panel .field textarea{min-height:76px;resize:vertical}
 .admin-tab-panel .field .si-saved{margin-top:4px;font-size:.74rem;color:#5a7185}
 /* Ejemplos textuales bajo cada campo del panel (no son valores: solo orientan) */
-.field-example{display:block;margin-top:5px;padding:5px 8px;border-left:3px solid #b9d7ea;border-radius:0 6px 6px 0;background:#f4f9fd;color:#46647a;font-size:.74rem;line-height:1.35;font-weight:500}
+.field-example{display:block;margin-top:5px;padding:5px 8px;border-left:3px solid #b9d7ea;border-radius:0 6px 6px 0;background:#f4f9fd;color:#46647a;font-size:.74rem;line-height:1.35;font-weight:500;white-space:pre-line}
 .hide-examples .field-example{display:none}
 .admin-examples-toggle{display:inline-flex;align-items:center;gap:7px;width:auto;margin:0 0 12px;color:var(--mute);font-size:.8rem;font-weight:600;cursor:pointer}
 .admin-examples-toggle input{width:auto;margin:0;accent-color:var(--blue)}

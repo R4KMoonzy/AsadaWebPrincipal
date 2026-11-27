@@ -153,7 +153,8 @@ const FIELD_EXAMPLES = {
   "prog_texto.clave": "Misión (también: Historia, Valores, Objetivo principal…)",
   "sitio_logo.logoId": "Logo oficial de la ASADA, en PNG con fondo transparente",
   "prog_logo.logoId": "Logo del programa Creciendo por la vida",
-  "documento.archivoId": "Reglamento de tarifas 2026.pdf"
+  "documento.archivoId": "Reglamento de tarifas 2026.pdf",
+  "documento.descripcion": "**Procedimiento:** trámite y código del formulario.\n\n**Requisitos del usuario:**\n* Completar el formulario.\n* Presentar identificación.\n\n**Consideraciones adicionales:** plazos y condiciones."
 };
 // La etiqueta del hero se fija de inmediato para que no se vea un texto anterior
 // mientras se cargan los valores guardados desde Firestore.
@@ -269,6 +270,10 @@ const storage = new Storage(new Client().setEndpoint(APPWRITE_CONFIG.endpoint).s
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmtReq = t => String(t ?? "").split("\n").map(line => {
+  const strong = esc(line).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  return strong.replace(/^(\s*)\*\s+/, "$1• ").replace(/\*([^*\n]+?)\*/g, "<em>$1</em>");
+}).join("\n");
 const toDate = v => v?.toDate ? v.toDate() : (v ? new Date(String(v).length === 10 ? v + "T00:00:00" : v) : null);
 const fmt = v => { const d = toDate(v); return d && !isNaN(d) ? d.toLocaleDateString("es-CR", { day: "numeric", month: "long", year: "numeric" }) : ""; };
 const fileView = id => id ? String(storage.getFileView(APPWRITE_CONFIG.bucketId, id)) : "";
@@ -1252,7 +1257,7 @@ const pages = {
     let all = [];
     const draw = () => { if (!box) return; const t = q ? q.value.toLowerCase() : "", c = cat ? cat.value : "";
       const r = all.filter(d => (!c || d.categoria === c) && (!t || (d.titulo + " " + (d.descripcion || "")).toLowerCase().includes(t)));
-      r.length ? box.innerHTML = `<div class="rows">${r.map(d => `<div class="row"><div><span class="tag">${esc(d.categoria || "Documento")}</span></div><div><h3>${esc(d.titulo)}</h3><p>${esc(d.descripcion || "")}</p><span class="meta">${fmt(d.creadoEn)}</span></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("")}</div>` : empty(box, "No se encontraron documentos."); };
+      r.length ? box.innerHTML = `<div class="rows">${r.map(d => `<div class="row"><div><span class="tag">${esc(d.categoria || "Documento")}</span></div><div><h3>${esc(d.titulo)}</h3><p>${fmtReq(d.descripcion || "")}</p><span class="meta">${fmt(d.creadoEn)}</span></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("")}</div>` : empty(box, "No se encontraron documentos."); };
     try { all = await listDocs("documentos"); draw(); } catch (e) { console.error(e); if (box) fail(box); }
     if (q) q.oninput = draw; if (cat) cat.onchange = draw;
     await renderSitePageSections("Transparencia/Documentos");
@@ -1362,7 +1367,7 @@ const pages = {
         const items = (await listDocs("documentos")).filter(d => d.categoria === "Formulario" && d.archivoId);
         if (items.length) {
           items.sort((a, b) => String(a.titulo || "").localeCompare(String(b.titulo || ""), "es"));
-          box.innerHTML = items.map(d => `<div class="row"><div><span class="tag">Formulario</span></div><div><h3>${esc(d.titulo)}</h3><p>${esc(d.descripcion || "")}</p></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("");
+          box.innerHTML = items.map(d => `<div class="row"><div><span class="tag">Formulario</span></div><div><h3>${esc(d.titulo)}</h3><p>${fmtReq(d.descripcion || "")}</p></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("");
         }
       } catch (e) { console.error(e); }
     }
@@ -1532,7 +1537,7 @@ const pages = {
       noticia: { t: "Noticias del sitio", c: "noticias", o: ["creadoEn", "desc"], editable: 1, f: [["titulo", "Titulo", "text"], ["resumen", "Resumen breve", "text"], ["descripcion", "Contenido completo", "area"], ["imagenId", "Imagen principal", "file", "image/*"]] },
       corte: { t: "Cortes de agua", c: "cortes", o: ["fecha", "desc"], editable: 1, fix: { tipo: "Corte de agua" }, f: [["sector", "Sector afectado", "text"], ["fecha", "Fecha", "date"], ["horario", "Horario", "text"], ["motivo", "Motivo", "area"], ["estado", "Estado", "select", estados]] },
       mantenimiento: { t: "Mantenimientos", c: "cortes", o: ["fecha", "desc"], editable: 1, fix: { tipo: "Mantenimiento" }, f: [["sector", "Sector o infraestructura", "text"], ["fecha", "Fecha", "date"], ["horario", "Horario", "text"], ["motivo", "Descripcion de los trabajos", "area"], ["estado", "Estado", "select", estados]] },
-      documento: { t: "Documentos y transparencia", c: "documentos", o: ["creadoEn", "desc"], editable: 1, f: [["titulo", "Titulo", "text"], ["categoria", "Categoria", "select", ["Reglamento", "Formulario", "Informe"]], ["descripcion", "Descripcion", "text"], ["archivoId", "Archivo PDF", "file", "application/pdf"]] },
+      documento: { t: "Documentos y transparencia", c: "documentos", o: ["creadoEn", "desc"], editable: 1, f: [["titulo", "Titulo", "text"], ["categoria", "Categoria", "select", ["Reglamento", "Formulario", "Informe"]], ["descripcion", "Descripcion", "area"], ["archivoId", "Archivo PDF", "file", "application/pdf"]] },
       proyecto: { t: "Proyectos", c: "proyectos", o: ["creadoEn", "desc"], editable: 1, f: [["titulo", "Titulo", "text"], ["estado", "Estado", "select", ["Planificado", "En ejecucion", "Concluido"]], ["descripcion", "Descripcion", "area"], ["imagenId", "Imagen", "file", "image/*"]] },
       faq: { t: "Preguntas frecuentes", c: "faqs", o: ["orden", "asc"], editable: 1, f: [["pregunta", "Pregunta", "text"], ["respuesta", "Respuesta", "area"], ["orden", "Orden de aparicion", "number"]] },
       junta: { t: "Junta directiva", c: "junta", o: ["orden", "asc"], editable: 1, f: [["nombre", "Nombre completo", "text"], ["cargo", "Cargo", "text"], ["orden", "Orden jerarquico", "number"], ["fotoId", "Fotografia", "file", "image/*"]] },
