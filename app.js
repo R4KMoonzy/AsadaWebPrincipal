@@ -453,7 +453,8 @@ const renderSitePageSections = async (pagina) => {
     host.hidden = false;
     host.innerHTML = secs.map(s => {
       const body = (Array.isArray(s.bloques) && s.bloques.length) ? `<div class="cms-body">${renderBlocks(s.bloques)}</div>` : renderBlocks(null, s);
-      return `<section class="section site-custom-sec"><div class="wrap"><div class="sec-head"><h2>${esc(s.titulo || "")}</h2></div>${body}</div></section>`;
+      const anchor = "sec-" + slugify(s.slug || s.titulo || s.id);
+      return `<section class="section site-custom-sec" id="${esc(anchor)}"><div class="wrap"><div class="sec-head"><h2>${esc(s.titulo || "")}</h2></div>${body}</div></section>`;
     }).join("");
   } catch (e) { host.hidden = true; }
 };
@@ -753,27 +754,212 @@ const initAyaUI = () => {
     e.preventDefault(); b.parentElement.classList.toggle("open");
   }));
 
-  // Búsqueda rápida del encabezado
+  // Búsqueda global del encabezado: sitio, trámites, formularios, documentos y Programa
   const sBtn = $("#header-search"), sPanel = $("#header-search-panel"), sInput = $("#site-search"), sRes = $("#site-search-results");
   if (sBtn && sPanel && sInput && sRes) {
-    const links = [
-      ["Inicio", "/"], ["Nuestros servicios", "/servicios"], ["Quienes somos", "/nosotros"],
-      ["Nuestra historia y cobertura", "/#historia"], ["Avisos de servicio", "/cortes"],
-      ["Noticias", "/noticias"], ["Tarifas", "/tarifas"], ["Calidad del agua", "/calidad-agua"],
-      ["Trámites", "/afiliacion"], ["Transparencia", "/documentos"],
-      ["Programa de Educación Ambiental", "/programa"], ["Preguntas frecuentes", "/faq"], ["Contacto", "/contacto"]
-    ];
+    const plain = s => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const stem = w => w.length > 4 && w.endsWith("es") ? w.slice(0, -2) : (w.length > 3 && w.endsWith("s") ? w.slice(0, -1) : w);
+    const tokens = s => [...new Set(plain(s).replace(/[^a-z0-9]+/g, " ").split(" ").filter(Boolean).map(stem))];
+    const SYN = {
+      tramite: ["tramite", "formulario", "solicitud", "requisito", "documento"],
+      formulario: ["formulario", "tramite", "solicitud", "descargar", "pdf"],
+      documento: ["documento", "transparencia", "reglamento", "informe", "formulario", "pdf"],
+      documentacion: ["documento", "transparencia", "reglamento", "informe", "formulario", "pdf"],
+      doucmentacion: ["documento", "transparencia", "reglamento", "informe", "formulario", "pdf"],
+      doucmento: ["documento", "transparencia", "reglamento", "informe"],
+      transparencia: ["documento", "reglamento", "informe", "formulario"],
+      constancia: ["constancia", "certificacion", "certificado", "disponibilidad"],
+      certificacion: ["certificacion", "constancia", "certificado"],
+      certificado: ["certificado", "certificacion", "constancia"],
+      aviso: ["aviso", "noticia", "corte", "mantenimiento"],
+      noticia: ["noticia", "aviso", "comunicado"],
+      fuga: ["fuga", "averia", "emergencia", "reparacion", "reporte"],
+      averia: ["averia", "fuga", "emergencia", "reparacion", "reporte"],
+      agua: ["agua", "potable", "acueducto", "abastecimiento"],
+      tarifa: ["tarifa", "precio", "costo", "cuota", "pago"],
+      aliado: ["aliado", "organizacion", "empresa", "institucion"],
+      programa: ["programa", "ambiental", "educacion", "creciendo", "vida"]
+    };
+    const makeEntry = (t, h, kw = "", sub = "", short = false) => {
+      const text = `${t} ${sub} ${kw}`;
+      return { t, h: toHref(h), sub, short, key: plain(text), k: new Set(tokens(text)) };
+    };
+    const index = [];
+    const add = (t, h, kw, sub, short = false) => index.push(makeEntry(t, h, kw, sub, short));
+
+    // Accesos directos y páginas del sitio (incluye el Programa).
+    add("Inicio", "/", "asada bijagua agua potable inicio cobertura", "Página principal", true);
+    add("Trámites y formularios", "/afiliacion", "tramites tramite formularios formulario descargar solicitudes requisitos cambio nombre titular conexion traslado diametro certificaciones constancia disponibilidad hudrica suspension eliminacion servicio", "Formularios y requisitos", true);
+    add("Descargar formularios", "/afiliacion#afiliacion-formularios", "formularios formulario tramites solicitudes descargar pdf", "Formularios vigentes", true);
+    add("Transparencia y documentos", "/documentos", "documentos documento documentacion transparencia reglamentos informes formularios descargar pdf", "Documentación pública", true);
+    add("Requisitos de trámites", "/afiliacion#afiliacion-req", "requisitos documentos cedula plano escritura tramites formularios", "Trámites");
+    add("Proceso de atención", "/afiliacion#afiliacion-proc", "proceso pasos solicitud junta directiva atencion tramites", "Trámites");
+    add("Nuestros servicios", "/servicios", "servicios acueducto alcantarillado conexion reparacion mantenimiento", "Servicios");
+    add("Quiénes somos y junta directiva", "/nosotros", "quienes somos junta directiva colaboradores mision vision organizacion comunitaria", "Institución");
+    add("Nuestra historia", "/#historia", "historia anos hitos evolucion acueducto bijagua", "Institución");
+    add("Cobertura y sectores", "/#cobertura", "cobertura sectores abonados redes kilómetros hidrantes tanques upala bijagua", "Institución");
+    add("Avisos de servicio", "/cortes", "avisos cortes de agua mantenimiento sector horario estado programado", "Información útil", true);
+    add("Noticias", "/noticias", "noticias avisos comunidad actividades", "Información útil");
+    add("Tarifas 2026", "/tarifas", "tarifas 2026 precios costo cuota bloque consumo acueducto proteccion recurso hidrico", "Servicios", true);
+    add("Calidad del agua", "/calidad-agua", "calidad agua potable analisis cloro laboratorio control pruebas", "Servicios");
+    add("Proyectos", "/proyectos", "proyectos obras planificado ejecucion concluido inversión", "Institución");
+    add("Preguntas frecuentes", "/faq", "preguntas frecuentes dudas respuestas help ayuda", "Ayuda", true);
+    add("Contacto y reporte de averías", "/contacto", "contacto reportar averia fuga emergencia telefono correo whatsapp direccion horario", "Ayuda", true);
+    add("Programa de Educación Ambiental", "/programa", "programa educacion ambiental creciendo por la vida agua bosque comunidad", "Programa", true);
+    add("Historia del programa", "/programa#i-historia", "programa historia evolucion ambiental", "Programa");
+    add("Misión y visión del programa", "/programa#i-mision", "programa mision vision objetivo filosofia", "Programa");
+    add("Ejes y grupos del programa", "/programa#i-ejes", "programa ejes tematicos grupos meta voluntariado", "Programa");
+    add("Impacto del programa", "/programa#i-impacto", "programa impacto resultados beneficiarios", "Programa");
+    add("Aliados del programa", "/programa#aliados", "programa aliados organizaciones empresas instituciones apoyo", "Programa", true);
+    add("Noticias del programa", "/programa#noticias", "programa noticias actividades ambientales", "Programa");
+    add("Galería del programa", "/programa#galeria", "programa galeria fotos actividades", "Programa");
+
+    // El índice de Firestore se carga una sola vez y se renueva cada 5 minutos.
+    let dynamic = [], dynamicAt = 0, dynamicTask = null, loadingDynamic = false;
+    const stringsOf = v => {
+      if (typeof v === "string") return v;
+      if (Array.isArray(v)) return v.map(stringsOf).join(" ");
+      if (v && typeof v === "object") return Object.entries(v)
+        .filter(([k]) => !/^(url|destino|imagenId|archivoId|logoId|fotoId)$/i.test(k))
+        .map(([, x]) => stringsOf(x)).join(" ");
+      return "";
+    };
+    const pageOfSection = p => {
+      const v = plain(p).replace(/^seccion en:\s*/, "").trim();
+      if (/inicio/.test(v)) return "/";
+      if (/contacto/.test(v)) return "/contacto";
+      if (/nosotros/.test(v)) return "/nosotros";
+      if (/servicios/.test(v)) return "/servicios";
+      if (/tarifas/.test(v)) return "/tarifas";
+      if (/calidad/.test(v)) return "/calidad-agua";
+      if (/tramites|afiliacion/.test(v)) return "/afiliacion";
+      if (/transparencia|documentos/.test(v)) return "/documentos";
+      if (/proyectos/.test(v)) return "/proyectos";
+      if (/faq|preguntas/.test(v)) return "/faq";
+      return "/";
+    };
+    const pageOfClue = c => {
+      const v = plain(c);
+      if (/tramite|afiliacion/.test(v)) return "/afiliacion";
+      if (/transparencia|documento/.test(v)) return "/documentos";
+      if (/programa|ambiental/.test(v)) return "/programa";
+      if (/contacto|averia|emergencia/.test(v)) return "/contacto";
+      if (/tarifa/.test(v)) return "/tarifas";
+      if (/servicio/.test(v)) return "/servicios";
+      if (/calidad/.test(v)) return "/calidad-agua";
+      if (/nosotros|junta|historia|cobertura/.test(v)) return "/nosotros";
+      if (/noticia/.test(v)) return "/noticias";
+      if (/faq|pregunta/.test(v)) return "/faq";
+      return "/";
+    };
+    const progAnchor = {
+      "Resumen": "#inicio", "Historia": "#i-historia", "Misión": "#i-mision", "Visión": "#i-mision",
+      "Objetivo principal": "#i-mision", "Filosofía": "#i-filosofia", "Valores": "#i-filosofia",
+      "Ejes temáticos": "#i-ejes", "Grupos meta": "#i-ejes"
+    };
+    const buildDynamic = async () => {
+      const out = [];
+      const load = async (c, o, dir, n, fn) => {
+        try { (await listDocs(c, o, dir, n)).forEach(fn); } catch (e) { /* el índice fijo sigue disponible */ }
+      };
+      await Promise.all([
+        load("documentos", "creadoEn", "desc", 200, d => {
+          const cat = String(d.categoria || "Documento"), form = /formulario/i.test(cat);
+          out.push(makeEntry(d.titulo || "Documento",
+            `${form ? "/afiliacion" : "/documentos"}#doc-${d.id}`,
+            `${cat} ${d.descripcion || ""} ${form ? "formulario formularios descargar tramite solicitud pdf" : "documento documentos documentacion transparencia reglamento informe pdf descargar"}`,
+            form ? "Formulario · Trámites" : `${cat} · Transparencia`));
+        }),
+        load("noticias", "creadoEn", "desc", 100, d => out.push(makeEntry(d.titulo || "Noticia", `/noticia-detalle?id=${d.id}`, `${d.resumen || ""} ${d.descripcion || ""} noticia aviso`, "Noticia"))),
+        load("programa_noticias", "creadoEn", "desc", 100, d => out.push(makeEntry(d.titulo || "Noticia", `/programa#noticia-${d.id}`, `${d.resumen || ""} ${d.descripcion || ""} noticia programa aviso`, "Noticia del programa"))),
+        load("cortes", "fecha", "desc", 100, d => out.push(makeEntry(`${d.tipo || "Aviso"}: ${d.sector || ""}`, `/cortes#aviso-${d.id}`, `${d.sector || ""} ${d.motivo || ""} ${d.horario || ""} ${d.estado || ""} aviso corte agua mantenimiento`, "Aviso de servicio"))),
+        load("faqs", "orden", "asc", 100, d => out.push(makeEntry(d.pregunta || "Pregunta frecuente", "/faq", `${d.pregunta || ""} ${d.respuesta || ""} pregunta frecuente respuesta ayuda`, "Pregunta frecuente"))),
+        load("proyectos", "creadoEn", "desc", 100, d => out.push(makeEntry(d.titulo || "Proyecto", "/proyectos", `${d.estado || ""} ${d.descripcion || ""} proyecto obra`, "Proyecto"))),
+        load("servicios", "orden", "asc", 100, d => out.push(makeEntry(d.titulo || "Servicio", "/servicios", `${d.descripcion || ""} ${stringsOf(d.chips)} servicio`, "Servicio"))),
+        load("tarifas", "orden", "asc", 200, d => out.push(makeEntry(`${d.servicio || "Tarifa"} · ${d.categoria || "Categoría"}`, "/tarifas", `${d.bloque || ""} ${d.cuota || ""} ${d.vigente || ""} tarifa 2026 precio cuota consumo`, "Tarifa"))),
+        load("junta", "orden", "asc", 100, d => out.push(makeEntry(d.nombre || "Miembro", "/nosotros", `${d.cargo || ""} junta directiva`, "Junta Directiva"))),
+        load("colaboradores", "orden", "asc", 100, d => out.push(makeEntry(d.nombre || "Colaborador", "/nosotros", `${d.cargo || ""} colaborador`, "Colaborador"))),
+        load("sitio_config", "creadoEn", "desc", 300, d => {
+          const key = String(d.clave || "");
+          if (!d.valor || out.some(x => x.clue === key)) return;
+          const e = makeEntry(key.replace(/ - /g, " · "), pageOfClue(key), `${key} ${d.valor} texto del sitio`, "Texto del sitio");
+          e.clue = key; out.push(e);
+        }),
+        load("sitio_secciones", "orden", "asc", 200, d => {
+          if (d.visible === "No" || d.visible === false) return;
+          const slug = slugify(d.slug || d.titulo || d.id);
+          const href = d.pagina === "Página nueva (individual)" ? `/pagina?slug=${encodeURIComponent(slug)}` : `${pageOfSection(d.pagina)}#sec-${slug}`;
+          out.push(makeEntry(d.titulo || "Sección", href, stringsOf(d.bloques || d), "Sección del sitio"));
+        }),
+        load("sitio_botones", "orden", "asc", 200, d => {
+          if (d.visible === "No" || d.visible === false) return;
+          const dest = destAny(d.destino || "#");
+          const href = dest.charAt(0) === "#" ? `${/contacto/i.test(d.ubicacion || "") ? "/contacto" : "/"}${dest}` : dest;
+          out.push(makeEntry(d.etiqueta || "Acceso", href, `${d.ubicacion || ""} ${dest} acceso rápido botón`, "Acceso del sitio"));
+        }),
+        load("sitio_historia", "orden", "asc", 200, d => out.push(makeEntry(d.titulo || d.anio || "Hito", "/#historia", `${d.anio || ""} ${d.descripcion || ""} historia`, "Historia"))),
+        load("sitio_cobertura", "orden", "asc", 200, d => out.push(makeEntry(d.nombre || "Zona", "/#cobertura", `${d.km || ""} ${d.descripcion || ""} cobertura zona sector`, "Cobertura"))),
+        load("sitio_cifras", "orden", "asc", 200, d => out.push(makeEntry(d.numero || "Cifra", "/", `${d.prefijo || ""} ${d.etiqueta || ""} cifra cobertura`, "Cifra del sitio"))),
+        load("sitio_beneficiarios", "orden", "asc", 200, d => out.push(makeEntry(d.numero || "Beneficiarios", "/", `${d.etiqueta || ""} beneficiarios abonados`, "Beneficiarios"))),
+        load("sitio_tecnologia", "orden", "asc", 200, d => out.push(makeEntry(d.titulo || "Tecnología", "/#historia", `${d.descripcion || ""} tecnologia proceso agua`, "Tecnología"))),
+        load("programa_textos", "creadoEn", "desc", 200, d => {
+          if (!d.contenido || out.some(x => x.clue === d.clave)) return;
+          const e = makeEntry(d.clave || "Texto del programa", `/programa${progAnchor[d.clave] || "#informacion"}`, `${d.clave || ""} ${d.contenido} programa educacion ambiental`, "Texto del programa");
+          e.clue = d.clave; out.push(e);
+        }),
+        load("programa_secciones", "orden", "asc", 200, d => {
+          if (d.visible === "No" || d.visible === false) return;
+          const slug = slugify(d.slug || d.id);
+          out.push(makeEntry(d.titulo || "Sección", `/programa#sec-${slug}`, stringsOf(d.bloques || d), "Sección del programa"));
+        }),
+        load("programa_botones", "orden", "asc", 200, d => {
+          if (d.visible === "No" || d.visible === false) return;
+          const dest = destAny(d.destino || "#");
+          out.push(makeEntry(d.etiqueta || "Acceso", dest.charAt(0) === "#" ? `/programa${dest}` : dest, `${d.ubicacion || ""} ${dest} programa acceso botón`, "Acceso del programa"));
+        }),
+        load("programa_aliados", "creadoEn", "asc", 200, d => out.push(makeEntry(d.nombre || "Aliado", "/programa#aliados", `${d.nombre || ""} aliado programa ambiental`, "Aliado del programa"))),
+        load("programa_galeria", "creadoEn", "desc", 100, d => out.push(makeEntry(d.titulo || "Foto del programa", "/programa#galeria", "programa galeria foto actividad ambiental", "Galería del programa")))
+      ]);
+      return out;
+    };
+    const ensureDynamic = () => {
+      if (dynamic.length && Date.now() - dynamicAt < 300000) return Promise.resolve();
+      if (!dynamicTask) dynamicTask = buildDynamic().then(r => { dynamic = r; dynamicAt = Date.now(); }).finally(() => { dynamicTask = null; });
+      return dynamicTask;
+    };
+    const score = (e, raw, qTokens) => {
+      let n = 0;
+      if (plain(e.t) === raw) n += 100;
+      if (plain(e.t).startsWith(raw)) n += 40;
+      if (plain(e.t).includes(raw)) n += 20;
+      if (e.short) n += 5;
+      return n + qTokens.length;
+    };
     const draw = () => {
-      const q = sInput.value.trim().toLowerCase();
-      const found = (q ? links.filter(([t]) => t.toLowerCase().includes(q)) : links.slice(0, 6)).slice(0, 8);
-      sRes.innerHTML = found.length ? found.map(([t, h]) => `<a href="${h}">${t}<span>→</span></a>`).join("") : `<p class="meta">No se encontraron resultados. Pruebe con “tarifas” o “avisos”.</p>`;
+      const raw = plain(sInput.value.trim()), q = tokens(raw);
+      const all = index.concat(dynamic);
+      let found;
+      if (!q.length) found = all.filter(e => e.short).slice(0, 12);
+      else {
+        found = all.filter(e => q.every(t => e.k.has(t) || (SYN[t] || []).some(s => e.k.has(s))));
+        found.sort((a, b) => score(b, raw, q) - score(a, raw, q)).splice(12);
+      }
+      if (!found.length) {
+        sRes.innerHTML = loadingDynamic ? `<p class="meta">Buscando en todo el sitio…</p>` : `<p class="meta">No se encontraron resultados. Pruebe con “formularios”, “trámites”, “tarifas” o “avisos”.</p>`;
+        return;
+      }
+      sRes.innerHTML = found.map(e => `<a href="${esc(e.h)}"><b>${esc(e.t)}</b>${e.sub ? `<small>${esc(e.sub)}</small>` : ""}<span>→</span></a>`).join("");
     };
     const close = () => { sPanel.hidden = true; sBtn.setAttribute("aria-expanded", "false"); };
     sBtn.addEventListener("click", e => {
       e.stopPropagation();
       const open = sPanel.hidden;
       sPanel.hidden = !open; sBtn.setAttribute("aria-expanded", String(open));
-      if (open) { draw(); sInput.focus(); }
+      if (open) {
+        draw(); loadingDynamic = true;
+        ensureDynamic().then(() => { loadingDynamic = false; draw(); });
+        sInput.focus();
+      }
     });
     sPanel.addEventListener("click", e => e.stopPropagation());
     sInput.addEventListener("input", draw);
@@ -844,8 +1030,8 @@ const mountLayout = () => {
       <button class="burger" type="button" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
     </div></div>
     <div class="header-search-panel" id="header-search-panel" hidden><div class="wrap">
-      <label for="site-search">Buscar información</label>
-      <input id="site-search" type="search" placeholder="Escriba un tema: tarifas, avisos, cobertura…" autocomplete="off">
+      <label for="site-search">Buscar en todo el sitio</label>
+      <input id="site-search" type="search" placeholder="Busque todo: formularios, trámites, documentos, tarifas, avisos, aliados…" autocomplete="off">
       <div id="site-search-results" class="site-search-results"></div>
     </div></div>
   </header>
@@ -1001,7 +1187,7 @@ const newsCard = n => `<article class="card"><a class="card-img" href="/noticia-
   <div class="card-body"><time>${fmt(n.creadoEn)}</time><h3>${esc(n.titulo)}</h3><p>${esc(n.resumen || "")}</p><a class="link" href="/noticia-detalle?id=${n.id}" style="align-self:flex-start">Leer mas</a></div></article>`;
 const cutRow = c => {
   const on = !/final|cancel/i.test(c.estado || "");
-  return `<div class="row"><div><strong>${fmt(c.fecha)}</strong><span class="meta">${esc(c.horario || "")}</span></div>
+  return `<div class="row" id="aviso-${c.id}"><div><strong>${fmt(c.fecha)}</strong><span class="meta">${esc(c.horario || "")}</span></div>
   <div><span class="meta">${esc(c.tipo || "Aviso")}</span><h3>${esc(c.sector)}</h3><p>${esc(c.motivo || "")}</p></div><span class="tag ${on ? "on" : "off"}">${esc(c.estado || "Programado")}</span></div>`;
 };
 
@@ -1257,7 +1443,7 @@ const pages = {
     let all = [];
     const draw = () => { if (!box) return; const t = q ? q.value.toLowerCase() : "", c = cat ? cat.value : "";
       const r = all.filter(d => (!c || d.categoria === c) && (!t || (d.titulo + " " + (d.descripcion || "")).toLowerCase().includes(t)));
-      r.length ? box.innerHTML = `<div class="rows">${r.map(d => `<div class="row"><div><span class="tag">${esc(d.categoria || "Documento")}</span></div><div><h3>${esc(d.titulo)}</h3><p>${fmtReq(d.descripcion || "")}</p><span class="meta">${fmt(d.creadoEn)}</span></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("")}</div>` : empty(box, "No se encontraron documentos."); };
+      r.length ? box.innerHTML = `<div class="rows">${r.map(d => `<div class="row" id="doc-${d.id}"><div><span class="tag">${esc(d.categoria || "Documento")}</span></div><div><h3>${esc(d.titulo)}</h3><p>${fmtReq(d.descripcion || "")}</p><span class="meta">${fmt(d.creadoEn)}</span></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("")}</div>` : empty(box, "No se encontraron documentos."); };
     try { all = await listDocs("documentos"); draw(); } catch (e) { console.error(e); if (box) fail(box); }
     if (q) q.oninput = draw; if (cat) cat.onchange = draw;
     await renderSitePageSections("Transparencia/Documentos");
@@ -1366,8 +1552,9 @@ const pages = {
       if (box) try {
         const items = (await listDocs("documentos")).filter(d => d.categoria === "Formulario" && d.archivoId);
         if (items.length) {
-          items.sort((a, b) => String(a.titulo || "").localeCompare(String(b.titulo || ""), "es"));
-          box.innerHTML = items.map(d => `<div class="row"><div><span class="tag">Formulario</span></div><div><h3>${esc(d.titulo)}</h3><p>${fmtReq(d.descripcion || "")}</p></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("");
+          const ordenTramite = d => { const m = String(d.descripcion || "").match(/^\*\*(\d+)\./); return m ? Number(m[1]) : 99; };
+          items.sort((a, b) => ordenTramite(a) - ordenTramite(b) || String(a.titulo || "").localeCompare(String(b.titulo || ""), "es"));
+          box.innerHTML = items.map(d => `<div class="row" id="doc-${d.id}"><div><span class="tag">Formulario</span></div><div><h3>${esc(d.titulo)}</h3><p>${fmtReq(d.descripcion || "")}</p></div><a class="btn sm dark" href="${fileDown(d.archivoId)}" target="_blank" rel="noopener">Descargar</a></div>`).join("");
         }
       } catch (e) { console.error(e); }
     }
